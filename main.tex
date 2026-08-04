@@ -1,0 +1,344 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{array,booktabs,arydshln,xcolor}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{pifont}
+\newcommand{\xmark}{\ding{53}}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{multirow}
+\usepackage{array,booktabs,arydshln,xcolor}
+\large
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{diagbox}
+\usepackage{,amssymb}
+\usepackage{systeme} 
+\usepackage[parfill]{parskip}
+\usepackage[shortlabels]{enumitem}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{bbm}
+\usepackage{caption}
+\usepackage[style=authoryear]{biblatex}
+%\usepackage[authoryear]{natbib}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+\newcolumntype{C}[1]{>{\Centering}m{#1}}
+\renewcommand\tabularxcolumn[1]{C{#1}}
+\usepackage{makecell}
+\usepackage[T1]{fontenc} 
+\usepackage{fouriernc}
+\usepackage{mathtools}
+\usepackage{amssymb,amsthm} 
+\usepackage{ marvosym }
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage[toc,page]{appendix}
+\newcommand\blitz{\textup{\Lightning}}
+\large
+\usepackage[graphicx]{realboxes}
+\usepackage{adjustbox}
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\usepackage{hyperref}
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{conj}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+
+\newtheorem{question}[theorem]{Question}
+\newtheorem{questions}[theorem]{Questions}
+
+%\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newtheoremstyle{TheoremNum}
+        {\topsep}{\topsep}              %%% space between body and thm
+        {\itshape}                      %%% Thm body font
+        {}                              %%% Indent amount (empty = no indent)
+        {\bfseries}                     %%% Thm head font
+        {.}                             %%% Punctuation after thm head
+        { }                             %%% Space after thm head
+        {\thmname{#1}\thmnote{ \bfseries #3}}%%% Thm head spec
+    \theoremstyle{TheoremNum}
+    \newtheorem{theoremn}{Theorem}
+
+
+\newtheoremstyle{CorollaryNum}
+        {\topsep}{\topsep}              %%% space between body and thm
+        {\itshape}                      %%% Thm body font
+        {}                              %%% Indent amount (empty = no indent)
+        {\bfseries}                     %%% Thm head font
+        {.}                             %%% Punctuation after thm head
+        { }                             %%% Space after thm head
+        {\thmname{#1}\thmnote{ \bfseries #3}}%%% Thm head spec
+    \theoremstyle{CorollaryNum}
+    \newtheorem{corollaryn}{Corollary}
+
+\newtheoremstyle{PropositionNum}
+        {\topsep}{\topsep}              %%% space between body and thm
+        {\itshape}                      %%% Thm body font
+        {}                              %%% Indent amount (empty = no indent)
+        {\bfseries}                     %%% Thm head font
+        {.}                             %%% Punctuation after thm head
+        { }                             %%% Space after thm head
+        {\thmname{#1}\thmnote{ \bfseries #3}}%%% Thm head spec
+    \theoremstyle{PropositionNum}
+    \newtheorem{propn}{Proposition}
+
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+    \newtheoremstyle{ConjectureNum}
+        {\topsep}{\topsep}              %%% space between body and thm
+        {\itshape}                      %%% Thm body font
+        {}                              %%% Indent amount (empty = no indent)
+        {\bfseries}                     %%% Thm head font
+        {.}                             %%% Punctuation after thm head
+        { }                             %%% Space after thm head
+        {\thmname{#1}\thmnote{ \bfseries #3}}%%% Thm head spec
+    \theoremstyle{TheoremNum}
+    \newtheorem{conjn}{Conjecture}
+    
+\newcommand{\argmin}{\arg\!\min}
+\newcommand{\argmax}{\arg\!\max}
+    
+\addbibresource{main.bib}
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+\linespread{1}
+
+%opening
+\title{Divorce-induced health decline and the impact on mortality risk\thanks{The authors are grateful to the DFG (German Research Foundation) for financial support (Project number: 544381616).}}
+
+\author{Kar Man Tan\thanks{Corresponding author: \href{mailto:karman.tan@bib.bund.de}{karman.tan@bib.bund.de}. Federal Institute for Population Research (BiB), Friedrich-Ebert-Allee 4, 65185 Wiesbaden, Germany}
+\and
+Pavel Grigoriev\thanks{Federal Institute for Population Research (BiB)}}
+% Pavel Grigoriev\thanks{\href{mailto:pavel.grigoriev@bib.bund.de}{pavel.grigoriev@bib.bund.de}. Federal Institute for Population Research (BiB)}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Divorce is linked to elevated mortality. However, the causal mechanisms underlying this relationship are complex and remain insufficiently identified. Health is one such mechanism and is the focus of this paper. Using linked administrative data from the German Pension Insurance Fund (DRV), we examine whether divorce increases the risk of an initial musculoskeletal rehabilitation, and how much of the divorce-mortality gap runs through this channel. Rehabilitation is administered by the DRV and is granted only once a musculoskeletal condition has become chronic and threatens the ability to work. Our outcome measures the crossing of an institutional threshold rather than the onset of disease. We build annual risk sets of individuals experiencing a first (observable) divorce and individuals who have not yet divorced in that year and then use propensity score matching to generate comparable matches. \textcolor{red}{Results: Divorce effect on cumulative incidence of musculoskeletal rehab, divorce effect on mortality, results from decomposition}
+% \textit{(JEL D41, D42, D43, D81, D82, D83, D84, D85, D86)}
+\end{abstract}
+
+\textbf{Keywords:} divorce, health, rehabilitation, mortality
+
+\textbf{JEL Classification:} H75, I12, J12
+
+%[SUBMITTED TO \textbf{JOURNAL OF RISK AND INSURANCE} AND IN REVIEW]
+
+\newpage
+
+\section{Introduction}
+
+The link between divorce and mortality has been widely discussed in social epidemiological studies. Register-based studies have used Finnish data (\citeauthor{metsa2013short}, \citeyear{metsa2013short}), Norwegian data (\citeauthor{berntsen2012relationship}, \citeyear{berntsen2012relationship}) and  English/Welsh data (\citeauthor{grundy2010marital}, \citeyear{grundy2010marital}). Until recently, Germany has been a difficult setting for this question. \citeauthor{brockmann2004love} (\citeyear{brockmann2004love}) is the only study to the best of our knowledge which explicitly analyzes the link between divorce and mortality although the dataset used in the study is the SOEP\footnote{German Socioeconomic Panel} which is not an administrative dataset. Since 2011, it is possible to link different administrative datasets from the German Pension Insurance Fund (DRV) using a unique identifier, allowing us to access full income biographies, divorce information\footnote{This information is available due to the law of splitting pension points.}, rehabilitation history and death. The availability of this dataset led to the conception of the project \textit{Divorce and Diagnosis (DiDi): Register-based Analysis on the Role of Divorce in Health and Employment Dynamics}\footnote{This project is a collaboration between the Federal Institute for Population Research, Hertie School, Charit\'{e} - Universit\"{a}tsmedizin Berlin and the DRV.}, which constitutes our study. 
+
+Our study focuses on the interaction between divorce, health and mortality. While there can be a direct link between divorce and mortality if divorce results in suicide (\citeauthor{kposowa2000marital}, \citeyear{kposowa2000marital}) or homicide, causal evidence remains scarce when the link is indirect. Hence, we chose health as it is one possible indirect link tying together divorce and mortality. There can, however, still be threats to identification as health is not only a consequence but also a cause of divorce  (\citeauthor*{torvik2015health}, \citeyear{torvik2015health}). Furthermore, the individuals who choose to divorce may not necessarily be random. Many of the register-based studies make use of hazard models to estimate excess mortality risk after divorce and controls for sociodemographic and socioeconomic variables. For Germany, \citeauthor{brockmann2004love} (\citeyear{brockmann2004love}) account for health by using the self-reported health measure from the German SOEP and control for variables associated with marital status to find that divorced mean have 51\% higher mortality than married men while there is no significant effect for women. \citeauthor{leopold2018gender} (\citeyear{leopold2018gender}) presents a very careful multi-outcome treatment of the gendered consequences of divorce over time, but it is not designed to control for the health that occurs before from the health consequences which follow the divorce. In our paper, we control for pre-existing health trends and other factors which occur before the divorce by using propensity score matching to answer the following questions
+
+\begin{itemize}
+    \item[\textbf{RQ1:}] Does divorce raise the risk of musculoskeletal rehabilitation\footnote{Musculoskeletal diseases are the most common cuase of lost work time in Germany.} among divorced and non-divorced individuals?
+    \item[\textbf{RQ2:}] Of the total effect of divorce on mortality, how much operates through an indirect channel (musculoskeletal rehabilitation) and a direct channel?
+\end{itemize}
+
+For context, the DRV only grants rehabilitation once the musculoskeletal condition is chronic to the point that it threatens working ability (\citeauthor{drv2005leitlinien}, \citeyear{drv2005leitlinien}). We do not argue that divorce causes musculoskeletal disease but rather whether divorce moves individuals who carry a latent vulnerability across the legal threshold where rehabilitation becomes necessary. Please see Section 2.3 for a more detailed discussion. 
+
+\textcolor{red}{Results... maybe policy implications?}
+
+Section 2 provides a literature review, Section 3 introduces the data and methodology, Section 4 presents the results, Section 5 discusses the implications and Section 6 concludes.
+
+\section{Literature review}
+\subsection{Link between divorce and mortality}
+%The link between divorce and mortality risk is widely documented in sociology and epidemiology, but causal evidence remains scarce. Sbarra and Nietert (2009) find that being divorced is a leading predictor of early death across forty years of the Charleston Heart Study, and Sbarra, et al. (2012) set out the biological, stressmediated and behavioural routes through which that could operate. Leopold (2018) documents that men are more vulnerable in the short run in terms of wellbeing, that gender differences narrow in the medium run, and that women bear the long-run poverty risk from lost household income and single parenting. Divorce is almost never a proximate cause of death; it shortens life through psychological, behavioural and material channels, which is precisely why a decomposition of the effect into observable channels is more informative than another total effect.
+
+\subsection{Divorce and health}
+% Wade and Pevalin (2004) find worse mental health among those divorcing or divorced than among the married; Bjoerkenstam, et al. (2013) find a higher probability of psychiatric inpatient care in the year following divorce in a register-based study of 703,960 individuals; Bracke, et al. (2010) find higher professional care-seeking for mental health problems among the divorced and separated. In the sicknessabsence literature, Hallberg and Mattsson (1992) and Dahl, et al. (2015) document elevated absence around marital dissolution. Physical and mental health are not separable channels here: poor mental health is linked to unhealthy behaviour, disturbed sleep and addiction, which raise the probability of physical complications (Doan, et al., 2022), and Carter, et al. (2025) find that being divorced makes depression treatment less effective and remission slower. Raab, et al. (2018) show that functional limitation accumulates faster in the years before death among individuals reporting depression.
+
+\subsection{Divorce and musculoskeletal disease}
+% The pathway from divorce to musculoskeletal impairment requiring rehabilitation is plausible but has not been estimated causally. Chronic stress, changes in work intensity and household burden, interrupted treatment, and the loss of a spouse who prompts and supports care-seeking can all accelerate the progression from latent musculoskeletal vulnerability to impairment severe enough to threaten earning capacity. The last of these mechanisms cuts in the opposite direction from the others and matters for how our mediation result should be read: a spouse can both buffer the underlying condition and be the person who pushes a reluctant partner to apply for rehabilitation.
+
+\textcolor{red}{Rehabilitation system in Germany}
+
+\textcolor{red}{Inclusion criteria and `exclusion' criteria for applying for rehab with DRV} \url{https://www.deutsche-rentenversicherung.de/DRV/DE/Reha/Warum-Reha/voraussetzung_ausschlussgruende.html}
+
+\textcolor{red}{vague definition of `threatening ability to work', typical duration of medical rehabilitation, cost of rehabilitation, how transitional allowance kicks in when individuals have exhausted the salary receipt from employers.}\url{https://www.deutsche-rentenversicherung.de/DRV/DE/Reha/Medizinische-Reha/Allgemeine-med-Reha/allgemeine-med-reha.html}
+
+
+\textcolor{red}{transitional allowance}\url{https://www.deutsche-rentenversicherung.de/DRV/DE/Reha/Warum-Reha/uebergangsgeld.html}
+
+\textcolor{red}{78 week rule}\url{https://www.gesetze-im-internet.de/sgb_5/__48.html} Individuals can only receive pay from their health insurance for a maximum of 78 weeks in a 3-year period
+
+\textcolor{red}{specific prerequisites for musculoskeletal rehab}\url{https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Experten/infos_fuer_aerzte/begutachtung/leitlinien_rehabeduerftigkeit_stuetz_bewegungsapparat_kurzfassung_pdf.pdf} Basically, it is not sufficient to only have pain. The criteria which need to be fulfilled in order to qualify for musculoskeletal rehab with the DRV is chronic pain syndrome, incapacity to work with a psychosocial dimension, comorbidty and active cooperation of the insured person in the rehabilitation. In terms of musculoskeletal rehabilitation, there needs to be significant restrictions of movement associated with chronic pain of a persistent or recurrent nature, postural deformities, whiplash distortion, muscular atrophy, etc.
+
+
+\subsection{Musculoskeletal disease and death}
+%Musculoskeletal conditions are rarely direct causes of death in the way that ischaemic heart disease or cancer are. They are slow-burning, and raise mortality indirectly through disability, comorbidity accumulated under a more sedentary life, pain, falls and fracture (Williams, et al., 2018). Chronic musculoskeletal pain is in turn linked to smoking, depression and anxiety, each of which carries its own mortality risk (Chen, et al., 2021). Sickness absence itself predicts mortality (Vahtera, Pentti and Kivimaeki, 2004; Bambra and Norman, 2006; Mittendorfer-Rutz, et al., 2012), which is why rehabilitation entry is a defensible mediator to test - but also why its sign is not obvious ex ante, since entering rehabilitation is simultaneously a marker of impairment and a treatment for it.
+
+\section{Data and methodology}
+\subsection{Data}
+The Research Data Center of the DRV allows linkages of different datasets starting from the reporting year 2011 through a unique identifier (Forschungsdatenzentrum Rentenversicherung, 2025). The datasets we use are AKVS\footnote{Active Insured Persons}, LTVS\footnote{Latent Insured Persons}, RTBN\footnote{Insured Persons’ Pension Portfolio}, RTWF\footnote{Termination of Pensions due to Death}, RSD\footnote{Completed Rehabilitation in the Insurance History} and VA\footnote{Pension Equalization Statistics}. The time period covered by the data is 2011 to 2023.
+
+The AKVS, LTVS and RTBN are merged by the DRV to form the BASE dataset. The AKVS dataset contains individuals who are still actively contributing to the pension fund hence it generally represents individuals who are employed. The LTVS dataset contains individuals who have paused pension fund contributions but have not yet retired (nor drawn from their pension fund). It may include individuals who are unemployed, undergoing further education, on parental leave, etc. The RTBN dataset contains individuals who are drawing from their pension fund, i.e. retired individuals. The merged dataset, BASE, allows us to map out the full life-course coverage of individuals. If we only considered only RTBN, the sample is biased towards individuals who have contributed and lived long enough to draw a pension, ignoring those individuals who have undergone rehabilitation or died before drawing a pension. Considering only AKVS ignores rehabilitation efforts and gray divorces. To round up the dataset, it is also important to consider LTVS which details what happens between employment spells and retirement.
+
+We then supplement the merged dataset with the RTWF, RSD and the VA. The RTWF details pension terminations due to deaths. If the death information from the merged dataset is inconsistent with the information in the RTWF, the individuals (cases) are dropped \textcolor{red}{\{about 127 individuals are dropped\}}. The RSD dataset details the completed rehabilitations and include information such as the broad diagnosis group, the type of rehabilitation benefits applied for, start and end date of rehabilitation. The RSD dataset also includes individuals with withdrawn, transferred or rejected applications. We only include individuals whose applications were successful and who completed the rehabilitation spell. Furthermore, about 5\% of individuals undergo three or more rehabilitation spells per year. We also drop these individuals. We then supplement the merged dataset by including the additional rehabilitation information for the remaining individuals in the RSD dataset. The VA dataset includes information related to divorce and only contains divorced individuals. From the VA, we can obtain the date of divorce, pension supplements and deductions which result from divorce.
+
+
+\subsection{Matching}
+
+Since divorce is not randomly assigned, divorced and non-divorced individuals may differ systematically before divorce occurs. We therefore use 1:1 matching without replacement to construct a comparison group of individuals who are similar with respect to observed pre-treatment characteristics. The causal interpretation relies on conditional exchangeability (\citeauthor{rosenbaum1983central}, \citeyear{rosenbaum1983central}). This means that, conditional on the observed characteristics used in matching, individuals who divorce and comparable individuals who do not divorce are assumed to have had similar potential health trajectories in the absence of divorce. In other words, it is assumed that there are no remaining unobserved factors that jointly affect the probability of divorce and the subsequent health outcomes. However, the administrative data may not fully capture factors such as relationship conflict or social support.
+
+We define treatment as the first observed divorce from the earliest observed marriage spell. We limit the treatment cohorts to divorces observed between 2012 and 2018 to ensure that each cohort can be observed for at least five years after divorce. The year of divorce is fixed as $t_0$. For each treatment year, we form a separate within-year risk set. For treated individuals whose first observed divorce occurs in $t_0$, eligible controls are individuals who have not yet experienced a divorce by that year. Controls may divorce later. We do not restrict the control group to individuals who never divorce because this would define control eligibility using information that occurs after $t_0$. This means that it is possible that an individual who was a control before their own divorce can be counted as treated afterwards. Individuals must be alive at $t_0$ and must have an observed record in $t_{0}-1$. We exclude individuals with a musculoskeletal rehabilitation up to and including $t_{0}$. They may previously have received rehabilitation for other conditions. The resulting sample therefore consists of individuals who are at risk of their first observed musculoskeletal rehabilitation after $t_0$.
+
+We require treated and control individuals to be matched exactly on sex, five-year age band and whether any rehabilitation has occurred by $t_{0}-1$. Then, we estimate a logistic propensity-score model separately for each treatment year. The propensity score represents the estimated probability of divorce in $t_0$, conditional on observed characteristics measured before divorce. The characteristics we include are age, cumulative rehabilitation history, mental-health rehabilitation history, years since the most recent rehabilitation, pension contribution periods,\footnote{Periods during which pension contributions were recorded.} earnings, pension income, unsuccessful rehabilitation applications, federal state, broad occupational group, income-source status and marital status at $t_{0}-1$.
+
+We treat missingness in earnings, pension income and contribution periods as potentially informative. In particular, observed earnings with missing pension income generally indicate active employment, whereas observed pension income with missing earnings generally indicates pension receipt. We retain the observed earnings and pension values and include a categorical measure describing the joint observability of the two income sources. We also include separate indicators for missing contribution-period information. This allows the matching model to use both the recorded values and the information contained in their missingness patterns.
+
+Within each treatment year and exact-match group, we use optimal matching. The matching procedure first maximizes the number of treated individuals who can be matched within the caliper and then chooses the combination of pairs that minimizes the total propensity-score distance. We limit matches to a maximum absolute propensity-score difference of 0.01. Matching is conducted without replacement, meaning that each treated individual and each control can appear in only one matched pair. \textcolor{red}{To accommodate the large annual control pools, the propensity-score model is fitted using all treated individuals and, where necessary, a reproducibly selected sample of controls, with the total estimation sample limited to 500,000 observations. The resulting propensity scores are corrected for the control-sampling fraction, and the fitted model is then used to calculate propensity scores for every eligible treated individual and control. The computational limit therefore affects how the propensity model is estimated but does not remove controls from the matching pool.}
+
+\textcolor{red}{We assess covariate balance before and after matching using standardized mean differences. Balance is assessed separately for continuous variables, binary variables, each level of categorical variables and indicators of missingness. We present these results in Figure blablabla. An absolute standardized mean difference below 0.10 is treated as evidence of adequate balance on the corresponding observed characteristic. Where residual imbalance above this threshold remains after matching, the affected variables are additionally included in the outcome model. This adjustment is intended to address limited remaining imbalance and is not used as a substitute for unsuccessful matching.}
+
+
+
+\textcolor{red}{Using the matched sample, we estimate the average treatment effect among the matched treated individuals. We examine first entry into musculoskeletal rehabilitation, time to first musculoskeletal rehabilitation, rehabilitation duration and all-cause mortality after divorce. Musculoskeletal rehabilitation is examined over a five-year follow-up period, with death treated as a competing event. Mortality is followed for up to ten years where permitted by the end of the observation period in 2023. The amount of available mortality follow-up therefore varies across treatment cohorts.}
+
+
+\subsection{Identification}
+
+For identification, we focus on the average treatment effect among the matched treated individuals. 
+\subsubsection{RQ1: Musculoskeletal rehabilitation}
+
+We follow each matched individual from $t_0+1$ to $t_0+5$ and estimate a discrete-time hazard model:
+
+\begin{align}
+\begin{split}
+ \lambda_{i\tau}^{\text{rehab}} & = \text{Pr}(R_{i \tau} = 1 | \text{no musculoskeletal rehab before $\tau$, alive at $\tau$}) \\
+ & = \Lambda_{\text{rehab}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
+\end{split}
+\tag{1}\label{eq:rq1_equation}
+\end{align}
+
+where $R_{i\tau}$ is a dummy indicating individual $i$'s first entry into musculoskeletal rehabilitation in time in follow-up year $t_0 + \tau$ where $\tau \in \{1,...,5\}$, $\alpha_\tau$ are fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured at $t_0 -1$ that we add depending on the specification. We estimate two specifications for Equation \ref{eq:rq1_equation}. In the first specification, we omit $\mathbf{x}_i$ and rely only on matching to deal with selection bias. In the second specification, we include variables whose absolute standardized mean difference after matching exceed 0.10 into $\mathbf{x}_i$. Standard errors are clustered at the level of the matched pair. 
+
+The hazard odds ratio from Equation \ref{eq:rq1_equation} is difficult to interpret on its own as it does not show how frequently rehabilitation occurs, hence we also estimate the cumulative incidence of a first musculoskeletal rehabilitation over the 5-year follow up period using a discrete Aalen-Johansen estimator\footnote{This estimator recognizes that individuals who die can no longer enter rehabilitation. For example, suppose there are 100 people where 10 enter rehabilitation in $t_0 + 1$, 20 die before rehabilitation and 70 are still alive and have not entered rehabilitation. Suppose in $t_0 + 2$, 7 people out of the remaining 70 enter rehabilitation. If we treat death as censoring rather than as a competing event, the proportion surviving up to $t_0+1$ is $1-\frac{10}{100} = 0.9$, and up to $t_0+2$ is $1-\frac{7}{70} = 0.9$, $\therefore$ the cumulative rehabilitation probability is $1-(0.9\times 0.9) = 0.19$, which is an overestimation. With the Aalen-Johansen estimator, we consider the proportion which actually entered rehabilitation by each follow-up year before dying. In $t_0+1$, the proportion entering rehabilitation is 0.1, however, after $t_0+1$, the proportion remaining alive without having entered rehabilitation is $1-\frac{10+20}{100} = 0.7$. In $t_0+2$, $\frac{7}{70}=0.1$ is the share of people who enter rehabilitation, but since only 70\% of the original population was alive without having entered rehabilitation at the beginning of $t_0+2$, the contribution to the incidence is $0.7\times0.1=0.07$, hence the cumulative rehabilitation probability is $0.17$} (\citeauthor{aalen1978empirical}, \citeyear{aalen1978empirical}). We report four values at the the 5-year horizon, 1) cumulative rehabilitation risk among treated individuals, 2) cumulative rehabilitation risk among controls, 3) risk difference per 1000 individuals and 4) the corresponding risk ratio. Confidence intervals are obtained by resampling whole matched pairs. 
+
+The biggest threat to the conditional exchangeability assumption is unobserved pre-divorce trends, which available variables may not fully capture, especially by only observing the year prior to the divorce. To address this, we first conducted an event study from $t_0 -3$ to $t_0+5$ by taking the difference in values of unsuccessful rehabilitation applications, earnings, pension income, missingness of pension income and prior rehabilitation activity between the treated and control in each matched pair and conducting a Wald test (\citeauthor{wald1943tests}, \citeyear{wald1943tests}) to determine whether the differences across time are significant for each variable. Following divergences in trends prior to $t_0$, we repeated the matching exercise with three lags, i.e. $t_0 -3, t_0-2, t_0-1$ instead of only $t_0 -1$. Since we require that individuals have an observed record, the lag-3 specification considers only the time period between 2014 and 2018. We also repeat the lag-1 specification for only 2014 to 2018.
+
+\subsubsection{RQ2: Mortality}
+
+We follow each individual from $t_0+1$ until $t_0+10$ or 2023, the last year of the sample, whichever occurs first and estimate a discrete-time hazard model similar to Equation \ref{eq:rq1_equation}:
+
+\begin{align}
+\begin{split}
+    \lambda_{i\tau}^{\text{death}} & = \text{Pr}(Y_{i\tau}=1 | \text{alive at beginning of follow-up year } \tau)\\
+    & = \Lambda_{\text{rehab}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
+\end{split}
+\tag{2}\label{eq:rq2_equation_basic}
+\end{align}
+
+where $Y_{i\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate two specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after amtching. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years.
+
+In addition to the straightforward analysis of divorce on mortality, we run a mediation analysis to determine how much of the mortality difference can be attributed to `early' musculoskeletal rehabilitation. We use landmark periods of $L\in\{1,2\}$. This is to account for individuals who die early without a rehabilitation ever being recorded since this individual would be unmediated. We chose one or two years because a longer mediator window may have the potential to invite health shocks unrelated to divorce to produce musculoskeletal rehabilitation. Furthermore, since our data is only until 2023, a longer mediator window shortens the mortality follow-up window. With $L=1$, the horizon, $H_L$ is four years and with $L=2$, it is three years. The mediator for individual $i$ is defined as:
+
+\begin{align}
+ M_i(L) = 
+ \begin{cases} 
+ 1, & \mbox{if } \text{individual $i$ enters musculoskeletal rehabilitation} \\ 
+   & \text{between $t_0+1$ to $t_0+L$,}\\
+ 0, & \mbox{otherwise}. 
+ \end{cases}
+\end{align}
+
+We excluded matched pairs where at least one individual died before and at $t_0+ L$ or does not have an annual record in the mediator window. This is to ensure that $M_i(L)=0$ indicates that the individual was observed throughout the mediator window without entering rehabilitation instead of rehabilitation cannot be observed because the individual died or disappeared. We then estimate the probability of early musculoskeletal rehabilitation:
+
+\begin{align}
+\begin{split}
+\text{Pr}(M_i(L)=1|D_i,\mathbf{z}_i) = \Lambda_{\text{rehab}}\left(\kappa +\delta D_i + \mathbf{z}_i'\mathbf{\eta}\right)
+\end{split}
+\end{align}
+
+where $\mathbf{z}_i$ contains all available pre-treatment matching variables for the relevant lag-1 and lag-3 specifications. Mortality follow-up begins after the mediator window has closed, i.e. at $t_0 + L +1$. For the post-landmark follow-up year $t_0+L+s$ where $s \in \{1,...,H_L\}$, we estimate the probability of an individual $i$ dying given that the individual was alive at the beginning of post-landmark year $t_0+L+s$:
+
+\begin{align}
+\begin{split}
+    \lambda_{is}(L) &= \text{Pr}(Y_{is}=1 |\text{ alive at the beginning of post-landmark year $t_0+L+s$}) \\
+    & = \Lambda_{\text{death}}\left(\alpha_s + \theta_D D_i + \theta_M M_i(L) + \theta_{DM}D_iM_i(L)+\mathbf{z}_i'\mathbf{\rho}\right)
+\end{split}
+\end{align}
+
+where $\alpha_s$ indicates time fixed effects and $D_i$ is a dummy indicating divorce as before. $D_iM_i(L)$ is an interaction term between divorce and early musculoskeletal rehabilitation. After predicting the probability of death in the follow-up year $t_0 + L + s$ conditional on survival to the beginning of the year, we calculate the individual-specific scenario cumulative mortality risk:
+
+\begin{align}
+\begin{split}
+    \hat{R}_i(d,m) = 1 - \prod_{s=1}^{H_L} \left[1-\hat{\lambda}_{is}(d,m)\right]
+\end{split}
+\end{align}
+
+where $d,m \in \{0,1\}$ indicate divorce and rehabilitation. The scenarios are the four divorce and rehabilitation combinations: $(d,m)\in \left\{(0,0),(0,1),(1,0),(1,1)\right\}$. We then compute the standardized population mortality risk for the four scenarios:
+
+\begin{align}
+\begin{split}
+\hat{Y}(d,M(d')) = \frac{1}{N_L} \sum_{i=1}^{N_L} \left[\hat{p}_i(d')\hat{R}_i(d,1) + \left(1-\hat{p}_i(d')\right)\hat{R}_i(d,0)\right]
+\end{split}
+\end{align}
+
+where $N_L$ is the number of individual observations in the sample for landmark $L$ and $\hat{p}_i(d')=\widehat{\text{Pr}}(M_i(L)=1|D_i,\mathbf{z}_i)$ is individual $i$'s probability of early musculoskeletal rehabilitation when divorce status is set to $d'$. We assume that there are no unmeasured confounding of the early rehabilitation and mortality relationship and no mediator-outcome confounders caused by divorce. We can then decompose the total effect, $Y(1,M(1))-Y(0,M(0))$, into the natural indirect effect, $Y(1,M(1))-Y(1,M(0))$ and the natural direct effect, $Y(1,M(0))-Y(0,M(0))$ and interpret the decomposition as evidence about a possible rehabilitation channel. 
+
+
+\section{Results}
+\subsection{Descriptive summary}
+\textcolor{red}{How many individuals are in the 20\% dataset? How many person years? How many people have undergone divorce in each year? We limit matching to years 2012 to 2018 and 2014 to 2018. Who do we filter out? How many people undergo medical rehabilitation? What are the top rehabilitation codes and cases?}
+
+\textcolor{red}{Of the $N_T$ eligible treated individuals, $N_M$ were successfully matched, corresponding to a matching rate of (X\%). Because matching is 1:1 and without replacement, the matched sample contains $N_M$ treated individuals and $N_M$ unique controls. We additionally report the number of unmatched treated individuals, matching rates by treatment year, the distribution of propensity scores, and the mean and maximum propensity-score distances between matched individuals.}
+
+\textcolor{red}{figure to show the event study coefficients and maybe Wald test - joint coefficient test}
+
+\textcolor{red}{lag1 vs lag3 specification comparison with sample size and number of matches maybe?}
+
+\subsection{RQ1: Musculoskeletal rehabilitation}
+
+\subsection{RQ2: Mortality}
+
+
+\section{Discussion}
+
+\section{Conclusion}
+
+
+
+\section{Appendix}
+\subsection{Subsection 1}
+
+
+\end{document}
