@@ -196,7 +196,7 @@ To deal with health selection, \citeauthor{kohn2014effect} (\citeyear{kohn2014ef
 
 \subsection{Divorce and musculoskeletal disease}
 
-Evidence on the pathway from divorce to musculoskeletal impairment is rather limited and ambiguous. However, we chose to focus on musculoskeletal diseases because they are a major source of disability and work interruption in Germany\footnote{For an individual covered by statutory health insurance, musculoskeletal pain first enters the health insurance system through sickness absence rather than through the DRV. If pain makes an employee unable to work, the individual must immediately inform the employer of the incapacity and the expected duration. If the incapacity lasts longer than three calendar days, a medical certificate needs to be acquired from the individual's general practitioner, although the employer may require certification from the first day. The employer continues to pay the normal salary for up to six weeks for incapacity caused by the same illness (\citeauthor{entgfg1994}, \citeyear{entgfg1994}). After the six weeks, if the illness continues, the statutory health insurer steps in and pays \textit{Krankengeld}, which is usually about 70\% of covered gross income up to a maximum of 90\% of net income. For the same illness, this benefit is limited to 78 weeks within a 3-year period, counted from the first day of incapacity, meaning that the time of illness paid by the employer is included in the 78 weeks (\citeauthor{sgbv1988}, \citeyear{sgbv1988}). Medical rehabilitation facilitated by the DRV requires a separate application and assessment of whether earning capacity is substantially endangered or already reduced, if rehabilitation is expected to prevent or improve that reduction (\citeauthor{sgbvi1989}, \citeyear{sgbvi1989}; \citeauthor{drvGeneralReha}, \citeyear{drvGeneralReha}). This application is usually independent of the six weeks and \textit{Krankengeld} although the health insurer can allow the individual ten weeks to submit a rehabilitation application indicating that earning capacity is threatened (\citeauthor{sgbv1988}, \citeyear{sgbv1988}). For musculoskeletal conditions, the DRV assessment focuses on documented functional limitations and their consequences for work and social participation. Chronic pain, psychosocial circumstances surrounding incapacity, comorbidity, and active cooperation are considerations in this assessment rather than four cumulative eligibility conditions. Isolated pain is insufficient to establish rehabilitation need for certain hip, knee, and shoulder conditions (\citeauthor{drvMskCriteria2005}, \citeyear{drvMskCriteria2005}). Approved medical rehabilitation is normally provided on an inpatient or full-day outpatient basis and usually lasts approximately three weeks. The employer continues wages during rehabilitation if entitlement remains, otherwise, the DRV may pay \textit{"Ubergangsgeld}, normally 68\% of previous net earnings or 75\% for an insured person with a qualifying child, while entitlement to \textit{Krankengeld} is suspended (\citeauthor{drvUebergangsgeld,sgbv1988}, \citeyear{drvUebergangsgeld,sgbv1988}).}. The DRV Reha-Atlas (\citeauthor{drv2024rehaatlas}, \citeyear{drv2024rehaatlas}) reports of all completed medical rehabilitations, orthopedic conditions are the most common, accounting for 35.6\% of rehabilitations among women and 35.5\% among men. \citeauthor{baua2026arbeitswelt} (\citeyear{baua2026arbeitswelt}) reports that musculoskeletal diseases account for 21\% of certified incapacity days in 2024, which is the largest diagnostic group. 
+Evidence on the pathway from divorce to musculoskeletal impairment is rather limited and ambiguous. However, we chose to focus on musculoskeletal diseases because they are a major source of disability and work interruption in Germany\footnote{Please see the section on \nameref{app:rehab_germany} in the Appendix.}. The DRV Reha-Atlas (\citeauthor{drv2024rehaatlas}, \citeyear{drv2024rehaatlas}) reports of all completed medical rehabilitations, orthopedic conditions are the most common, accounting for 35.6\% of rehabilitations among women and 35.5\% among men. \citeauthor{baua2026arbeitswelt} (\citeyear{baua2026arbeitswelt}) reports that musculoskeletal diseases account for 21\% of certified incapacity days in 2024, which is the largest diagnostic group. 
 
 \citeauthor{sjogren2009epidemiology} (\citeyear{sjogren2009epidemiology}), using Danish data, find that chronic pain is more common among individuals who are divorced, separated or widowed, where musculoskeletal diseases accounted for 66.8\% of the cause of chronic pain. However, \citeauthor{choi2026marital} (\citeyear{choi2026marital}), using the Health and Retirement Survey find that individuals who transition from marriage to divorce tend to have a lower probability of high-impact pain. On the other hand, \citeauthor{cimas2018chronic} (\citeyear{choi2026marital}) using SHARE\footnote{Survey of Health, Aging and Retirement in Europe} data, find that there are gender differences. While divorced women have a higher incidence of chronic musculoskeletal pain, men have a lower prevalence. Meanwhile, \citeauthor{andorsen2017prospective} (\citeyear{andorsen2017prospective}) finds that there is no significant effect between divorce and musculoskeletal complaints using Norwegian data.
 
@@ -227,11 +227,11 @@ Since divorce is not randomly assigned, divorced and non-divorced individuals ma
 
 We define treatment as the first observed divorce from the earliest observed marriage spell. We limit the treatment cohorts to divorces observed between 2012 and 2018 to ensure that each cohort can be observed for at least five years after divorce. The year of divorce is fixed as $t_0$. For each treatment year, we form a separate within-year risk set. For treated individuals whose first observed divorce occurs in $t_0$, eligible controls are individuals who have not yet experienced a divorce by that year. Controls may divorce later. We do not restrict the control group to individuals who never divorce because this would define control eligibility using information that occurs after $t_0$. This means that it is possible that an individual who was a control before their own divorce can be counted as treated afterwards. Individuals must be alive at $t_0$ and must have an observed record in $t_{0}-1$. We exclude individuals with a musculoskeletal rehabilitation up to and including $t_{0}$. They may previously have received rehabilitation for other conditions. The resulting sample therefore consists of individuals who are at risk of their first observed musculoskeletal rehabilitation after $t_0$.
 
-We require treated and control individuals to be matched exactly on sex, five-year age band and whether any rehabilitation has occurred by $t_{0}-1$. Then, we estimate a logistic propensity-score model separately for each treatment year. The propensity score represents the estimated probability of divorce in $t_0$, conditional on observed characteristics measured before divorce. The characteristics we include are age, cumulative rehabilitation history, mental-health rehabilitation history, years since the most recent rehabilitation, pension contribution periods,\footnote{Periods during which pension contributions were recorded.} earnings, pension income, unsuccessful rehabilitation applications, federal state, broad occupational group, income-source status and marital status at $t_{0}-1$.
+We require treated and control individuals to be matched exactly on \texttt{gender}, five-year \texttt{age\_band} and whether any rehabilitation has occurred by $t_{0}-1$, i.e. \texttt{ever\_had\_any\_rehab\_to\_date}. Then, we estimate a logistic propensity score model separately for each treatment year. The propensity score represents the estimated probability of divorce in $t_0$, conditional on observed characteristics measured before divorce at $t_{0}-1$. The numeric characteristics we include are \texttt{age}, \texttt{income}, \texttt{pension\_income}, \texttt{cumulative\_rehabs\_to\_date}, \texttt{cumulative\_mental\_rehabs\_to\_date}, \texttt{years\_since\_last\_rehab}, \texttt{full\_time\_contribution\_periods}\footnote{Periods during which pension contributions were recorded for full-time work.} and \texttt{part\_time\_contribution\_periods}\footnote{periods during which pension contributions were recorded for part-time work}. The binary characteristics we include are \texttt{ever\_had\_mental\_rehab\_to\_date}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{missing\_full\_time\_contribution} and \texttt{missing\_part\_time\_contribution}. The categorical variables included are \texttt{federal\_state}, \texttt{broad\_occupational\_category}\footnote{Classification of Occupations 1988 created by the German Federal Employment Agency. We used the first digit which signifies occupational area.}, \texttt{income\_source}\footnote{This variable has the following categories regarding the source of income: 1) income only from working, income only from pensions, income from earnings and pensions, no income from earnings or pensions. The latter two categories are uncommon.} and \texttt{marital\_status}\footnote{Annual marital status is reconstructed from marriage spell records. In a few cases where an individual is married for exactly half the year, status is assigned by an unseeded random draw at the data processing stage. This can affect the variable used for propensity score balancing.}.
 
 We treat missingness in earnings, pension income and contribution periods as potentially informative. In particular, observed earnings with missing pension income generally indicate active employment, whereas observed pension income with missing earnings generally indicates pension receipt. We retain the observed earnings and pension values and include a categorical measure describing the joint observability of the two income sources. We also include separate indicators for missing contribution-period information. This allows the matching model to use both the recorded values and the information contained in their missingness patterns.
 
-Within each treatment year and exact-match group, we use optimal matching. The matching procedure first maximizes the number of treated individuals who can be matched within the caliper and then chooses the combination of pairs that minimizes the total propensity-score distance. We limit matches to a maximum absolute propensity-score difference of 0.01. Matching is conducted without replacement, meaning that each treated individual and each control can appear in only one matched pair. \textcolor{red}{To accommodate the large annual control pools, the propensity-score model is fitted using all treated individuals and, where necessary, a reproducibly selected sample of controls, with the total estimation sample limited to 500,000 observations. The resulting propensity scores are corrected for the control-sampling fraction, and the fitted model is then used to calculate propensity scores for every eligible treated individual and control. The computational limit therefore affects how the propensity model is estimated but does not remove controls from the matching pool.}
+Within each treatment year and exact-match group, we use optimal matching. The matching procedure first maximizes the number of treated individuals who can be matched within the caliper and then chooses the combination of pairs that minimizes the total propensity score distance. We limit matches to a maximum absolute propensity score difference of 0.01. Matching is conducted without replacement, meaning that each treated individual and each control can appear in only one matched pair. To accommodate the large annual control pools, the propensity score model is fitted using all treated individuals and, where necessary, a reproducibly selected sample of controls, with the total estimation sample limited to 500,000 observations\footnote{Please see the section on \nameref{app:control_limitation_500_000} in the Appendix}. The resulting propensity scores are corrected for the control-sampling fraction, and the fitted model is then used to calculate propensity scores for every eligible treated individual and control. The computational limit therefore affects how the propensity model is estimated but does not remove controls from the matching pool.
 
 \textcolor{red}{We assess covariate balance before and after matching using standardized mean differences. Balance is assessed separately for continuous variables, binary variables, each level of categorical variables and indicators of missingness. We present these results in Figure blablabla. An absolute standardized mean difference below 0.10 is treated as evidence of adequate balance on the corresponding observed characteristic. Where residual imbalance above this threshold remains after matching, the affected variables are additionally included in the outcome model. This adjustment is intended to address limited remaining imbalance and is not used as a substitute for unsuccessful matching.}
 
@@ -249,82 +249,80 @@ We follow each matched individual from $t_0+1$ to $t_0+5$ and estimate a discret
 
 \begin{align}
 \begin{split}
- \lambda_{i\tau}^{\text{rehab}} & = \text{Pr}(R_{i \tau} = 1 | \text{no musculoskeletal rehab before $\tau$, alive at $\tau$}) \\
+ \lambda_{i,\tau}^{\text{rehab}} & = \text{Pr}(R_{i \tau} = 1 | \text{no musculoskeletal rehab before $\tau$, alive at $\tau$}) \\
  & = \Lambda_{\text{rehab}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
 \end{split}
 \tag{1}\label{eq:rq1_equation}
 \end{align}
 
-where $R_{i\tau}$ is a dummy indicating individual $i$'s first entry into musculoskeletal rehabilitation in time in follow-up year $t_0 + \tau$ where $\tau \in \{1,...,5\}$, $\alpha_\tau$ are fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured at $t_0 -1$ that we add depending on the specification. We estimate two specifications for Equation \ref{eq:rq1_equation}. In the first specification, we omit $\mathbf{x}_i$ and rely only on matching to deal with selection bias. In the second specification, we include variables whose absolute standardized mean difference after matching exceed 0.10 into $\mathbf{x}_i$. Standard errors are clustered at the level of the matched pair. 
+where $R_{i,\tau}$ is a dummy indicating individual $i$'s first entry into musculoskeletal rehabilitation in time in follow-up year $t_0 + \tau$ where $\tau \in \{1,...,5\}$, $\alpha_\tau$ are fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured at $t_0 -1$ that we add depending on the specification. We estimate two specifications for Equation \ref{eq:rq1_equation}. In the first specification, we omit $\mathbf{x}_i$ and rely only on matching to deal with selection bias. In the second specification, we include variables whose absolute standardized mean difference after matching exceed 0.10 into $\mathbf{x}_i$. Standard errors are clustered at the level of the matched pair. 
 
 The hazard odds ratio from Equation \ref{eq:rq1_equation} is difficult to interpret on its own as it does not show how frequently rehabilitation occurs, hence we also estimate the cumulative incidence of a first musculoskeletal rehabilitation over the 5-year follow up period using a discrete Aalen-Johansen estimator\footnote{This estimator recognizes that individuals who die can no longer enter rehabilitation. For example, suppose there are 100 people where 10 enter rehabilitation in $t_0 + 1$, 20 die before rehabilitation and 70 are still alive and have not entered rehabilitation. Suppose in $t_0 + 2$, 7 people out of the remaining 70 enter rehabilitation. If we treat death as censoring rather than as a competing event, the proportion surviving up to $t_0+1$ is $1-\frac{10}{100} = 0.9$, and up to $t_0+2$ is $1-\frac{7}{70} = 0.9$, $\therefore$ the cumulative rehabilitation probability is $1-(0.9\times 0.9) = 0.19$, which is an overestimation. With the Aalen-Johansen estimator, we consider the proportion which actually entered rehabilitation by each follow-up year before dying. In $t_0+1$, the proportion entering rehabilitation is 0.1, however, after $t_0+1$, the proportion remaining alive without having entered rehabilitation is $1-\frac{10+20}{100} = 0.7$. In $t_0+2$, $\frac{7}{70}=0.1$ is the share of people who enter rehabilitation, but since only 70\% of the original population was alive without having entered rehabilitation at the beginning of $t_0+2$, the contribution to the incidence is $0.7\times0.1=0.07$, hence the cumulative rehabilitation probability is $0.17$} (\citeauthor{aalen1978empirical}, \citeyear{aalen1978empirical}). We report four values at the the 5-year horizon, 1) cumulative rehabilitation risk among treated individuals, 2) cumulative rehabilitation risk among controls, 3) risk difference per 1000 individuals and 4) the corresponding risk ratio. Confidence intervals are obtained by resampling whole matched pairs. 
 
 The biggest threat to the conditional exchangeability assumption is unobserved pre-divorce trends, which available variables may not fully capture, especially by only observing the year prior to the divorce. To address this, we first conducted an event study from $t_0 -3$ to $t_0+5$ by taking the difference in values of unsuccessful rehabilitation applications, earnings, pension income, missingness of pension income and prior rehabilitation activity between the treated and control in each matched pair and conducting a Wald test (\citeauthor{wald1943tests}, \citeyear{wald1943tests}) to determine whether the differences across time are significant for each variable. Following divergences in trends prior to $t_0$, we repeated the matching exercise with three lags, i.e. $t_0 -3, t_0-2, t_0-1$ instead of only $t_0 -1$. Since we require that individuals have an observed record, the lag-3 specification considers only the time period between 2014 and 2018. We also repeat the lag-1 specification for only 2014 to 2018.
 
 
-{\color{red} \subsubsection{RQ2: Mortality}
+\subsubsection{RQ2: Mortality}
 
 We follow each individual from $t_0+1$ until $t_0+10$ or 2023, the last year of the sample, whichever occurs first and estimate a discrete-time hazard model similar to Equation \ref{eq:rq1_equation}:
 
 \begin{align}
 \begin{split}
-    \lambda_{i\tau}^{\text{death}} & = \text{Pr}(Y_{i\tau}=1 | \text{alive at beginning of follow-up year } \tau)\\
+    \lambda_{i,\tau}^{\text{death}} & = \text{Pr}(Y_{i,\tau}=1 | \text{alive at beginning of follow-up year } \tau)\\
     & = \Lambda_{\text{rehab}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
 \end{split}
 \tag{2}\label{eq:rq2_equation_basic}
 \end{align}
 
-where $Y_{i\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate two specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after amtching. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years.
+where $Y_{i,\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate two specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after amtching. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years.
 
-In addition to the straightforward analysis of divorce on mortality, we run a mediation analysis to determine how much of the mortality difference can be attributed to `early' musculoskeletal rehabilitation. We use landmark periods of $L\in\{1,2\}$. This is to account for individuals who die early without a rehabilitation ever being recorded since this individual would be unmediated. We chose one or two years because a longer mediator window may have the potential to invite health shocks unrelated to divorce to produce musculoskeletal rehabilitation. Furthermore, since our data is only until 2023, a longer mediator window shortens the mortality follow-up window. With $L=1$, the horizon, $H_L$ is four years and with $L=2$, it is three years. The mediator for individual $i$ is defined as:
 
-\begin{align}
- M_i(L) = 
- \begin{cases} 
- 1, & \mbox{if } \text{individual $i$ enters musculoskeletal rehabilitation} \\ 
-   & \text{between $t_0+1$ to $t_0+L$,}\\
- 0, & \mbox{otherwise}. 
- \end{cases}
-\end{align}
+In addition to the straightforward analysis of divorce on mortality, we run a mediation analysis to determine how much of the mortality difference can be attributed to `early' musculoskeletal rehabilitation as result of divorce. A single binary mediator measured one or two years after divorce is insufficient for this question since it can ignore deterioration that occurs later in the follow-up window, such as economic and rehabilitation histories that change after divorce. For example, divorce can potentially change earnings which can subsequently have the ability to affect the probability of entering musculoskeletal rehabilitation and dying. 
 
-We excluded matched pairs where at least one individual died before and at $t_0+ L$ or does not have an annual record in the mediator window. This is to ensure that $M_i(L)=0$ indicates that the individual was observed throughout the mediator window without entering rehabilitation instead of rehabilitation cannot be observed because the individual died or disappeared. We then estimate the probability of early musculoskeletal rehabilitation:
+Let $D_i \in \{0,1\}$ is divorce status fixed at $t_0$, $\mathbf{z}_i$ the available pre-treatment matching variables for the relevant lag-1 and lag-3 specifications, $H=5$ the fixed mortality and mediation horizon, $\mathbf{L}_{i,t}$ the post-divorce history (\texttt{income}, \texttt{pension\_income}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{non\_ms\_rehab}\footnote{A dummy indicating that an individual has a non-musculoskeletal rehabilitation that year.}, \texttt{income\_source}) in time $t$ and $M_{i,t-1} \in {0,1}$ is a dummy indicating whether individual $i$ entered musculoskeletal rehabilitation by the end of time $t-1$. We use information in time $t-1$ to predict information in time $t$. We cannot use information from time $t$ since we are unsure whether the dependent or independent variables are recorded first. We use weighted maximum likelihood to account for individuals actually observed in the data in a given year. 
+
+We estimate the probability of an individual $i$ having a record for the year $t_o + t$ given that they are alive:
 
 \begin{align}
 \begin{split}
-\text{Pr}(M_i(L)=1|D_i,\mathbf{z}_i) = \Lambda_{\text{rehab}}\left(\kappa +\delta D_i + \mathbf{z}_i'\mathbf{\eta}\right)
+\text{Pr}(R_{i,t}=1 | D_i,\mathbf{z}_i, \mathbf{L}_{i,t-1}) = \Lambda_{\text{obs}}(\alpha_t + \beta D_i + \mathbf{z}_i'\psi + \mathbf{L}_{i,t-1}'\psi_L + \mu M_{i,t-1})
 \end{split}
+\tag{3}\label{eq:rq2_0_present}
 \end{align}
 
-where $\mathbf{z}_i$ contains all available pre-treatment matching variables for the relevant lag-1 and lag-3 specifications. Mortality follow-up begins after the mediator window has closed, i.e. at $t_0 + L +1$. For the post-landmark follow-up year $t_0+L+s$ where $s \in \{1,...,H_L\}$, we estimate the probability of an individual $i$ dying given that the individual was alive at the beginning of post-landmark year $t_0+L+s$:
+We then predict $\hat{p}_{obs,i}(u)$, i.e. the probability that individual $i$ has a record in time $u$ given their information up until $u-1$ and inverse this to compute weight:
 
 \begin{align}
 \begin{split}
-    \lambda_{is}(L) &= \text{Pr}(Y_{is}=1 |\text{ alive at the beginning of post-landmark year $t_0+L+s$}) \\
-    & = \Lambda_{\text{death}}\left(\alpha_s + \theta_D D_i + \theta_M M_i(L) + \theta_{DM}D_iM_i(L)+\mathbf{z}_i'\mathbf{\rho}\right)
+\hat{\omega}_{i,t} = \text{min} \left(\prod_{u=1}^t \frac{1}{\text{max}\left(\hat{p}_{\text{obs},i}(u),\underline{p}\right)}, \bar{\omega}\right)
 \end{split}
+\tag{4}\label{eq:rq2_0_weights}
 \end{align}
 
-where $\alpha_s$ indicates time fixed effects and $D_i$ is a dummy indicating divorce as before. $D_iM_i(L)$ is an interaction term between divorce and early musculoskeletal rehabilitation. After predicting the probability of death in the follow-up year $t_0 + L + s$ conditional on survival to the beginning of the year, we calculate the individual-specific scenario cumulative mortality risk:
+We set the maximum weight, $\bar{\omega} = 20$, to prevent one trajectory from having too much influence. We then estimate the probability of first musculoskeletal rehabilitation in year $t$ given that the individual did not experience musculoskeletal rehab in $t-1$ and other information in $t-1$\footnote{Weighed version: $\ell_{\text{rehab}} = \sum_{i,t} \hat{\omega}_{i,t} \left[M_{i,t}\text{log } \lambda_{i,t}^{\text{rehab}} + \left(1-M_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{rehab}}\right)\right]$}:
 
 \begin{align}
 \begin{split}
-    \hat{R}_i(d,m) = 1 - \prod_{s=1}^{H_L} \left[1-\hat{\lambda}_{is}(d,m)\right]
+\lambda_{i,t}^{\text{rehab}} &=
+\text{Pr}(M_{i,t}=1 | M_{i,t-1}=0, D_i, \mathbf{z}_i, \mathbf{L}_{i,t-1}) \\ & = \Lambda_{\text{rehab}}(\kappa + \delta D_i + \mathbf{z_i}'\eta + \mathbf{L_{i,t-1}'}\eta_L )
 \end{split}
+\tag{5}\label{eq:rq2_1_unweighted}
 \end{align}
 
-where $d,m \in \{0,1\}$ indicate divorce and rehabilitation. The scenarios are the four divorce and rehabilitation combinations: $(d,m)\in \left\{(0,0),(0,1),(1,0),(1,1)\right\}$. We then compute the standardized population mortality risk for the four scenarios:
+
+Similarly, the probability of death in year $t$ given that an individual was alive at the end of $t-1$\footnote{Weighted version: $\ell_{\text{death}} = \sum_{i,t} \hat{\omega}_{i,t} \left[Y_{i,t}\text{log } \lambda_{i,t}^{\text{death}} + \left(1-Y_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{death}}\right)\right]$} is given by:
 
 \begin{align}
 \begin{split}
-\hat{Y}(d,M(d')) = \frac{1}{N_L} \sum_{i=1}^{N_L} \left[\hat{p}_i(d')\hat{R}_i(d,1) + \left(1-\hat{p}_i(d')\right)\hat{R}_i(d,0)\right]
+\lambda_{i,t}^{\text{death}} & = \text{Pr}(Y_{i,t}=1| \text{alive at the end of } t-1) \\
+& = \Lambda_{\text{death}}\left(\alpha_t + \theta_D D_i + \theta_M M_{i,t} + \theta_{DM} D_iM_{i,t} + \mathbf{z}_i' \rho + \mathbf{L}_{i,t-1}'\rho_L\right)
 \end{split}
+\tag{6}\label{eq2:rq2_unweighted}
 \end{align}
 
-where $N_L$ is the number of individual observations in the sample for landmark $L$ and $\hat{p}_i(d')=\widehat{\text{Pr}}(M_i(L)=1|D_i,\mathbf{z}_i)$ is individual $i$'s probability of early musculoskeletal rehabilitation when divorce status is set to $d'$. We assume that there are no unmeasured confounding of the early rehabilitation and mortality relationship and no mediator-outcome confounders caused by divorce. We can then decompose the total effect, $Y(1,M(1))-Y(0,M(0))$, into the natural indirect effect, $Y(1,M(1))-Y(1,M(0))$ and the natural direct effect, $Y(1,M(0))-Y(0,M(0))$ and interpret the decomposition as evidence about a possible rehabilitation channel. 
+We need to model the evolution of $\mathbf{L}_{i,t}$ among individuals who survive, i.e. observations where $Y_{i,t}=0$, so that we can simulate the counterfactual histories under the hypothetical divorce status for our mediation analysis. We fit give separate models on the survivors, weighted by the same $\hat{\omega}_{i,t}$ used in the weighted versions of Equations \ref{eq:rq2_1_unweighted} and \ref{eq2:rq2_unweighted}. We use a log-scale linear regressions for \texttt{income} and \texttt{pension\_income}, logit for \texttt{unsuccessful\_rehab\_application\_this\_year} and \texttt{non\_ms\_rehab}, and multinomial logit for \texttt{income\_source}. These five models condition on the covariates used for matching $\mathbf{z}_i$, $\mathbf{L}_{i,t-1}$, current mediator $M_{i,t}$ and prior mediator $M_{i,t-1}$. The log-scale models for \texttt{income} and \texttt{pension\_income} additionally include \texttt{income\_source}, and the logit models include \texttt{income\_source}, \texttt{income} and \texttt{pension\_income}. Please see the section on \nameref{app:updating_history} in the Appendix. 
 
 
-
-}
 
 
 
@@ -332,7 +330,7 @@ where $N_L$ is the number of individual observations in the sample for landmark 
 \subsection{Descriptive summary}
 \textcolor{red}{How many individuals are in the 20\% dataset? How many person years? How many people have undergone divorce in each year? We limit matching to years 2012 to 2018 and 2014 to 2018. Who do we filter out? How many people undergo medical rehabilitation? What are the top rehabilitation codes and cases?}
 
-\textcolor{red}{Of the $N_T$ eligible treated individuals, $N_M$ were successfully matched, corresponding to a matching rate of (X\%). Because matching is 1:1 and without replacement, the matched sample contains $N_M$ treated individuals and $N_M$ unique controls. We additionally report the number of unmatched treated individuals, matching rates by treatment year, the distribution of propensity scores, and the mean and maximum propensity-score distances between matched individuals.}
+\textcolor{red}{Of the $N_T$ eligible treated individuals, $N_M$ were successfully matched, corresponding to a matching rate of (X\%). Because matching is 1:1 and without replacement, the matched sample contains $N_M$ treated individuals and $N_M$ unique controls. We additionally report the number of unmatched treated individuals, matching rates by treatment year, the distribution of propensity scores, and the mean and maximum propensity score distances between matched individuals.}
 
 \textcolor{red}{figure to show the event study coefficients and maybe Wald test - joint coefficient test}
 
@@ -347,10 +345,49 @@ where $N_L$ is the number of individual observations in the sample for landmark 
 
 \section{Conclusion}
 
+% \printbibliography[title = {References}]
+% \bibliographystyle{apalike}
+% \bibliography{main}
+
+\section*{Appendix}
+\subsection*{Rehabilitation system in Germany}
+\phantomsection
+\makeatletter
+\def\@currentlabelname{Rehabilitation system in Germany}
+\makeatother
+\label{app:rehab_germany}
+For an individual covered by statutory health insurance, musculoskeletal pain first enters the health insurance system through sickness absence rather than through the DRV. If pain makes an employee unable to work, the individual must immediately inform the employer of the incapacity and the expected duration. If the incapacity lasts longer than three calendar days, a medical certificate needs to be acquired from the individual's general practitioner, although the employer may require certification from the first day. The employer continues to pay the normal salary for up to six weeks for incapacity caused by the same illness (\citeauthor{entgfg1994}, \citeyear{entgfg1994}). After the six weeks, if the illness continues, the statutory health insurer steps in and pays \textit{Krankengeld}, which is usually about 70\% of covered gross income up to a maximum of 90\% of net income. For the same illness, this benefit is limited to 78 weeks within a 3-year period, counted from the first day of incapacity, meaning that the time of illness paid by the employer is included in the 78 weeks (\citeauthor{sgbv1988}, \citeyear{sgbv1988}). Medical rehabilitation facilitated by the DRV requires a separate application and assessment of whether earning capacity is substantially endangered or already reduced, if rehabilitation is expected to prevent or improve that reduction (\citeauthor{sgbvi1989}, \citeyear{sgbvi1989}; \citeauthor{drvGeneralReha}, \citeyear{drvGeneralReha}). This application is usually independent of the six weeks and \textit{Krankengeld} although the health insurer can allow the individual ten weeks to submit a rehabilitation application indicating that earning capacity is threatened (\citeauthor{sgbv1988}, \citeyear{sgbv1988}). For musculoskeletal conditions, the DRV assessment focuses on documented functional limitations and their consequences for work and social participation. Chronic pain, psychosocial circumstances surrounding incapacity, comorbidity, and active cooperation are considerations in this assessment rather than four cumulative eligibility conditions. Isolated pain is insufficient to establish rehabilitation need for certain hip, knee, and shoulder conditions (\citeauthor{drvMskCriteria2005}, \citeyear{drvMskCriteria2005}). Approved medical rehabilitation is normally provided on an inpatient or full-day outpatient basis and usually lasts approximately three weeks. The employer continues wages during rehabilitation if entitlement remains, otherwise, the DRV may pay \textit{Ubergangsgeld}, normally 68\% of previous net earnings or 75\% for an insured person with a qualifying child, while entitlement to \textit{Krankengeld} is suspended (\citeauthor{drvUebergangsgeld,sgbv1988}, \citeyear{drvUebergangsgeld,sgbv1988}).
 
 
-\section{Appendix}
-\subsection{Subsection 1}
+\subsection*{Dealing with a large sample of controls}
+\phantomsection
+\makeatletter
+\def\@currentlabelname{Dealing with a large sample of controls}
+\makeatother
+\label{app:control_limitation_500_000}
+
+Suppose in 2015, there are 50,000 individuals who are divorced and 2 million eligible controls. Using all 2 million controls to estimate the logit model would cause memory issues and take a long time to run. So we imposed a cap of $450,000 (500,000 - 50,000)$ eligible controls which are then randomly selected, although the same seed is used for reproducibility. If there are less than 450,000 eligible controls, we use all of them to estimate the parameters for the logit model. Once we have estimated the logit model, we estimate the propensity score for everyone, not only the 450,000 controls and 50,000 treated. Then we match based on propensity scores and end up with a treated-control pair, i.e. in 2015, we would have 50,000 treated and 50,000 controls.
+
+\subsection*{Updating the evolution of $\mathbf{L}_{i,t}$}
+\phantomsection
+\makeatletter
+\def\@currentlabelname{Updating the evolution of $\mathbf{L}_{i,t}$}
+\makeatother
+\label{app:updating_history}
+
+We first estimate \texttt{income\_source}. Let \texttt{income\_source} be denoted by $S_{i,t}$:
+
+\begin{align*}
+\text{Pr}(S_{i,t} = k | \cdot) = \frac{\exp \left(c_k+\delta_kD_i +\mathbf{z}_i'\eta_k + \mathbf{L}_{i,t-1}'\eta_{L,k} + \mu_kM_{i,t-1} + \zeta_k M_{i,t} + \tau_{k,t}\right)}{\sum_{k'} \exp(\cdot)}
+\end{align*}
+
+where $c_k$ is an intercept and $\tau_{k,t}$ is the time fixed effect at year $t$ for category $k$. 
+
+Then, we estimate \texttt{income} and \texttt{pension\_income}. Let $A_{i,t}$ represent \texttt{income} and \texttt{pension\_income} in the equation below:
+
+\begin{align*}
+\log(1+A_{i,t}) = c 
+\end{align*}
 
 
 \end{document}
