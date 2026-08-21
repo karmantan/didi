@@ -1,5 +1,4 @@
 \documentclass[a4paper,12pt]{article}
-\usepackage{color}
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{soul}
@@ -7,47 +6,36 @@
 \usepackage{float}
 \usepackage{array,booktabs,arydshln,xcolor}
 \usepackage{amsthm}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 \usepackage{pifont}
 \newcommand{\xmark}{\ding{53}}
 \usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{graphicx}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{multirow}
-\usepackage{array,booktabs,arydshln,xcolor}
-\large
 \usepackage{adjustbox}
-\usepackage{booktabs}
 \usepackage{diagbox}
-\usepackage{,amssymb}
 \usepackage{systeme} 
 \usepackage[parfill]{parskip}
 \usepackage[shortlabels]{enumitem}
 \usepackage{listings}
-\usepackage{float}
 \usepackage{fancyhdr}
 \usepackage{bbm}
-\usepackage{caption}
-\usepackage[style=authoryear]{biblatex}
+\usepackage[backend=bibtex, style=authoryear]{biblatex}
+%\usepackage[style=authoryear]{biblatex}
 %\usepackage[authoryear]{natbib}
-\usepackage{tabularx,ragged2e,booktabs,caption}
+\usepackage{tabularx,ragged2e}
 \newcolumntype{C}[1]{>{\Centering}m{#1}}
 \renewcommand\tabularxcolumn[1]{C{#1}}
 \usepackage{makecell}
 \usepackage[T1]{fontenc} 
 \usepackage{fouriernc}
 \usepackage{mathtools}
-\usepackage{amssymb,amsthm} 
 \usepackage{ marvosym }
-\usepackage{makecell}
 \usepackage{multicol}
 \usepackage[toc,page]{appendix}
 \newcommand\blitz{\textup{\Lightning}}
-\large
 \usepackage[graphicx]{realboxes}
-\usepackage{adjustbox}
 \usepackage{titlesec}
 \setcounter{secnumdepth}{4}
 \titleformat{\paragraph}
@@ -55,7 +43,6 @@
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \usepackage{hyperref}
-\usepackage{enumitem,amssymb}
 \newlist{todolist}{itemize}{2}
 \setlist[todolist]{label=$\square$}
 \newcommand{\cmark}{\ding{51}}%
@@ -226,15 +213,14 @@ We then supplement the merged dataset with the RTWF, RSD and the VA. The RTWF de
 Since divorce is not randomly assigned, divorced and non-divorced individuals may differ systematically before divorce occurs. We therefore use 1:1 matching without replacement to construct a comparison group of individuals who are similar with respect to observed pre-treatment characteristics. The causal interpretation relies on conditional exchangeability (\citeauthor{rosenbaum1983central}, \citeyear{rosenbaum1983central}). This means that, conditional on the observed characteristics used in matching, individuals who divorce and comparable individuals who do not divorce are assumed to have had similar potential health trajectories in the absence of divorce. In other words, it is assumed that there are no remaining unobserved factors that jointly affect the probability of divorce and the subsequent health outcomes. However, the administrative data may not fully capture factors such as relationship conflict or social support.
 
 We define treatment as the first observed divorce from the earliest observed marriage spell. We limit the treatment cohorts to divorces observed between 2012 and 2018 to ensure that each cohort can be observed for at least five years after divorce. The year of divorce is fixed as $t_0$. For each treatment year, we form a separate within-year risk set. For treated individuals whose first observed divorce occurs in $t_0$, eligible controls are individuals who have not yet experienced a divorce by that year. Controls may divorce later. We do not restrict the control group to individuals who never divorce because this would define control eligibility using information that occurs after $t_0$. This means that it is possible that an individual who was a control before their own divorce can be counted as treated afterwards. Individuals must be alive at $t_0$ and must have an observed record in $t_{0}-1$. We exclude individuals with a musculoskeletal rehabilitation up to and including $t_{0}$. They may previously have received rehabilitation for other conditions. The resulting sample therefore consists of individuals who are at risk of their first observed musculoskeletal rehabilitation after $t_0$.
-
-We require treated and control individuals to be matched exactly on \texttt{gender}, five-year \texttt{age\_band} and whether any rehabilitation has occurred by $t_{0}-1$, i.e. \texttt{ever\_had\_any\_rehab\_to\_date}. Then, we estimate a logistic propensity score model separately for each treatment year. The propensity score represents the estimated probability of divorce in $t_0$, conditional on observed characteristics measured before divorce at $t_{0}-1$. The numeric characteristics we include are \texttt{age}, \texttt{income}, \texttt{pension\_income}, \texttt{cumulative\_rehabs\_to\_date}, \texttt{cumulative\_mental\_rehabs\_to\_date}, \texttt{years\_since\_last\_rehab}, \texttt{full\_time\_contribution\_periods}\footnote{Periods during which pension contributions were recorded for full-time work.} and \texttt{part\_time\_contribution\_periods}\footnote{periods during which pension contributions were recorded for part-time work}. The binary characteristics we include are \texttt{ever\_had\_mental\_rehab\_to\_date}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{missing\_full\_time\_contribution} and \texttt{missing\_part\_time\_contribution}. The categorical variables included are \texttt{federal\_state}, \texttt{broad\_occupational\_category}\footnote{Classification of Occupations 1988 created by the German Federal Employment Agency. We used the first digit which signifies occupational area.}, \texttt{income\_source}\footnote{This variable has the following categories regarding the source of income: 1) income only from working, income only from pensions, income from earnings and pensions, no income from earnings or pensions. The latter two categories are uncommon.} and \texttt{marital\_status}\footnote{Annual marital status is reconstructed from marriage spell records. In a few cases where an individual is married for exactly half the year, status is assigned by an unseeded random draw at the data processing stage. This can affect the variable used for propensity score balancing.}.
+ 
+We require treated and control individuals to be matched exactly on \texttt{gender}, five-year \texttt{age\_band} and whether any rehabilitation has occurred by $t_{0}-1$, i.e. \texttt{ever\_had\_any\_rehab\_to\_date}. Then, we estimate a logistic propensity score model separately for each treatment year. The propensity score represents the estimated probability of divorce in $t_0$, conditional on observed characteristics measured before divorce at $t_{0}-1$. The numeric characteristics we include are \texttt{age}, \texttt{income}, \texttt{pension\_income}, \texttt{cumulative\_rehabs\_to\_date}, \texttt{cumulative\_mental\_rehabs\_to\_date}, \texttt{years\_since\_last\_rehab}, \texttt{full\_time\_contribution\_periods}\footnote{Periods during which pension contributions were recorded for full-time work.} and \texttt{part\_time\_contribution\_periods}\footnote{Periods during which pension contributions were recorded for part-time work}. The binary characteristics we include are \texttt{ever\_had\_mental\_rehab\_to\_date}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{missing\_full\_time\_contribution} and \texttt{missing\_part\_time\_contribution}. The categorical variables included are \texttt{federal\_state}, \texttt{broad\_occupational\_category}\footnote{Classification of Occupations 1988 created by the German Federal Employment Agency. We used the first digit which signifies occupational area.}, \texttt{income\_source}\footnote{This variable has the following categories regarding the source of income: 1) income only from working, income only from pensions, income from earnings and pensions, no income from earnings or pensions. The latter two categories are uncommon.} and \texttt{marital\_status}\footnote{Annual marital status is reconstructed from marriage spell records. In a few cases where an individual is married for exactly half the year, status is assigned by an unseeded random draw at the data processing stage. This can affect the variable used for propensity score balancing.}.
 
 We treat missingness in earnings, pension income and contribution periods as potentially informative. In particular, observed earnings with missing pension income generally indicate active employment, whereas observed pension income with missing earnings generally indicates pension receipt. We retain the observed earnings and pension values and include a categorical measure describing the joint observability of the two income sources. We also include separate indicators for missing contribution-period information. This allows the matching model to use both the recorded values and the information contained in their missingness patterns.
 
 Within each treatment year and exact-match group, we use optimal matching. The matching procedure first maximizes the number of treated individuals who can be matched within the caliper and then chooses the combination of pairs that minimizes the total propensity score distance. We limit matches to a maximum absolute propensity score difference of 0.01. Matching is conducted without replacement, meaning that each treated individual and each control can appear in only one matched pair. To accommodate the large annual control pools, the propensity score model is fitted using all treated individuals and, where necessary, a reproducibly selected sample of controls, with the total estimation sample limited to 500,000 observations\footnote{Please see the section on \nameref{app:control_limitation_500_000} in the Appendix}. The resulting propensity scores are corrected for the control-sampling fraction, and the fitted model is then used to calculate propensity scores for every eligible treated individual and control. The computational limit therefore affects how the propensity model is estimated but does not remove controls from the matching pool.
 
 \textcolor{red}{We assess covariate balance before and after matching using standardized mean differences. Balance is assessed separately for continuous variables, binary variables, each level of categorical variables and indicators of missingness. We present these results in Figure blablabla. An absolute standardized mean difference below 0.10 is treated as evidence of adequate balance on the corresponding observed characteristic. Where residual imbalance above this threshold remains after matching, the affected variables are additionally included in the outcome model. This adjustment is intended to address limited remaining imbalance and is not used as a substitute for unsuccessful matching.}
-
 
 
 \textcolor{red}{Using the matched sample, we estimate the average treatment effect among the matched treated individuals. We examine first entry into musculoskeletal rehabilitation, time to first musculoskeletal rehabilitation, rehabilitation duration and all-cause mortality after divorce. Musculoskeletal rehabilitation is examined over a five-year follow-up period, with death treated as a competing event. Mortality is followed for up to ten years where permitted by the end of the observation period in 2023. The amount of available mortality follow-up therefore varies across treatment cohorts.}
@@ -269,13 +255,12 @@ We follow each individual from $t_0+1$ until $t_0+10$ or 2023, the last year of 
 \begin{align}
 \begin{split}
     \lambda_{i,\tau}^{\text{death}} & = \text{Pr}(Y_{i,\tau}=1 | \text{alive at beginning of follow-up year } \tau)\\
-    & = \Lambda_{\text{rehab}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
+    & = \Lambda_{\text{death}}\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\mathbf{\gamma}\right)
 \end{split}
 \tag{2}\label{eq:rq2_equation_basic}
 \end{align}
 
 where $Y_{i,\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate two specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after amtching. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years.
-
 
 In addition to the straightforward analysis of divorce on mortality, we run a mediation analysis to determine how much of the mortality difference can be attributed to `early' musculoskeletal rehabilitation as result of divorce. A single binary mediator measured one or two years after divorce is insufficient for this question since it can ignore deterioration that occurs later in the follow-up window, such as economic and rehabilitation histories that change after divorce. For example, divorce can potentially change earnings which can subsequently have the ability to affect the probability of entering musculoskeletal rehabilitation and dying. 
 
@@ -299,7 +284,7 @@ We then predict $\hat{p}_{obs,i}(u)$, i.e. the probability that individual $i$ h
 \tag{4}\label{eq:rq2_0_weights}
 \end{align}
 
-We set the maximum weight, $\bar{\omega} = 20$, to prevent one trajectory from having too much influence. We then estimate the probability of first musculoskeletal rehabilitation in year $t$ given that the individual did not experience musculoskeletal rehab in $t-1$ and other information in $t-1$\footnote{Weighed version: $\ell_{\text{rehab}} = \sum_{i,t} \hat{\omega}_{i,t} \left[M_{i,t}\text{log } \lambda_{i,t}^{\text{rehab}} + \left(1-M_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{rehab}}\right)\right]$}:
+We set the maximum weight, $\bar{\omega} = 20$ , to prevent one trajectory from having too much influence. We then estimate the parameters of a model on the probability of first musculoskeletal rehabilitation in year $t$ given that the individual did not experience musculoskeletal rehab in $t-1$ and other information in $t-1$\footnote{Weighed version: $\ell_{\text{rehab}} = \sum_{i,t} \hat{\omega}_{i,t} \left[M_{i,t}\text{log } \lambda_{i,t}^{\text{rehab}} + \left(1-M_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{rehab}}\right)\right]$}:
 
 \begin{align}
 \begin{split}
@@ -310,19 +295,43 @@ We set the maximum weight, $\bar{\omega} = 20$, to prevent one trajectory from h
 \end{align}
 
 
-Similarly, the probability of death in year $t$ given that an individual was alive at the end of $t-1$\footnote{Weighted version: $\ell_{\text{death}} = \sum_{i,t} \hat{\omega}_{i,t} \left[Y_{i,t}\text{log } \lambda_{i,t}^{\text{death}} + \left(1-Y_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{death}}\right)\right]$} is given by:
+Similarly, we estimate the parameters for a model on the probability of death in year $t$ given that an individual was alive at the end of $t-1$\footnote{Weighted version: $\ell_{\text{death}} = \sum_{i,t} \hat{\omega}_{i,t} \left[Y_{i,t}\text{log } \lambda_{i,t}^{\text{death}} + \left(1-Y_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{death}}\right)\right]$} is given by:
 
 \begin{align}
 \begin{split}
 \lambda_{i,t}^{\text{death}} & = \text{Pr}(Y_{i,t}=1| \text{alive at the end of } t-1) \\
 & = \Lambda_{\text{death}}\left(\alpha_t + \theta_D D_i + \theta_M M_{i,t} + \theta_{DM} D_iM_{i,t} + \mathbf{z}_i' \rho + \mathbf{L}_{i,t-1}'\rho_L\right)
 \end{split}
-\tag{6}\label{eq2:rq2_unweighted}
+\tag{6}\label{eq:rq2_unweighted}
 \end{align}
 
-We need to model the evolution of $\mathbf{L}_{i,t}$ among individuals who survive, i.e. observations where $Y_{i,t}=0$, so that we can simulate the counterfactual histories under the hypothetical divorce status for our mediation analysis. We fit give separate models on the survivors, weighted by the same $\hat{\omega}_{i,t}$ used in the weighted versions of Equations \ref{eq:rq2_1_unweighted} and \ref{eq2:rq2_unweighted}. We use a log-scale linear regressions for \texttt{income} and \texttt{pension\_income}, logit for \texttt{unsuccessful\_rehab\_application\_this\_year} and \texttt{non\_ms\_rehab}, and multinomial logit for \texttt{income\_source}. These five models condition on the covariates used for matching $\mathbf{z}_i$, $\mathbf{L}_{i,t-1}$, current mediator $M_{i,t}$ and prior mediator $M_{i,t-1}$. The log-scale models for \texttt{income} and \texttt{pension\_income} additionally include \texttt{income\_source}, and the logit models include \texttt{income\_source}, \texttt{income} and \texttt{pension\_income}. Please see the section on \nameref{app:updating_history} in the Appendix. 
+Since $\mathbf{L}_{i,t}$ is itself affected by divorce and evolves annually, we cannot hold it fixed at its observed values when generating the hypothetical divorce paths needed for the mediation decomposition\footnote{Suppose an individual earns 30,000 in 2013, divorces in 2014 and then earns 22,000 in 2015. Divorce could have caused the earnings to drop to 22,000 if the individual switched jobs. To determine the individual's rehabilitation or death risk if they had not divorced, we cannot plug in 22,000 because 22,000 is already corrupted by divorce. We need a clean number uncorrupted by divorce.}. Hence, we need to model the evolution of $\mathbf{L}_{i,t}$ among individuals who survive, i.e. observations where $Y_{i,t}=0$, so that we can simulate the counterfactual histories under the hypothetical divorce status for our mediation analysis (\citeauthor{robins1986}, \citeyear{robins1986}; \citeauthor*{lin2017survival}, \citeyear{lin2017survival}). We fit five separate models on the survivors, weighted by the same $\hat{\omega}_{i,t}$ (\citeauthor*{lin2017epi}, \citeyear{lin2017epi}) used in the weighted versions of Equations \ref{eq:rq2_1_unweighted} and \ref{eq:rq2_unweighted}. We use a log-scale linear regressions for \texttt{income} and \texttt{pension\_income}, logit for \texttt{unsuccessful\_rehab\_application\_this\_year} and \texttt{non\_ms\_rehab}, and multinomial logit for \texttt{income\_source}. These five models condition on the covariates used for matching $\mathbf{z}_i$, $\mathbf{L}_{i,t-1}$, current mediator $M_{i,t}$ and prior mediator $M_{i,t-1}$. The log-scale models for \texttt{income} and \texttt{pension\_income} additionally include \texttt{income\_source}, and the logit models include \texttt{income\_source}, \texttt{income} and \texttt{pension\_income}. Please see the section on \nameref{app:updating_history} in the Appendix. 
+
+Once the parameters for these five equations are estimated, we simulate the counterfactual histories, one year at a time using the following process. 
+
+\begin{enumerate}
+  \item Rehab probability (uses $\mathbf{L}_{i,t-1}$)$\rightarrow$ draw$\rightarrow$ $M_{i,t}$
+  \begin{itemize}
+    \item Since our data starts from 2011, we use $\mathbf{L}_{i,2011}$ which contains true values to estimate the probability of rehabilitation, $\lambda_{i,2011}^{rehab}$. Since we need to feed $M_{i,2012}$ into the next step and not $\lambda_{i,2011}^{rehab}$, we draw a random number from a uniform distribution $U(0,1)$ and if it is smaller than $\lambda_{i,2011}^{rehab}$, then the value of $M_{i,2012}$ is set at 1 and 0 otherwise.
+  \end{itemize}
+  \item Death probability (uses $\mathbf{L}_{i,t-1}$, $M_{i,t}$) $\rightarrow$ if individual $i$ survives, continue
+  \item History-update (uses $\mathbf{z}_i$, $D_i$, $\mathbf{L}_{i,t-1}$, $M_{i,t-1}$, $M_{i,t}$) $\rightarrow$ produces $\mathbf{L}_{i,t}$
+  \begin{itemize}
+    \item We use $\mathbf{L}_{i,2011}$, $M_{i,2011}$ and $M_{i,2012}$ to simulate $\mathbf{L}_{i,2012}$.
+  \end{itemize}
+  \item Hand $\mathbf{L}_{i,t}$ forward, repeat for $t+1$
+\end{enumerate}
 
 
+True divorce status $D_i$ is fixed at baseline and can simply be plugged into Equation \ref{eq:rq2_1_unweighted} for rehabilitation. In order to find the counterfactual effect, we can simply plug in the opposite value since there are only two divorce statuses and each status has a direct opposite. Hence, in step 1, we obtained the rehabilition probability and thus, predicted rehabilitation occurrence at time $t$, $M_{i,t}(d_i)$ for an individual with divorce status $d_i$. For individual $i$ whose plugged in divorce status is $d_i = 1$, denote the rehabilitation occurrence in time $t$ as $M_{i,t}(1)$ and when $d_i = 0$, $M_{i,t}(0)$. An individual's rehabilitation timing is given by $M_i(1)$ and $M_i(0)$\footnote{For example, if $M_i(d_i) = t+2$, then $M_{i,t'}(d_i)=0$ when $0<t'<t+2$ and $M_{i,t+2}(d_i)=1$.}.We then obtain the sets, $M(1)$ and $M(0)$, which contain the rehabilitation timing for all individuals. 
+
+Subsequently, when we cross $d_i \in \{0,1\}$ with the resulting $M_{i}(d_i)$ and $M_i(d_i')$ where $d_i \neq d_i'$, we yield four different possibilities $\in \left\{(0,M_{i}(0)), (0,M_{i}(1)), (1, M_{i}(0)), (1, M_{i}(1))\right\}$. We might be tempted to plug in these four possibilities into Equations \ref{eq:rq2_1_unweighted}, \ref{eq:rq2_unweighted} and the equations for updating $\mathbf{L}_{i,t}$ (in the Appendix) but $M_i(d_i)$ is not a fixed characteristic but the output of a year-by-year stochastic process. In other words, since $M_{i}(d_i)$ is based on \textit{at least one random} draw under a hypothetical divorce status, there is no direct opposite like in the case with divorce status. Furthermore, we have two dimensions, $d_i$ and $M_{i}(d_i)$, where we need a counterfactual but it is difficult to defend \textit{individual} counterfactuals for $(0,M_{i}(1))$ and $(1, M_{i}(0))$. Think of this like a natural experiment. If we only wanted a clean effect of divorce, we can externally impose divorce on some individuals. The individuals who we forced to divorce would experience the rehabilitation timing of someone with a divorced status, likewise for the non-divorced. If we wanted a clean direct effect of divorce and an indirect effect attributable to rehabilitation, we not only need to force someone to divorce but also experience the rehabilitation timing of a non-divorced person at the same time and vice versa, i.e. we need the off-diagonal or counterfactuals. This is not possible with a natural experiment as we cannot impose both dimensions simultaneously. For example, suppose we want to plug in the $(0,M_{i}(1))$ combination. Suppose the probability of rehabilitation under divorce is 80\% and under non-divorce 5\%. This means the timing of $M_i(1)$ is likely to be earlier than that of $M_i(0)$. Hence, plugging in $d_i = 0$ together with $M_i(1)$ (which is, to put it crudely, `contaminated' with individual $i$'s identity when $d_i = 1$) into Equation \ref{eq:rq2_unweighted} would be like imposing both dimensions simultaneously. This argument also holds for the $(1, M_{i}(0))$ combination. To manage this `contamination', we sever the link between individual $i$ and their estimated rehabilitation timing by attaching another individual's rehabilitation timing. While $(0, M_i(0))$ and $(1, M_i(1))$ do not have this `contamination' problem, we also sever the link between the individual and estimated rehabilitation timing for consistency.
+
+To do this, we make use of the distribution of $M(1)$ and $M(0)$. This would then be similar to imposing an external rehabilitation timing. Before step 2, we replace individual $i$'s value of $M_i(d_i)$ with individual $j$'s $M_j(d_j)$ where $d_i = d_j$. This means that when both individuals $i$ and $j$ have an identical plugged in divorce status, individual $i$ will have individual $j$'s rehabilitation timing. This second-best approach helps us identify what the average death risk for individuals with a particular plugged in divorce status looks like under a random redistribution of rehabilitation timing\footnote{One caveat is that, it may be possible that individual $j$'s rehabilitation timing is unlikely to be produced given individual $i$'s rehabilitation probability, for example, if individual $j$'s probability of rehabilitation in year 1 is high (e.g., 90\%) while individual $i$'s is low (e.g., 10\%). This is called a positivity or overlap concern (\citeauthor*{vanderweele2014effect}, \citeyear{vanderweele2014effect}; \citeauthor*{petersen2012diagnosing}, \citeyear{petersen2012diagnosing}).}.
+
+Suppose individual $i$ received individual $j$'s value when $d_i = 0$, and individual $k$'s value when $d_i = 1$. This means that individual $i$'s hypothetical rehabilitation timings going into step 2 take the values of $M_j(0)$ and $M_k(1)$ respectively. We can then plug in the four combinations, $\in \left\{(0,M_{j}(0)), (0,M_{k}(1)), (1, M_{j}(0)), (1, M_{k}(1))\right\}$, into Equation \ref{eq:rq2_unweighted} in step 2 for individual $i$ in time $t$. We then update $\mathbf{L}_{i,t}$  and repeat all four steps until we reach five years. After we have completed all steps for five years, we repeat the entire process 25 times with different draws for the rehabilitation occurrence to average out noise from the simulations. Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}, \citeyear{efron1993bootstrap}) and repeat the entire procedure. 
+
+formulae average rehabilitation and average Y(d,M(d))
 
 
 
@@ -345,7 +354,7 @@ We need to model the evolution of $\mathbf{L}_{i,t}$ among individuals who survi
 
 \section{Conclusion}
 
-% \printbibliography[title = {References}]
+\printbibliography[title={References}]
 % \bibliographystyle{apalike}
 % \bibliography{main}
 
@@ -375,19 +384,60 @@ Suppose in 2015, there are 50,000 individuals who are divorced and 2 million eli
 \makeatother
 \label{app:updating_history}
 
-We first estimate \texttt{income\_source}. Let \texttt{income\_source} be denoted by $S_{i,t}$:
+We first estimate the parameters of the model for \texttt{income\_source}. Let \texttt{income\_source} be denoted by $S_{i,t}$:
 
 \begin{align*}
 \text{Pr}(S_{i,t} = k | \cdot) = \frac{\exp \left(c_k+\delta_kD_i +\mathbf{z}_i'\eta_k + \mathbf{L}_{i,t-1}'\eta_{L,k} + \mu_kM_{i,t-1} + \zeta_k M_{i,t} + \tau_{k,t}\right)}{\sum_{k'} \exp(\cdot)}
 \end{align*}
 
-where $c_k$ is an intercept and $\tau_{k,t}$ is the time fixed effect at year $t$ for category $k$. 
+where $c_k$ is the constant and $\tau_{k,t}$ is the time fixed effect at year $t$ for category $k$. 
 
-Then, we estimate \texttt{income} and \texttt{pension\_income}. Let $A_{i,t}$ represent \texttt{income} and \texttt{pension\_income} in the equation below:
+Then, we estimate the parameters for the models on \texttt{income} and \texttt{pension\_income} using the equation structure below. Let $A_{i,t}$ represent \texttt{income} and \texttt{pension\_income}:
 
 \begin{align*}
-\log(1+A_{i,t}) = c 
+\log(1+A_{i,t}^v) = c_v + \beta_v D_i + \mathbf{z}_i'\gamma_v + \mathbf{L}_{i,t-1}'\gamma_{L,v} + \mu_v M_{i,t-1} + \zeta_v M_{i,t} + \tau_{v,t} + \phi_v' \mathbbm{1}[\tilde S_{i,t}] + \varepsilon_{i,t}^v
 \end{align*}
 
+where $v$ indicates whether we are estimating \texttt{income} or \texttt{pension\_income}, $c_v$ is the constant, $\tilde S_{i,t}$ was the previously estimated \texttt{income\_source} and $\tau_{v,t}$ is the time fixed effect. 
+
+We finally estimate the parameters for the model on the binary indicators \texttt{non\_ms\_rehab} and \texttt{unsuccessful\_rehab\_application\_this\_year}:
+
+\begin{align*}
+\Pr\!\left(B_{i,t}^{1}=1 \mid \cdot\right)
+&=
+\Lambda\!\Big(
+    \alpha_1
+    + \theta_1 D_i
+    + \mathbf{z}_i'\rho_1
+    + \mathbf{L}_{i,t-1}'\rho_{L,1}
+    + \mu_1 M_{i,t-1}
+    + \nu_1 M_{i,t} \\
+&\qquad
+    + \tau_{1,t}
+    + \widetilde{\mathbf{A}}_{i,t}'\pi_1
+    + \mathbbm{1}\!\left[\widetilde{S}_{i,t}=1\right]\pi_{S,1}
+\Big)
+\end{align*}
+
+\begin{align*}
+\Pr\!\left(B_{i,t}^{2}=1 \mid \cdot,\ B_{i,t}^{1}\right)
+&=
+\Lambda\!\Big(
+    \alpha_2
+    + \theta_2 D_i
+    + \mathbf{z}_i'\rho_2
+    + \mathbf{L}_{i,t-1}'\rho_{L,2}
+    + \mu_2 M_{i,t-1}
+    + \nu_2 M_{i,t} \\
+&\qquad
+    + \tau_{2,t}
+    + \widetilde{\mathbf{A}}_{i,t}'\pi_2
+    + \mathbbm{1}\!\left[\widetilde{S}_{i,t}\right]\pi_{S,2}
+    + \pi_B \widetilde{B}_{i,t}^{1}
+\Big)
+\end{align*}
+
+
+where $B_{i,t}^1$ is a dummy representing \texttt{unsuccessful\_rehab\_application\_this\_year} and is estimated first, $B_{i,t}^2$ is a a dummy representing \texttt{non\_ms\_rehab} which is estimated second hence also contains the predicted $\widetilde{B}_{i,t}^{1}$ and $\widetilde{\mathbf{A}}_{i,t}$ is a vector containing the drawn level (not $\log$) amounts of (\texttt{income } \texttt{pension\_income}) which we just estimated in the log-scale linear regressions above.
 
 \end{document}
