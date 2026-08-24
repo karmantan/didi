@@ -329,26 +329,95 @@ Subsequently, when we cross $d_i \in \{0,1\}$ with the resulting $M_{i}(d_i)$ an
 
 To do this, we make use of the distribution of $M(1)$ and $M(0)$. This would then be similar to imposing an external rehabilitation timing. Before step 2, we replace individual $i$'s value of $M_i(d_i)$ with individual $j$'s $M_j(d_j)$ where $d_i = d_j$. This means that when both individuals $i$ and $j$ have an identical plugged in divorce status, individual $i$ will have individual $j$'s rehabilitation timing. This second-best approach helps us identify what the average death risk for individuals with a particular plugged in divorce status looks like under a random redistribution of rehabilitation timing\footnote{One caveat is that, it may be possible that individual $j$'s rehabilitation timing is unlikely to be produced given individual $i$'s rehabilitation probability, for example, if individual $j$'s probability of rehabilitation in year 1 is high (e.g., 90\%) while individual $i$'s is low (e.g., 10\%). This is called a positivity or overlap concern (\citeauthor*{vanderweele2014effect}, \citeyear{vanderweele2014effect}; \citeauthor*{petersen2012diagnosing}, \citeyear{petersen2012diagnosing}).}.
 
-Suppose individual $i$ received individual $j$'s value when $d_i = 0$, and individual $k$'s value when $d_i = 1$. This means that individual $i$'s hypothetical rehabilitation timings going into step 2 take the values of $M_j(0)$ and $M_k(1)$ respectively. We can then plug in the four combinations, $\in \left\{(0,M_{j}(0)), (0,M_{k}(1)), (1, M_{j}(0)), (1, M_{k}(1))\right\}$, into Equation \ref{eq:rq2_unweighted} in step 2 for individual $i$ in time $t$. We then update $\mathbf{L}_{i,t}$  and repeat all four steps until we reach five years. After we have completed all steps for five years, we repeat the entire process 25 times with different draws for the rehabilitation occurrence to average out noise from the simulations. Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}, \citeyear{efron1993bootstrap}) and repeat the entire procedure. 
+Suppose individual $i$ received individual $j$'s value when $d_i = 0$, and individual $k$'s value when $d_i = 1$. This means that individual $i$'s hypothetical rehabilitation timings going into step 2 take the values of $M_j(0)$ and $M_k(1)$ respectively. We can then plug in the four combinations, $\in \left\{(0,M_{j}(0)), (0,M_{k}(1)), (1, M_{j}(0)), (1, M_{k}(1))\right\}$, into Equation \ref{eq:rq2_unweighted} in step 2 for individual $i$ in time $t$. We then update $\mathbf{L}_{i,t}$  and repeat all four steps until we reach five years. 
 
-formulae average rehabilitation and average Y(d,M(d))
+Since individual $i$'s $M_{i,t}$ depends on a random draw which subsequently affects $L_{i,t}$, we re-run the entire process 25 times with different draws for the rehabilitation occurrence to average out simulation randomness. Let $M_{i,r}(d_i)$ and $Y_{i,r}(d_i,M(d_i'))$ denote individual $i$'s simulated rehabilitation and death indicators by the horizon of five years from $t_0$ and $R=25$ denote the number of Monte Carlo repeats. The Monte Carlo average for individual $i$ is given by:
+
+\begin{align}
+\begin{split}
+\hat{M}_{i}(d_i) & = \frac{1}{R} \sum_{r=1}^{R}M_{i,r}(d_i) \\
+\hat{Y}_i(d_i,M(d_i')) & = \frac{1}{R} \sum_{r=1}^R Y_{i,r}(d_i,M(d_i'))
+\end{split}
+\tag{7}\label{eq:avg_within_individual}
+\end{align}
+
+We then average across the matched treated individuals. Let $\mathcal{T}$ denote the set of $N_M$ matched treated individuals:
+
+\begin{align}
+\begin{split}
+\hat{M}(d) & = \frac{1}{N_M} \sum_{i \in \mathcal{T}} \hat{M}_i(d_i) \\
+\hat{Y}(d, M(d')) & = \frac{1}{N_M} \sum_{i \in \mathcal{T}} \hat{Y}_i(d_i,M(d_i'))
+\end{split}
+\tag{8}\label{eq:avg_between_individual}
+\end{align}
+
+In Equation \ref{eq:avg_between_individual}, we plug in the four different combinations to obtain \textit{population} averages of the rehabilitation risk under the hypothetical divorce status, $d$ and mortality risk under the hypothetical divorce $d$ combined with the rehabilitation timing of divorce status $d'$ where $d, d' \in \{0,1\}$. We can then decompose the total effect into the direct effect and indirect effect:
+
+\begin{align}
+\begin{split}
+\widehat{\text{Total effect}}&= \hat{Y}(1,M(1))-\hat{Y}(0,M(0)) \\
+\widehat{\text{Direct effect}}&= \hat{Y}(1,M(0))-\hat{Y}(0,M(0)) \\
+\widehat{\text{Indirect effect}}&= \hat{Y}(1,M(1))-\hat{Y}(1,M(0))
+\end{split}
+\tag{9}\label{eq:decomposition}
+\end{align}
+
+The total effect is simply answering what the difference in mortality risk is between divorced and non-divorced individuals within five years. The direct effect captures part of the difference in mortality risk related to divorce but unrelated to rehabilitation, i.e. given that rehabilitation timing is held constant, how does divorce (potentially operating through financial strain, loneliness, stress) affect mortality risk. The indirect effect answers how much of the difference in mortality risk is attributed to divorce shifting individuals onto the rehabilitation timing distribution typical of divorced individuals. We calculated interventional direct and indirect effects (\citeauthor*{vanderweele2014effect}, \citeyear{vanderweele2014effect}) which is different from natural direct and indirect effects  (\citeauthor{pearl2001direct}, \citeyear{pearl2001direct}). A natural indirect effect answers what would happen to individual $i$'s mortality risk if their rehabilitation timing shifted from what it looks like when individual $i$ is non-divorced to what it would look like if individual $i$ is divorced while holding divorce status constant at $d=1$. In contrast, an interventional indirect effect answers what would happen to average mortality risk if the population's rehabilitation timing shifts from the distribution typical of non-divorced individuals to a distribution typical of divorced individuals while holding divorce status constant at $d=1$. 
+
+Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}, \citeyear{efron1993bootstrap}) with replacement and repeat the entire procedure. We do this to obtain the 95\% confidence interval for the total, direct and indirect effects. 
+
+
 
 
 
 \section{Results}
 \subsection{Descriptive summary}
-\textcolor{red}{How many individuals are in the 20\% dataset? How many person years? How many people have undergone divorce in each year? We limit matching to years 2012 to 2018 and 2014 to 2018. Who do we filter out? How many people undergo medical rehabilitation? What are the top rehabilitation codes and cases?}
 
-\textcolor{red}{Of the $N_T$ eligible treated individuals, $N_M$ were successfully matched, corresponding to a matching rate of (X\%). Because matching is 1:1 and without replacement, the matched sample contains $N_M$ treated individuals and $N_M$ unique controls. We additionally report the number of unmatched treated individuals, matching rates by treatment year, the distribution of propensity scores, and the mean and maximum propensity score distances between matched individuals.}
+{
+\color{red}
 
-\textcolor{red}{figure to show the event study coefficients and maybe Wald test - joint coefficient test}
+\begin{itemize}
+\item How many individuals are in the 20\% dataset? How many person years?
+\item How many individuals have undergone divorce each year?
+\item Matching limited to 2012 to 2018 for lag1 spec, and 2014 to 2018 for lag3 spec. Who do we filter out? Sample size and number of matches used for each. Do people have gaps in the data?
+\item How many people undergo medical rehabilitation? What are the top rehabilitation codes and cases? What happens in the five year follow up? Do people die before they get the rehab? How many complete the rehab and survive the 5 years? How many neither get rehab nor die in the 5 years?
+\item $N_T$: eligible treated individuals, $N_M$: matched individuals (treated and controls), gender composition. Are there people who show up twice, perhaps first as control and then as divorced down the line?
+\item What is the matching rate by treatment year?
+\item Distribution of propensity scores, mean, max between matched individuals
+\item Event study coefficients, pre-trend Wald test/joint coefficient test
+\end{itemize}
+}
 
-\textcolor{red}{lag1 vs lag3 specification comparison with sample size and number of matches maybe?}
 
 \subsection{RQ1: Musculoskeletal rehabilitation}
 
+{
+\color{red}
+\begin{itemize}
+\item How much more likely are divorced people to start rehab than almost identical non-divorced people?
+\item Does adding leftover covariates which were not well balanced affect the above result?
+\item Does the risk mostly show up in the year following divorce or does it creep up by year 5?
+\item What is the share of divorced people who started rehab by year 5 compared to controls?
+\item What is the difference in the results when lag1 spec is used versus lag3 spec?
+\item What is the difference in rehab risk between genders?
+\item Of the matches, how many have a full five years of usable follow up data?
+\end{itemize}
+}
+
 \subsection{RQ2: Mortality}
 
+{
+\color{red}
+
+\begin{itemize}
+\item How much more likely are divorced people to die during the follow up period
+\item Compare lag1 and lag3 spec mortality risk
+\item Total, direct and indirect effects plus 95\% confidence interval.
+\item How often is it the case that the borrowed rehab timing is completely off?
+\item Total, direct and indirect effects for men vs women. 
+\end{itemize}
+
+}
 
 \section{Discussion}
 
