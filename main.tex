@@ -156,7 +156,7 @@ The link between divorce and mortality has been widely discussed in social epide
 Our study focuses on the interaction between divorce, health and mortality. While there can be a direct link between divorce and mortality if divorce results in suicide (\citeauthor{kposowa2000marital}, \citeyear{kposowa2000marital}; \citeauthor{stevenson2006bargaining}, \citeyear{stevenson2006bargaining}) or homicide, causal evidence remains scarce when the link is indirect. Hence, we chose health as it is one possible indirect link tying together divorce and mortality. There can, however, still be threats to identification as health is not only a consequence but also a cause of divorce  (\citeauthor*{torvik2015health}, \citeyear{torvik2015health}). Furthermore, the individuals who choose to divorce may not necessarily be random. Many of the register-based studies make use of hazard models to estimate excess mortality risk after divorce and controls for sociodemographic and socioeconomic variables. For Germany, \citeauthor{brockmann2004love} (\citeyear{brockmann2004love}) account for health by using the self-reported health measure from the German SOEP and control for variables associated with marital status to find that divorced mean have 51\% higher mortality than married men while there is no significant effect for women. \citeauthor{leopold2018gender} (\citeyear{leopold2018gender}) presents a very careful multi-outcome treatment of the gendered consequences of divorce over time, but it is not designed to control for the health that occurs before from the health consequences which follow the divorce. In our paper, we control for pre-existing health trends and other factors which occur before the divorce by using propensity score matching to answer the following questions
 
 \begin{itemize}
-    \item[\textbf{RQ1:}] Does divorce raise the risk of musculoskeletal rehabilitation\footnote{Musculoskeletal diseases are the most common cuase of lost work time in Germany.} among divorced and non-divorced individuals?
+    \item[\textbf{RQ1:}] Does divorce raise the risk of musculoskeletal rehabilitation\footnote{Musculoskeletal diseases are the most common cause of lost work time in Germany.} among divorced and non-divorced individuals?
     \item[\textbf{RQ2:}] Is some of the excess mortality caused by divorce occurring because divorce caused additional musculoskeletal deterioration?
 \end{itemize}
 
@@ -220,10 +220,9 @@ We treat missingness in earnings, pension income and contribution periods as pot
 
 Within each treatment year and exact-match group, we use optimal matching. The matching procedure first maximizes the number of treated individuals who can be matched within the caliper and then chooses the combination of pairs that minimizes the total propensity score distance. We limit matches to a maximum absolute propensity score difference of 0.01. Matching is conducted without replacement, meaning that each treated individual and each control can appear in only one matched pair. To accommodate the large annual control pools, the propensity score model is fitted using all treated individuals and, where necessary, a reproducibly selected sample of controls, with the total estimation sample limited to 500,000 observations\footnote{Please see the section on \nameref{app:control_limitation_500_000} in the Appendix}. The resulting propensity scores are corrected for the control-sampling fraction, and the fitted model is then used to calculate propensity scores for every eligible treated individual and control. The computational limit therefore affects how the propensity model is estimated but does not remove controls from the matching pool.
 
-\textcolor{red}{We assess covariate balance before and after matching using standardized mean differences. Balance is assessed separately for continuous variables, binary variables, each level of categorical variables and indicators of missingness. We present these results in Figure blablabla. An absolute standardized mean difference below 0.10 is treated as evidence of adequate balance on the corresponding observed characteristic. Where residual imbalance above this threshold remains after matching, the affected variables are additionally included in the outcome model. This adjustment is intended to address limited remaining imbalance and is not used as a substitute for unsuccessful matching.}
+We assess covariate balance before and after matching using standardized mean differences. Balance is assessed separately for continuous variables, binary variables, each level of categorical variables and indicators of missingness. An absolute standardized mean difference below 0.10 is treated as evidence of adequate balance on the corresponding observed characteristic. If residual imbalance above this threshold remains after matching, the affected variables are additionally included in the outcome model. This adjustment is intended to address limited remaining imbalance and is not used as a substitute for unsuccessful matching.
 
-
-\textcolor{red}{Using the matched sample, we estimate the average treatment effect among the matched treated individuals. We examine first entry into musculoskeletal rehabilitation, time to first musculoskeletal rehabilitation, rehabilitation duration and all-cause mortality after divorce. Musculoskeletal rehabilitation is examined over a five-year follow-up period, with death treated as a competing event. Mortality is followed for up to ten years where permitted by the end of the observation period in 2023. The amount of available mortality follow-up therefore varies across treatment cohorts.}
+Using the matched sample, we estimate the effect of divorce on first entry into musculoskeletal rehabilitation and all-cause mortality. Musculoskeletal rehabilitation is examined over a five-year follow-up period, with death treated as a competing event. Mortality is then followed for \textit{up to} ten years where permitted by the end of the observation period in 2023.
 
 
 \subsection{Identification}
@@ -370,22 +369,62 @@ Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}
 
 
 \section{Results}
-\subsection{Descriptive summary}
+\subsection{Summary statistics}
 
-{
-\color{red}
 
-\begin{itemize}
-\item How many individuals are in the 20\% dataset? How many person years?
-\item How many individuals have undergone divorce each year?
-\item Matching limited to 2012 to 2018 for lag1 spec, and 2014 to 2018 for lag3 spec. Who do we filter out? Sample size and number of matches used for each. Do people have gaps in the data?
-\item How many people undergo medical rehabilitation? What are the top rehabilitation codes and cases? What happens in the five year follow up? Do people die before they get the rehab? How many complete the rehab and survive the 5 years? How many neither get rehab nor die in the 5 years?
-\item $N_T$: eligible treated individuals, $N_M$: matched individuals (treated and controls), gender composition. Are there people who show up twice, perhaps first as control and then as divorced down the line?
-\item What is the matching rate by treatment year?
-\item Distribution of propensity scores, mean, max between matched individuals
-\item Event study coefficients, pre-trend Wald test/joint coefficient test
-\end{itemize}
-}
+\textcolor{red}{1. summary statistics table for each variable used in matching, mean, min, max}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{Before matching} & \multicolumn{3}{c}{After matching} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Variable & Divorced & Control & SMD & Divorced & Control & SMD \\
+\midrule
+\multicolumn{7}{l}{\textit{Panel A: Continuous variables}} \\
+\midrule
+Age (years) & 45.83 & 49.82 & $-0.271$ & 45.10 & 45.03 & $0.007$ \\
+Earnings (euros) & 21{,}824 & 13{,}313 & $0.431$ & 21{,}317 & 20{,}904 & $0.020$ \\
+Pension income (euros) & 66 & 213 & $-0.420$ & 74 & 74 & $0.000$ \\
+Full-time contribution periods & 21.09 & 73.98 & $-0.415$ & 23.62 & 23.02 & $0.007$ \\
+Part-time contribution periods & 3.32 & 8.15 & $-0.274$ & 3.72 & 3.85 & $-0.008$ \\
+Cumulative rehabilitations to date & 0.122 & 0.030 & $0.281$ & 0.091 & 0.089 & $0.004$ \\
+Cumulative mental-health rehabilitations to date & 0.053 & 0.008 & $0.223$ & 0.037 & 0.034 & $0.014$ \\
+Years since last rehabilitation\textsuperscript{a} & 1.38 & 1.77 & $-0.248$ & 1.23 & 1.22 & $0.013$ \\
+\midrule
+\multicolumn{7}{l}{\textit{Panel B: Binary variables (\%)}} \\
+\midrule
+Ever had a mental-health rehabilitation & 4.41 & 0.69 & $0.238$ & 3.23 & 2.96 & $0.015$ \\
+Unsuccessful rehabilitation application this year & 2.59 & 0.48 & $0.172$ & 2.30 & 2.05 & $0.017$ \\
+Full-time contribution data missing & 91.95 & 73.25 & $0.509$ & 90.99 & 91.10 & $-0.004$ \\
+Part-time contribution data missing & 91.95 & 73.25 & $0.509$ & 90.99 & 91.10 & $-0.004$ \\
+\midrule
+\multicolumn{7}{l}{\textit{Panel C: Categorical variables (maximum $|$SMD$|$ across levels)}} \\
+\midrule
+ & \multicolumn{2}{c}{} & Before & \multicolumn{2}{c}{} & After \\
+Variable & \multicolumn{2}{c}{Levels} & max $|$SMD$|$ & \multicolumn{2}{c}{} & max $|$SMD$|$ \\
+\midrule
+Marital-status code\textsuperscript{b} & \multicolumn{2}{c}{5 / 4} & $3.009$ & \multicolumn{2}{c}{} & $0.071$ \\
+Income-source status & \multicolumn{2}{c}{4} & $0.639$ & \multicolumn{2}{c}{} & $0.049$ \\
+Federal state & \multicolumn{2}{c}{19} & $0.248$ & \multicolumn{2}{c}{} & $0.032$ \\
+Occupation category & \multicolumn{2}{c}{2} & $0.437$ & \multicolumn{2}{c}{} & $0.018$ \\
+Age band & \multicolumn{2}{c}{16 / 14} & $0.324$ & \multicolumn{2}{c}{} & $0.000$ \\
+Sex & \multicolumn{2}{c}{2} & $0.020$ & \multicolumn{2}{c}{} & $0.000$ \\
+Any rehabilitation before $t_0-1$ & \multicolumn{2}{c}{2} & $0.306$ & \multicolumn{2}{c}{} & $0.000$ \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Covariate balance before and after matching}
+\label{tab:balance}
+\vspace{0.5em}
+\begin{minipage}{\textwidth}
+{\footnotesize\RaggedRight \textsuperscript{a}Defined only for those with a prior rehabilitation; 90--98\% missing, filled with a placeholder value for this comparison. \textsuperscript{d}Before matching, divorced individuals are 100\% coded as ``married'' by construction, while a large share of controls carry a missing marital-status code. This asymmetry inflates the pre-match SMD outside the usual $\pm 1$ range and should not be read on the same scale as the other rows.\par}
+\end{minipage}
+\end{table}
+
+Across all 19 variables, the mean absolute SMD falls from 0.34 before matching to 0.01 after. Earnings and pension income are set to 0 when the record for that year is unobserved. Recall that the observability of either variable is informative, reflecting current employee vs pension recipient status (\texttt{income\_source}). Before matching, earnings are missing for 13.0\% of treated and 41.2\% of controls; after matching the missingness is 13.5\% and 14.5\% respectively. Pension income is missing for 91.9\% of trated and 73.2\% of controls before matching, and respectively 91.0\% and 91.1\% after matching. Among person-years with observed eranings, the mean earnings are \texteuro25{,}095 for treated and \texteuro22{,}641 for controls before matching, and respectively \texteuro24{,}649 and \texteuro24{,}446 after matching. The missingness rate for full-time and part-time contribution periods is not only numerically identical but matches pension income missingness almost exactly, which is consistent with all three variables tracking the same employment vs pension status. For a more detailed breakdown, please see the section on \ref{app:descriptives} in the Appendix.
 
 
 \subsection{RQ1: Musculoskeletal rehabilitation}
@@ -393,6 +432,7 @@ Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}
 {
 \color{red}
 \begin{itemize}
+    
 \item How much more likely are divorced people to start rehab than almost identical non-divorced people?
 \item Does adding leftover covariates which were not well balanced affect the above result?
 \item Does the risk mostly show up in the year following divorce or does it creep up by year 5?
@@ -507,5 +547,253 @@ We finally estimate the parameters for the model on the binary indicators \textt
 
 
 where $B_{i,t}^1$ is a dummy representing \texttt{unsuccessful\_rehab\_application\_this\_year} and is estimated first, $B_{i,t}^2$ is a a dummy representing \texttt{non\_ms\_rehab} which is estimated second hence also contains the predicted $\widetilde{B}_{i,t}^{1}$ and $\widetilde{\mathbf{A}}_{i,t}$ is a vector containing the drawn level (not $\log$) amounts of (\texttt{income } \texttt{pension\_income}) which we just estimated in the log-scale linear regressions above.
+
+\subsection*{Descriptive summary}
+\phantomsection
+\makeatletter
+\def\@currentlabelname{Updating the evolution of $\mathbf{L}_{i,t}$}
+\makeatother
+\label{app:descriptives}
+
+\begin{table}[H]
+\centering
+\label{tab:annual_panel}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Year & Person-years & Individuals & Divorces & \% of panel & All rehab & MSK rehab & Deaths \\
+\midrule
+2011 & 2,858,290 & 2,858,290 & 4,731 & 0.166 & 43,880 & 19,051 & 6,310 \\
+2012 & 2,867,809 & 2,867,809 & 4,496 & 0.157 & 45,951 & 20,084 & 6,457 \\
+2013 & 2,879,401 & 2,879,401 & 4,393 & 0.153 & 45,836 & 21,610 & 6,256 \\
+2014 & 2,900,975 & 2,900,975 & 4,239 & 0.146 & 46,961 & 22,618 & 6,412 \\
+2015 & 2,926,410 & 2,926,410 & 4,021 & 0.137 & 47,158 & 22,501 & 5,871 \\
+2016 & 2,954,800 & 2,954,800 & 3,804 & 0.129 & 45,724 & 21,585 & 6,595 \\
+2017 & 2,981,776 & 2,981,776 & 3,655 & 0.123 & 45,194 & 21,184 & 6,568 \\
+2018 & 3,022,330 & 3,022,330 & 3,493 & 0.116 & 46,460 & 21,531 & 7,360 \\
+2019 & 3,050,013 & 3,050,013 & 3,283 & 0.108 & 48,882 & 22,958 & 7,251 \\
+2020 & 3,054,308 & 3,054,308 & 3,040 & 0.100 & 39,346 & 16,985 & 8,769 \\
+2021 & 3,068,487 & 3,068,487 & 2,714 & 0.088 & 42,638 & 2,407 & 12,130 \\
+2022 & 3,105,388 & 3,105,388 & 2,302 & 0.074 & 44,671 & 16 & 12,905 \\
+2023 & 3,128,428 & 3,128,428 & 1,858 & 0.059 & 45,196 & 0 & 13,972 \\
+2024 & 3,146,317 & 3,146,317 & --- & --- & --- & --- & 10,614 \\
+\midrule
+Total & 41,944,732 & 3,717,941 & 46,029 & & 587,897 & 212,530 & \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Overall data description}
+\vspace{0.5em}
+{\footnotesize\RaggedRight Notes: Each individual is counted once per year and once in the total, so the total is not the sum of the column. Divorces are counted in the year of the first divorce we observe. Of the 46,029 individuals, 45,330 divorce out of the earliest marriage we observe. Rehabilitation counts are successful, completed rehabilitations. MSK stands for musculoskeletal. \par}
+\end{table}
+
+\textcolor{red}{The death column counts records whose year matches the recorded year of death. It is descriptive only. The mortality analysis uses the recorded year of death directly, not these annual records. The 2024 records carry no divorce or rehabilitation information.}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.6\linewidth]{figures/first_observed_divorces_by_year.png}
+% \caption{First-observed divorce in 4\% sample}
+% \label{fig:divorces}
+% \end{figure}
+
+The number of divorces fell steadily from 4,731 divorces in 2011 (0.166\% of individuals observed in 2011) to 1,858 divorces in 2023 (0.059\% of individuals in 2023). The national divorce rate also fell during this period although at a slower rate. The reason for this difference may be attributed to who gets counted in the VA dataset. The VA dataset explicitly excludes marriages which lasted three years or less or if the individuals divorcing waived the pension equalization through a prenuptial agreement or divorce settlement. Furthermore, if the income of the individuals divorcing are roughly equal, then the family court allows pension equalization to be skipped (\citeauthor{VersAusglG2009}, \citeyear{VersAusglG2009}; \citeauthor{MuKoBGB2025Bd9}, \citeyear{MuKoBGB2025Bd9}). 
+
+\begin{table}[H]
+\centering
+\label{tab:rehab_diagnosis_groups}
+\begin{tabular}{@{}clcrrr@{}}
+\toprule
+ & Category & Codes & Events & Unique persons & Share (\%) \\
+\midrule
+1  & Musculoskeletal\textsuperscript{a}        & 20\,/\,53, 56 & 273{,}543 & $\leq$174{,}646 & 46.5 \\
+2  & Mental health\textsuperscript{a}           & 30\,/\,55     &  89{,}711 &  $\leq$72{,}632 & 15.3 \\
+3  & Neoplasms\textsuperscript{b}               & 26\,/\,48     &  71{,}795 &  $\leq$56{,}453 & 12.2 \\
+4  & Nervous system\textsuperscript{b}          & 28\,/\,52     &  31{,}133 &  $\leq$22{,}350 &  5.3 \\
+5  & Cardiovascular\textsuperscript{c}          & 22            &  18{,}000 &          14{,}979 &  3.1 \\
+6  & Digestive \& metabolic\textsuperscript{c}  & 23            &  16{,}469 &          13{,}737 &  2.8 \\
+7  & Skin\textsuperscript{b}                    & 25\,/\,57     &  15{,}821 &  $\leq$12{,}457 &  2.7 \\
+8  & Other conditions\textsuperscript{c}        & 31            &  13{,}649 &          10{,}627 &  2.3 \\
+9  & Endocrine\textsuperscript{c}               & 24            &  11{,}743 &           9{,}818 &  2.0 \\
+10 & Respiratory\textsuperscript{c}             & 21            &   7{,}999 &           6{,}819 &  1.4 \\
+\midrule
+   & \multicolumn{2}{l}{Top-10 total}                          & 549{,}863 &                   & 93.5 \\
+   & \multicolumn{2}{l}{All groups}                            & 587{,}897 &         350{,}935 & 100.0 \\
+\bottomrule
+\end{tabular}
+\caption{Top ten rehabilitation diagnosis groups}
+\medskip
+\begin{minipage}{0.95\textwidth}
+\footnotesize
+\textit{Notes:} The DRV reclassified rehabilitation approvals from ICD-10-based diagnosis groups (codes 20--33) to treatment-based indicator groups
+(codes 40--59) on 1~January 2021. Combined groups show old\,/\,new codes; event counts
+are summed across both systems.
+\textsuperscript{a}Mapping confirmed in DRV documentation.
+\textsuperscript{b}Mapping inferred from year-by-year volume patterns; code~52
+(neurology) may additionally include stroke cases previously under code~22
+(cardiovascular).
+\textsuperscript{c}Old-system code only since it is possible that the indicator groups system
+redistributes these diagnostic chapters across multiple treatment-based codes
+(principally code~51, internal medicine), preventing one-to-one mapping; counts
+cover 2011--2021 only.
+Unique-person counts for combined groups are upper bounds ($\leq$) because the
+same individual may appear under both coding systems during the 2020--2021 transition.
+\end{minipage}
+\end{table}
+
+Across the 4\% sample, 350,935 individuals have at least one completed rehabilitation (about 9.4\% of all individuals in the sample). There are 587,897 rehabilitations covered. In any given year, about 1.3\% of the observed population starts a rehabilitation. The most common rehabilitation type is for musculoskeletal related conditions, covering 46.5\% off all rehabilitations, followed mental health rehabilitation, covering 15.3\% of all rehabilitations. 
+
+
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{Treated} & \multicolumn{2}{c}{Controls} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Restriction & Kept & Excluded & Kept & Excluded \\
+\midrule
+First divorce in 2012--2018 & 28,101 & & 20,533,501 & \\
+Not yet divorced at $t_0$ & --- & --- & 20,384,393 & 149,108 \\
+Divorce ends first-observed marriage & 27,891 & 210 & --- & --- \\
+Alive at $t_0$ & 27,887 & 4 & 20,317,221 & 67,172 \\
+No MSK rehab starting in $t_0$ & 27,343 & 544 & 20,201,989 & 115,232 \\
+Has a record in $t_{0}-1$ & 27,202 & 141 & 19,697,995 & 503,994 \\
+Has a valid age in $t_{0}-1$ & 27,202 & 0 & 19,697,928 & 67 \\
+No MSK rehab before $t_0$ & 25,541 & 1,661 & 19,334,802 & 363,126 \\
+\midrule
+Eligible & 25,541 & 2,560 & 19,334,802 & 1,198,699 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{lag-1 specification sample, 2012 to 2018}
+\vspace{0.5em}
+{\footnotesize\RaggedRight Notes: Treated individuals enter in exactly one year, so the treated columns count people. Controls can be eligible in several years, so the control columns count year slots rather than people. Hence, the 19,334,802 eligible control slots belong to 3,156,224 individuals.\par}
+\label{tab:attrition}
+\end{table}
+
+To build the matches for the lag-1 specification, we use first observed divorces from 2012 to 2018 so that each cohort has at least five years of follow-up. In this window, there are 28,101 divorces. After imposing restrictions, we are left 
+with 25,541 individuals. See Table \ref{tab:attrition} above. 
+
+\begin{table}[htbp]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrrrrr}
+\toprule
+$t_0$ & Eligible & Eligible & Matched & Match & Average gap & Average score & Average score \\
+ & treated & controls & pairs & rate (\%) & in a pair & treated & controls \\
+\midrule
+2012 & 4,317 & 2,765,104 & 4,290 & 99.4 & 0.00008 & 0.118 & 0.0014 \\
+2013 & 4,142 & 2,754,989 & 4,110 & 99.2 & 0.00019 & 0.128 & 0.0013 \\
+2014 & 3,912 & 2,749,187 & 3,870 & 98.9 & 0.00027 & 0.132 & 0.0012 \\
+2015 & 3,679 & 2,750,172 & 3,608 & 98.1 & 0.00040 & 0.143 & 0.0012 \\
+2016 & 3,359 & 2,756,249 & 3,142 & 93.5 & 0.00069 & 0.152 & 0.0010 \\
+2017 & 3,164 & 2,770,496 & 2,254 & 71.2 & 0.00081 & 0.169 & 0.0010 \\
+2018 & 2,968 & 2,788,605 & 1,530 & 51.5 & 0.00098 & 0.186 & 0.0009 \\
+\midrule
+Total & 25,541 & & 22,804 & 89.3 & 0.00040 & & \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Matching by treatment year}
+\label{tab:matching}
+\vspace{0.5em}
+{\footnotesize\RaggedRight Notes: Eligible controls are year slots available before matching. The gap in a pair is the absolute difference in propensity scores.\par}
+\end{table}
+
+Table \ref{tab:matching} shows the matching results. Of the 25,541 eligible treated individuals, we managed to match 22,804 (89.3\% of all treated) and fail to match 2,737 (10.7\% of all treated). The matched sample is therefore 45,608 individuals and no control is used twice. Every treated individual has at least one control in their exact-match group (i.e. in their gender, five-year age band and prior rehabilitation present group). \textcolor{red}{The matched sample has close to an even split by gender.} Across all years the median absolute gap in propensity scores is is 0.00003, the 95th percentile is 0.0022 and the largest gap is 0.0099. 
+
+The match rate is nearly complete from 2012 to 2015 and then decreases. It is likely because controls used in earlier years are taken out of later pools. \textcolor{red}{Furthermore, the pool of people who have not yet divorced shrinks over time. Why?} The individuals we matched have a mean age of 45.1 while the unmatched individuals are 51.9 on average. Of the matched treated individuals, 7.3\% have had some rehabilitation before $t_0$ compared to 28.0\% of unmatched treated individuals. 86\% of unmatched individuals come from 2017 and 2018. Hence, our subsequent results apply to divorced individuals who tend to be younger and healthier. It is also possible for individuals to appear first as a control and then as a treated if that individual divorces eventually. 7,273 individuals out of 38,335 individuals across all matched pairs are first controls and then treated (about 19.0\%). There is a mean gap of two years between being a control and being a treated. 
+
+\begin{table}[H]
+\centering
+\caption{Differences between matched pairs from $t_0-3$ to $t_0+5$}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrr}
+\toprule
+Year relative & Earnings & Pension income & Rehabilitation & Unsuccessful \\
+to $t_0$ & (euros) & (euros) & starts (pp) & applications (pp) \\
+\midrule
+$-3$ & $-586.9$ & $3.33$ & $-0.11$ & $-0.04$ \\
+ & (124.4) & (1.25) & (0.24) & (0.19) \\
+$-2$ & $-417.2$ & $1.18$ & $0.21$ & $0.28$ \\
+ & (80.6) & (0.91) & (0.24) & (0.18) \\
+$-1$ & 0 & 0 & 0 & 0 \\
+ & --- & --- & --- & --- \\
+$0$ & $32.6$ & $-0.86$ & $0.66$ & $-0.16$ \\
+ & (57.8) & (0.75) & (0.22) & (0.17) \\
+$1$ & $-34.5$ & $0.30$ & $-0.35$ & $0.05$ \\
+ & (84.3) & (1.17) & (0.27) & (0.18) \\
+$2$ & $-337.8$ & $2.14$ & $0.09$ & $-0.20$ \\
+ & (101.1) & (1.43) & (0.28) & (0.18) \\
+$3$ & $-516.9$ & $2.04$ & $-0.11$ & $-0.22$ \\
+ & (114.1) & (1.64) & (0.29) & (0.19) \\
+$4$ & $-714.0$ & $1.49$ & $-0.32$ & $-0.51$ \\
+ & (125.6) & (1.93) & (0.29) & (0.19) \\
+$5$ & $-854.8$ & $2.91$ & $0.14$ & $-0.36$ \\
+ & (137.4) & (2.22) & (0.30) & (0.19) \\
+\midrule
+Test statistic & $30.65$ & $7.04$ & $1.49$ & $3.51$ \\
+$p$-value & $<0.001$ & $0.030$ & $0.474$ & $0.173$ \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\label{tab:eventstudy}
+\vspace{0.5em}
+\begin{minipage}{\textwidth}
+{\footnotesize\RaggedRight Notes: Standard errors in brackets are clustered on the matched pair. The last two rows test whether the differences at $t_{0}-3$ and $t_{0}-2$ are both zero. The number of pairs is 14,127 at $t_{0}-3$, 18,287 at $t_{0}-2$, 22,804 at $t_{0}-1$ and $t_0$, and 22,112 at $t_{0}+5$. The $t_{0}-3$ row uses only the 2014 to 2018 cohorts, because the panel starts in 2011. Earnings and pension income in $t_{0}-1$ are matching variables, so the difference is 0 by construction.\par}
+\end{minipage}
+\end{table}
+
+In the lag-1 specification, matching only makes the treated and controls similar in $t_0-1$. It does not guarantee that both groups were on a similar path before $t_0$. Divorced individuals are seen having a different earnings path before $t_0-1$ already. \textcolor{red}{This suggests that the lag-1 specification may not satisfy matching assumptions, hence we also report the lag-3 specification.}
+
+\begin{table}[H]
+\centering
+\caption{Outcomes in the five years after $t_0$}
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{Divorced} & \multicolumn{2}{c}{Controls} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+What happened & $n$ & \% & $n$ & \% \\
+\midrule
+Neither rehabilitation nor death & 20,558 & 90.15 & 20,811 & 91.26 \\
+Died before any MSK rehabilitation & 467 & 2.05 & 285 & 1.25 \\
+Started MSK rehabilitation, survived & 1,770 & 7.76 & 1,701 & 7.46 \\
+Started MSK rehabilitation, then died & 9 & 0.04 & 7 & 0.03 \\
+\midrule
+Total & 22,804 & 100 & 22,804 & 100 \\
+\bottomrule
+\end{tabular}
+\label{tab:followup}
+\vspace{0.5em}
+\begin{minipage}{\textwidth}
+{\footnotesize\RaggedRight Notes: Matched sample, lag-1 specification, five years from $t_0$. MSK stands for musculoskeletal. Deaths come from the recorded year of death. One individual has a rehabilitation and a death recorded in the same year. Over the longer mortality window of up to ten years, the matched sample records 2,017 deaths.\par}
+\end{minipage}
+\end{table}
+
+In the five years after $t_0$, most individuals (90.2\% among treated and 91.3\% among controls) neither experience musculoskeletal rehabilitation or death. 7.8\% of the treated and 7.5\% of controls have started musculoskeletal rehabilitaion. 2.05\% of the treated die without starting musculoskeletal rehabilitation compared to 1.25\% of controls. Note that not everyone has a record in every follow-up year. 878 individuals out of the 38,335 (2.3\%) are missing at least one yearly record within the five-year window (1,282 missing records out of 219,471). We keep the full five-year window and treat a missing year as a year with no record rehabilitation instead of dropping the individual. A missing year might indicate labor market exit as a result of poor health, so we also run a stricter version where both members of a pair stop being followed just before the first year either one of them is missing a record. Since this affects 909 pairs where the mean gap is in $t_0+3$, the sample falls to 22,612 pairs, while the number of musculoskeletal rehabilitations falls from 3,505 to 3,449. 
+
+{
+\color{red}
+
+\begin{itemize}
+\item[DONE] How many individuals are in the 20\% dataset? How many person years?
+\item[DONE] How many individuals have undergone divorce each year?
+\item[DONE] Matching limited to 2012 to 2018 for lag1 spec, and 2014 to 2018 for lag3 spec. Who do we filter out? 
+\item[DONE] How many people undergo medical rehabilitation? 
+\item[DONE] What are the top rehabilitation codes and cases?
+\item[DONE] Sample size and number of matches used for each. What is the matching rate by treatment year? 
+\item[DONE] $N_T$: eligible treated individuals, $N_M$: matched individuals (treated and controls), gender composition. Are there people who show up twice, perhaps first as control and then as divorced down the line?
+\item[DONE] Distribution of propensity scores, mean, max between matched individuals
+\item[DONE] Event study coefficients, pre-trend Wald test/joint coefficient test
+\item[DONE] Do people have gaps in the data?
+\item[DONE] What happens in the five year follow up? Do people die before they get the rehab? How many complete the rehab and survive the 5 years? How many neither get rehab nor die in the 5 years?
+\item SMD differences
+
+\end{itemize}
+}
+
+
+
 
 \end{document}
