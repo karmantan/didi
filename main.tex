@@ -263,16 +263,11 @@ We follow each individual from $t_0+1$ until $t_0+10$ or 2023, the last year of 
 \tag{2}\label{eq:rq2_equation_basic}
 \end{align}
 
-where $Y_{i,\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate three specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after matching or by replacing $\mathbf{x}_i$ with $\mathbf{x}_{i,\tau-1}$, i.e. the values in the year preceding the follow-up year of interest. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years. \textcolor{red}{To show how the conventional approach differs from ours, we will eventually run a discrete-time hazard model like in Equation \ref{eq:rq2_equation_basic} on all eligible divorced and non-divorced individuals but without matching, with only age, sex, federal state and education in $t_0 - 1$ as controls.}
-
-Divorces can only be observed through the VA, which records a pension equalization only once the divorce is legally final (\S\S~148 and 224(1) FamFG; \citeauthor{FamFG2008}, \citeyear{FamFG2008}). However, $t_0$ is the year in which the marriage period used for the pension equalization ends (\S~3(1) VersAusglG; \citeauthor{VersAusglG2009}, \citeyear{VersAusglG2009}), which precedes the final court decision. A divorce is therefore only observed if the individual survived until the divorce became final. An individual who dies between the end of the marriage period and the final decision is never divorced (\S~131 FamFG), does not appear in the VA, and remains in the pool of not-yet-divorced individuals. This creates an asymmetry between the two groups. Both must survive calendar year $t_0$, but controls can die at any time after $t_0$, while divorcees cannot die before their divorce becomes final. This biases the mortality comparison in the first follow-up years, making it seem as if divorced individuals have a lower mortality.
-
-We nevertheless define $t_0$ as the end of the marriage period rather than the final court decision, because the relationship has usually broken down before $t_0$: a divorce generally requires that the spouses have lived apart for at least a year (\S\S~1565--1566 BGB; \citeauthor{BGB2002}, \citeyear{BGB2002}). Dating $t_0$ at the court decision would move the proceedings, during which the spouses settle the consequences of the divorce, into the period before $t_0$. The matching year would then already reflect the breakdown, and we would measure the effect of a change in legal marital status rather than of the breakdown of the relationship. Instead, we report mortality for each follow-up year and summarize it from the third follow-up year onwards, when the divorces of nearly all treated individuals should be final. The first follow-up years are also when deaths that follow immediately from the breakdown of the relationship, such as suicides and homicides, would be expected to be most frequent (\citeauthor{metsa2013short}, \citeyear{metsa2013short}). Since we cannot reliably separate these deaths from other causes, our mortality estimates describe the longer-run effect of divorce on mortality.
-
+where $Y_{i,\tau}$ is a dummy indicating that individual $i$ dies in follow-up year $t_0+\tau$, $\alpha_\tau$ are time fixed effects, $D_i$ is a dummy indicating divorce at $t_0$ and $\mathbf{x}_i$ are other variables measured prior to $t_0$. Just as in Equation \ref{eq:rq1_equation}, we estimate two specifications for Equation \ref{eq:rq2_equation_basic} by varying the inclusion of variables in  $\mathbf{x}_i$ based on absolute standardized mean differences after matching. We complement the pooled hazard odds ratio with cumulative mortality risks using the Kaplan-Meier estimator (\citeauthor{kaplan1958nonparametric}, \citeyear{kaplan1958nonparametric}). We again report cumulative mortality risk among treated and controls, the risk difference per 1000 individuals and the corresponding risk ratio at the 5-year horizon\footnote{The hazard model uses up to ten years of follow-up although later follow-up years are available only for earlier divorce cohorts.}. We also run the lag-3 specification with more pre-divorce years.
 
 In addition to the straightforward analysis of divorce on mortality, we run a mediation analysis to determine how much of the mortality difference can be attributed to `early' musculoskeletal rehabilitation as result of divorce. A single binary mediator measured one or two years after divorce is insufficient for this question since it can ignore deterioration that occurs later in the follow-up window, such as economic and rehabilitation histories that change after divorce. For example, divorce can potentially change earnings which can subsequently have the ability to affect the probability of entering musculoskeletal rehabilitation and dying. 
 
-Let $D_i \in \{0,1\}$ is divorce status fixed at $t_0$, $\mathbf{z}_i$ the available pre-treatment matching variables for the relevant lag-1 and lag-3 specifications, $H=5$ the fixed mortality and mediation horizon, $\mathbf{L}_{i,t}$ the post-divorce history (\texttt{income}, \texttt{pension\_income}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{non\_ms\_rehab}\footnote{A dummy indicating that an individual has a non-musculoskeletal rehabilitation that year.}, \texttt{income\_source}, and the days in a year spent in \texttt{regular\_employment}, \texttt{unemployment}, \texttt{margina\_employment} and \texttt{care\_leave}) in time $t$ and $M_{i,t-1} \in {0,1}$ is a dummy indicating whether individual $i$ entered musculoskeletal rehabilitation by the end of time $t-1$. We use information in time $t-1$ to predict information in time $t$. We cannot use information from time $t$ since we are unsure whether the dependent or independent variables are recorded first. We use weighted maximum likelihood to account for individuals actually observed in the data in a given year. 
+Let $D_i \in \{0,1\}$ is divorce status fixed at $t_0$, $\mathbf{z}_i$ the available pre-treatment matching variables for the relevant lag-1 and lag-3 specifications, $H=5$ the fixed mortality and mediation horizon, $\mathbf{L}_{i,t}$ the post-divorce history (\texttt{income}, \texttt{pension\_income}, \texttt{unsuccessful\_rehab\_application\_this\_year}, \texttt{non\_ms\_rehab}\footnote{A dummy indicating that an individual has a non-musculoskeletal rehabilitation that year.}, \texttt{income\_source}, and the days in a year spent in \texttt{regular\_employment}, \texttt{unemployment}, \texttt{marginal\_employment} and \texttt{care\_leave}) in time $t$ and $M_{i,t-1} \in {0,1}$ is a dummy indicating whether individual $i$ entered musculoskeletal rehabilitation by the end of time $t-1$. We use information in time $t-1$ to predict information in time $t$. We cannot use information from time $t$ since we are unsure whether the dependent or independent variables are recorded first. We use weighted maximum likelihood to account for individuals actually observed in the data in a given year. 
 
 We estimate the probability of an individual $i$ having a record for the year $t_o + t$ given that they are alive:
 
@@ -303,7 +298,7 @@ We set the maximum weight, $\bar{\omega} = 20$ , to prevent one trajectory from 
 \end{align}
 
 
-Similarly, we estimate the parameters for a model on the probability of death in year $t$ given that an individual was alive at the end of $t-1$\footnote{Weighted version: $\ell_{\text{death}} = \sum_{i,t} \hat{\omega}_{i,t} \left[Y_{i,t}\text{log } \lambda_{i,t}^{\text{death}} + \left(1-Y_{i,t} \right)\text{log } \left(1-\lambda_{i,t}^{\text{death}}\right)\right]$} is given by:
+Similarly, we estimate the parameters for a model on the probability of death in year $t$ given that an individual was alive at the end of $t-1$\footnote{Weighted version: $\ell_{\text{death}} = \sum_{i,t} \hat{\omega}_{i,t} \left[Y_{i,t}\log \lambda_{i,t}^{\text{death}} + \left(1-Y_{i,t} \right)\log \left(1-\lambda_{i,t}^{\text{death}}\right)\right]$} is given by:
 
 \begin{align}
 \begin{split}
@@ -359,7 +354,7 @@ We then average across the matched treated individuals. Let $\mathcal{T}$ denote
 \tag{8}\label{eq:avg_between_individual}
 \end{align}
 
-In Equation \ref{eq:avg_between_individual}, we plug in the four different combinations to obtain \textit{population} averages of the rehabilitation risk under the hypothetical divorce status, $d$ and mortality risk under the hypothetical divorce $d$ combined with the rehabilitation timing of divorce status $d'$ where $d, d' \in \{0,1\}$. We can then decompose the total effect into the direct effect and indirect effect:
+In Equation \ref{eq:avg_between_individual}, we plug in the four different combinations to obtain \textit{population} averages of the rehabilitation risk under the hypothetical divorce status, $d$ and mortality risk under the hypothetical divorce $d$ combined with the rehabilitation timing of divorce status $d'$ where $d, d' \in \{0,1\}$. We can then decompose into the direct effect and indirect effect:
 
 \begin{align}
 \begin{split}
@@ -372,7 +367,9 @@ In Equation \ref{eq:avg_between_individual}, we plug in the four different combi
 
 The total effect is simply answering what the difference in mortality risk is between divorced and non-divorced individuals within five years. The direct effect captures part of the difference in mortality risk related to divorce but unrelated to rehabilitation, i.e. given that rehabilitation timing is held constant, how does divorce (potentially operating through financial strain, loneliness, stress) affect mortality risk. The indirect effect answers how much of the difference in mortality risk is attributed to divorce shifting individuals onto the rehabilitation timing distribution typical of divorced individuals. We calculated interventional direct and indirect effects (\citeauthor*{vanderweele2014effect}, \citeyear{vanderweele2014effect}) which is different from natural direct and indirect effects  (\citeauthor{pearl2001direct}, \citeyear{pearl2001direct}). A natural indirect effect answers what would happen to individual $i$'s mortality risk if their rehabilitation timing shifted from what it looks like when individual $i$ is non-divorced to what it would look like if individual $i$ is divorced while holding divorce status constant at $d=1$. In contrast, an interventional indirect effect answers what would happen to average mortality risk if the population's rehabilitation timing shifts from the distribution typical of non-divorced individuals to a distribution typical of divorced individuals while holding divorce status constant at $d=1$. 
 
-Finally, we then bootstrap the sample 200 times (\citeauthor{efron1993bootstrap}, \citeyear{efron1993bootstrap}) with replacement and repeat the entire procedure. We do this to obtain the 95\% confidence interval for the total, direct and indirect effects. 
+Before computing the decomposition, we check whether the fitted models reproduce the observed data. We simulate each group under its own divorce status and compare the simulated yearly cumulative incidence of musculoskeletal rehabilitation, cumulative mortality, and mean earnings and pension income with the observed values. \textcolor{red}{The reason we do this is because in an earlier version of the code, due to the runaway earnings, the simulated musculoskeletal rehab ame out at 30\% against the true 4.6-8.6\% observed. }
+
+Finally, we then bootstrap the matched pairs 100 times (\citeauthor{efron1993bootstrap}, \citeyear{efron1993bootstrap}) with replacement and repeat the entire procedure. We do this to obtain the 95\% confidence interval for the total, direct and indirect effects. 
 
 
 
@@ -433,22 +430,109 @@ Any rehabilitation before $t_0-1$ & \multicolumn{2}{c}{2} & $0.306$ & \multicolu
 \end{minipage}
 \end{table}
 
-Across all 19 variables, the mean absolute SMD falls from 0.34 before matching to 0.01 after. Earnings and pension income are set to 0 when the record for that year is unobserved. Recall that the observability of either variable is informative, reflecting current employee vs pension recipient status (\texttt{income\_source}). Before matching, earnings are missing for 13.0\% of treated and 41.2\% of controls; after matching the missingness is 13.5\% and 14.5\% respectively. Pension income is missing for 91.9\% of trated and 73.2\% of controls before matching, and respectively 91.0\% and 91.1\% after matching. Among person-years with observed eranings, the mean earnings are \texteuro25{,}095 for treated and \texteuro22{,}641 for controls before matching, and respectively \texteuro24{,}649 and \texteuro24{,}446 after matching. The missingness rate for full-time and part-time contribution periods is not only numerically identical but matches pension income missingness almost exactly, which is consistent with all three variables tracking the same employment vs pension status. For a more detailed breakdown, please see the section on \ref{app:descriptives} in the Appendix.
+Across all 19 variables, the mean absolute SMD falls from 0.34 before matching to 0.01 after. Earnings and pension income are set to 0 when the record for that year is unobserved. Recall that the observability of either variable is informative, reflecting current employee vs pension recipient status (\texttt{income\_source}). Before matching, earnings are missing for 13.0\% of treated and 41.2\% of controls; after matching the missingness is 13.5\% and 14.5\% respectively. Pension income is missing for 91.9\% of treated and 73.2\% of controls before matching, and respectively 91.0\% and 91.1\% after matching. Among person-years with observed earnings, the mean earnings are \texteuro25{,}095 for treated and \texteuro22{,}641 for controls before matching, and respectively \texteuro24{,}649 and \texteuro24{,}446 after matching. Similarly, among person-years with observed pension points, the mean pension income is 820.15 for treated and 829.14 for controls, the mean full-time contribution period is 262.10 months for treated and 258.62 for controls and the mean part-time contribution periods is 41.23 months for treated and 43.25 for controls. The missingness rate for full-time and part-time contribution periods is not only numerically identical but matches pension income missingness almost exactly, which is consistent with all three variables tracking the same employment vs pension status. For a more detailed breakdown, please see the section on \ref{app:descriptives} in the Appendix.
 
 
 \subsection{RQ1: Musculoskeletal rehabilitation}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lcc}
+		\toprule
+		& Estimate & 95\% CI \\
+		\midrule
+		\multicolumn{3}{l}{\textit{Panel A: Hazard model (relative scale)}} \\ 
+		\midrule
+		Odds ratio (treated vs.\ control) & 1.046 & [0.979, 1.117] \\
+		& \multicolumn{2}{c}{$z = 1.33$, \quad $p = 0.184$} \\ \midrule
+		\multicolumn{3}{l}{\textit{Panel B: Cumulative incidence at five years (absolute scale)}} \\ \midrule
+		Divorced & 7.85\% & [7.50\%, 8.18\%] \\
+		Controls & 7.52\% & [7.12\%, 7.92\%] \\
+		Risk difference (per 1{,}000) & 3.2 & [$-$1.9, 8.1] \\
+		Risk ratio & 1.043 & [0.975, 1.113] \\
+		\bottomrule
+	\end{tabular}
+	\caption{Effect of divorce on first musculoskeletal rehabilitation entry}
+	\label{tab:rq1_main_effect}
+	\vspace{0.5em}
+	{\footnotesize\RaggedRight Notes: Person-years: 219{,}471 \quad Matched sets: 22{,}804 \quad Events: 3{,}505. Standard errors clustered on the matched pair. Confidence intervals from 200 bootstrap replicates, resampling whole matched sets. Risk difference is treated minus control.\par}
+\end{table}
+
+Panel A in Table \ref{tab:rq1_main_effect} reports the discrete-time hazard model in Equation \ref{eq:rq1_equation}. The odds ratio is 1.046, i.e. divorced individuals have 4.6\% higher odds of starting a musculoskeletal rehabilitation in any given follow-up year compared to controls. However, the estimate is not statistically significant at the 5\% level. Panel B reports cumulative incidence functions on the matched cohort, with death as a competing event. 7.85\% of divorce individuals have started a musculoskeletal rehabilitation compared with 7.52\% of controls. This result is also not statistically significant at the 5\% level. 
+
+\begin{table}[H]
+	\centering
+	\small
+	\setlength{\tabcolsep}{5pt}
+	\begin{tabular}{lrrrrr}
+		\toprule
+		Follow-up year
+		& Divorced
+		& Controls
+		& Cumulative RD
+		& Incremental RD
+		& 95\% CI \\
+		& (\%)
+		& (\%)
+		& per 1,000
+		& per 1,000
+		&  \\
+		\midrule
+		\multicolumn{6}{l}{\textit{Male}} \\ \midrule
+		1 & 1.83 & 1.82 &  0.09 &  0.09 &\\
+		2 & 3.42 & 3.63 & $-2.14$ &  $-2.23$ & \\
+		3 & 5.04 & 5.23 & $-1.87$ &  0.27 &\\
+		4 & 6.55 & 6.65 & $-0.98$ &  0.89& \\
+		5 & 7.81 & 7.80 &  0.09  & 1.07& $[-6.4,\ 7.1]$ \\
+		%\addlinespace
+		\midrule
+		\multicolumn{6}{l}{\textit{Female}} \\ \midrule
+		1 & 1.50 & 1.63 & $-1.29$ & $-1.29$ & \\
+		2 & 3.17 & 2.99 &  1.81 & 3.10 &\\
+		3 & 4.83 & 4.42 &  4.05 & 2.24 & \\
+		4 & 6.55 & 5.96 &  5.95 &  1.90 & \\
+		5 & 7.88 & 7.26 &  6.21 & 0.26 & $[-0.4,\ 13.6]$   \\
+		\addlinespace
+		Female $-$ male, year 5
+		& \multicolumn{2}{c}{}
+		& 6.12
+		&
+		&  $[-2.9,\ 16.2]$\\
+		\bottomrule
+	\end{tabular}
+	\caption{Musculoskeletal rehabilitation: heterogeneity by gender}
+	\label{tab:rq1_gender}
+	\begin{minipage}{0.94\textwidth}
+		\footnotesize
+		\vspace{0.5em}
+		\textit{Notes:} Cumulative incidence of first musculoskeletal	rehabilitation, with death treated as a competing event. RD denotes
+		the risk difference, calculated as divorced minus control. The sample contains 11,201 matched male pairs and 11,603 matched female pairs.  Confidence intervals are reported only for the prespecified five-year endpoint. The female-minus-male estimate tests whether the five-year risk difference differs by gender ($p=0.27$). Inference uses 200 bootstrap replications stratified by gender.
+	\end{minipage}
+\end{table}
+
+
+Table \ref{tab:rq1_gender} displays the five-year cumulative effect of divorce on starting a musculoskeletal rehabilitation. For men, the five-year cumulative risk difference is 0.09 per 1,000 between divorced and controls, while for women, it is much larger at 6.2 per 1,000 although both estimates are statistically insignificant. The overall incidence among divorced men and women are also very similar at year 5 (7.81\% and 7.88\% respectively). The gender difference arises primarily from the contrast between divorced and controls of the same gender rather than substantially difference rehabilitation incidence between males and females overall. For women, the bulk of the risk difference is emerges in years $t_0 +2$ to $t_0+4$, and the incremental difference is almost zero by year 5. For men, controls have a modestly higher cumulative incidence compared to the divorced in years $t_0+2$ to $t_0+4$. The largest difference occurs in $t_0+2$ where the cumulative risk among controls is 2.14 per 1,000 higher than divorced men. Similar to women, the risk difference almost disappears by year 5. 
+
+One possible interpretation is that divorce affects the transition from latent or previously untreated musculoskeletal problems into formal rehabilitation differently for men and women. Biological differences in susceptibility to musculoskeletal conditions may shape the underlying health problems on which these post-divorce processes operate, but they cannot by themselves explain the opposite divorce–control contrasts observed within gender. The timing is also consistent with differences in health-care seeking and social support following divorce. For example, the loss of spousal encouragement may delay help-seeking among some divorced men, whereas changes in household responsibilities, time constraints, or economic circumstances may alter women’s willingness or ability to enter rehabilitation. These mechanisms cannot be distinguished in the administrative data and should therefore be regarded as possible explanations rather than established channels. Moreover, the formal female-minus-male contrast is not statistically significant (\(p=0.27\)), so the apparent gender difference should be interpreted as suggestive rather than conclusive evidence of effect heterogeneity.
+
+Given these results, it is reasonable to question whether there are biological differences in susceptibility to musculoskeletal diseases. \citeauthor{wolf2015male} (\citeyear{wolf2015male}) find that women appear more biologically susceptible to particular degenerative and joint conditions due to differences in anatomy, hormones and biomechanics. However, certain injury patterns are more common in men, and when men develop osteoporotic hip fractures, outcomes may be worse. Differences in delayed access also 
+
+
+A possible interpretation is that divorce exposes the differences in approaches to healthcare seeking between genders and how those approaches interact with social support and expected household responsibilities after divorce. For example, loss of spousal support may delay care among divorced men but changes in household responsibilities may affect the willingness of women to enter rehabilitation. However, these mechanisms cannot be distinguished in the data. 
+
+
 
 {
 \color{red}
 \begin{itemize}
     
-\item How much more likely are divorced people to start rehab than almost identical non-divorced people?
-\item Does adding leftover covariates which were not well balanced affect the above result?
-\item Does the risk mostly show up in the year following divorce or does it creep up by year 5?
-\item What is the share of divorced people who started rehab by year 5 compared to controls?
+\item[DONE] How much more likely are divorced people to start rehab than almost identical non-divorced people?
+\item[NA] Does adding leftover covariates which were not well balanced affect the above result?
+\item[DONE] Does the risk mostly show up in the year following divorce or does it creep up by year 5?
+\item[DONE] What is the share of divorced people who started rehab by year 5 compared to controls?
+\item[DONE] What is the difference in rehab risk between genders?
 \item What is the difference in the results when lag1 spec is used versus lag3 spec?
-\item What is the difference in rehab risk between genders?
-\item Of the matches, how many have a full five years of usable follow up data?
+
 \end{itemize}
 }
 
@@ -513,13 +597,65 @@ We first estimate the parameters of the model for \texttt{income\_source}. Let \
 
 where $c_k$ is the constant and $\tau_{k,t}$ is the time fixed effect at year $t$ for category $k$. 
 
-Then, we estimate the parameters for the models on \texttt{income} and \texttt{pension\_income} using the equation structure below. Let $A_{i,t}$ represent \texttt{income} and \texttt{pension\_income}:
+Then, we estimate the parameters for the models on \texttt{income} and \texttt{pension\_income}. Let $A_{i,t}^v$ represent \texttt{income} and \texttt{pension\_income}. The first part is a logit for whether the amount is positive:
+
+\begin{align*}
+\Pr\!\left(A_{i,t}^v \mid \cdot\right)
+&=
+\Lambda\!\Big(
+    a_v
+    + b_v D_i
+    + \mathbf{z}_i' g_v
+    + \mathbf{L}_{i,t-1}'g_{L,v}
+    + m_v M_{i,t-1}
+    + n_v M_{i,t} \\
+&\qquad
+    + \tau_{v,t}^0
+    + \phi_v' \mathbbm{1}\!\left[\widetilde{S}_{i,t}\right]
+\Big)
+\end{align*}
+
+The second part is a linear regression of the log amount among individuals with a positive \texttt{income} or \texttt{pension\_income}:
 
 \begin{align*}
 \log(1+A_{i,t}^v) = c_v + \beta_v D_i + \mathbf{z}_i'\gamma_v + \mathbf{L}_{i,t-1}'\gamma_{L,v} + \mu_v M_{i,t-1} + \zeta_v M_{i,t} + \tau_{v,t} + \phi_v' \mathbbm{1}[\tilde S_{i,t}] + \varepsilon_{i,t}^v
 \end{align*}
 
-where $v$ indicates whether we are estimating \texttt{income} or \texttt{pension\_income}, $c_v$ is the constant, $\tilde S_{i,t}$ was the previously estimated \texttt{income\_source} and $\tau_{v,t}$ is the time fixed effect. 
+where $v$ indicates whether we are estimating \texttt{income} or \texttt{pension\_income}, $a_v$ and $c_v$ are constants, $\tilde S_{i,t}$ was the previously estimated \texttt{income\_source}, $\tau_{v,t}^0$ and $\tau_{v,t}$ are time fixed effects. In the simulation, \texttt{income} is drawn only if $\tilde{S}_{i,t}$ has the values `earnings only' or `earnings and pension', while \texttt{pension\_income} is drawn when $\tilde{S}_{i,t}$ has the values `pension only' or `earnings and pension', otherwise the amount is zero. If the first part leads to a positive amount, then we add a random error within the estimated residual standard deviation. This is to introduce some variation in case the simulated individual shares identical characteristics with others. We also cap the result at the largest observed log amount. 
+
+Next, we estimate the models for the four employment days related counts $E_{i,t}^e$ where $e$ indicates whether we are estimating the days in the year for \texttt{regular\_employment}, \texttt{unemployment}, \texttt{marginal\_employment} or \texttt{care\_leave}. This is also the order in which we estimate and update. Each count again has two parts. The first part is a logit for $E_{i,t}^e > 0$:
+
+\begin{align*}
+\Pr\!\left(E_{i,t}^e>0 \mid \cdot\right)
+&=
+\Lambda\!\Big(
+    a_e
+    + b_e D_i
+    + \mathbf{z}_i' g_e
+    + \mathbf{L}_{i,t-1}'g_{L,e}
+    + m_e M_{i,t-1}
+    + n_e M_{i,t} \\
+&\qquad
+    + \tau_{e,t}^0
+    + \phi_e' \mathbbm{1}\!\left[\widetilde{S}_{i,t}\right]
+    + \tilde{\mathbf{A}}_{i,t}' \pi_e^0 + \tilde{\mathbf{E}}_{i,t}^{<e'} \theta_e^0
+\Big)
+\end{align*}
+
+where $\tilde{\mathbf{A}}_{i,t}$ contains $\log(1+\tilde{A}_{i,t}^v)$ for the simulated \texttt{income} and \texttt{pension\_income} and $\tilde{\mathbf{E}}_{i,t}'^{<e}$ contains $\log(1+\tilde{E}_{i,t}^{e'})$ for the day counts simulated before $e$. For the second part, we transform the number of days into a share of the largest observed count $\bar{E}^e \leq 366$, $q_{i,t}^e = (E_{i,t}^e - 0.5)/\bar{E}^e \in (0,1)$, where subtracting half a day keeps the share strictly between 0 and 1. Among individuals with at least one day, we estimate:
+
+\begin{align*}
+\log\left(\frac{q_{i,t}^e}{1-q_{i,t}^e}\right) & =
+c_e + \beta_e D_i + \mathbf{z}_i' \gamma_e + \mathbf{L}_{i,t-1}'\gamma_{L,e} + \mu_e M_{i,t-1} + \zeta_e M_{i,t} \\
+&\qquad
++ \tau_{e,t}^0 + \phi_e' \mathbbm{1}\!\left[\widetilde{S}_{i,t}\right] + \tilde{\mathbf{A}}_{i,t}' \pi_e^0 + \tilde{\mathbf{E}}_{i,t}^{<e'} \theta_e + \epsilon_{i,t}^e
+\end{align*}
+
+as a first step in avoiding impossible values. We then obtain the mean $\hat{\mu}_{i,t}^e$ and residual standard deviation, $\hat{\sigma}_e = \left(\Sigma_{i,t} \hat{\omega}_{i,t}(\hat{\epsilon}_{i,t}^e)^2 / \Sigma_{i,t} \hat{\omega}_{i,t}\right)^{0.5}$. The number of days is then:
+
+\begin{align*}
+\tilde{E}_{i,t}^e = \min \left\{ \max \left\{ \operatorname{round} \left(\bar{E}^e \Lambda \left(\hat{\mu}_{i,t}^e + \hat{\sigma}_{e} u_{i,t}^e \right) + 0.5\right), 1\right\}, \bar{E}^e\right\}, \qquad u_{i,t}^e \sim N(0,1)
+\end{align*}
 
 We finally estimate the parameters for the model on the binary indicators \texttt{non\_ms\_rehab} and \texttt{unsuccessful\_rehab\_application\_this\_year}:
 
@@ -559,7 +695,7 @@ We finally estimate the parameters for the model on the binary indicators \textt
 \end{align*}
 
 
-where $B_{i,t}^1$ is a dummy representing \texttt{unsuccessful\_rehab\_application\_this\_year} and is estimated first, $B_{i,t}^2$ is a a dummy representing \texttt{non\_ms\_rehab} which is estimated second hence also contains the predicted $\widetilde{B}_{i,t}^{1}$ and $\widetilde{\mathbf{A}}_{i,t}$ is a vector containing the drawn level (not $\log$) amounts of (\texttt{income } \texttt{pension\_income}) which we just estimated in the log-scale linear regressions above.
+where $B_{i,t}^1$ is a dummy representing \texttt{unsuccessful\_rehab\_application\_this\_year} and is estimated first, $B_{i,t}^2$ is a a dummy representing \texttt{non\_ms\_rehab} which is estimated second hence also contains the predicted $\widetilde{B}_{i,t}^{1}$ and $\widetilde{\mathbf{A}}_{i,t}$ is a vector containing the drawn level ($\log (1+x)$ not $\log$) of the simulated current amounts of (\texttt{income}, \texttt{pension\_income}, and days in \texttt{employment}, \texttt{unemployment}, \texttt{marginal\_employment} and \texttt{care\_leave}) which we just estimated in the regressions above.
 
 \subsection*{Descriptive summary}
 \phantomsection
@@ -600,7 +736,7 @@ Total & 41,944,732 & 3,717,941 & 46,029 & & 587,897 & 212,530 & \\
 {\footnotesize\RaggedRight Notes: Each individual is counted once per year and once in the total, so the total is not the sum of the column. Divorces are counted in the year of the first divorce we observe. Of the 46,029 individuals, 45,330 divorce out of the earliest marriage we observe. Rehabilitation counts are successful, completed rehabilitations. MSK stands for musculoskeletal. \par}
 \end{table}
 
-\textcolor{red}{The death column counts records whose year matches the recorded year of death. It is descriptive only. The mortality analysis uses the recorded year of death directly, not these annual records. The 2024 records carry no divorce or rehabilitation information.}
+\textcolor{red}{The death column counts records whose year matches the recorded year of death. It is descriptive only. The mortality analysis uses the recorded year of death directly, not these annual records. The 2024 records carry no divorce or rehabilitation information. Delete the 2024 row. To do: create a new overall data description table where deaths are counted correctly. Rehab codes changed in 2021, musculoskeletal rehab from 2021 needs to include the new codes 53, 56 in addition to leftover code 20. Rehab codes from 2021 range from 40 to 59. }
 
 % \begin{figure}[H]
 % \centering
@@ -762,7 +898,6 @@ In the lag-1 specification, matching only makes the treated and controls similar
 
 \begin{table}[H]
 \centering
-\caption{Outcomes in the five years after $t_0$}
 \begin{tabular}{lrrrr}
 \toprule
  & \multicolumn{2}{c}{Divorced} & \multicolumn{2}{c}{Controls} \\
@@ -777,6 +912,7 @@ Started MSK rehabilitation, then died & 9 & 0.04 & 7 & 0.03 \\
 Total & 22,804 & 100 & 22,804 & 100 \\
 \bottomrule
 \end{tabular}
+\caption{Outcomes in the five years after $t_0$}
 \label{tab:followup}
 \vspace{0.5em}
 \begin{minipage}{\textwidth}
@@ -801,7 +937,7 @@ In the five years after $t_0$, most individuals (90.2\% among treated and 91.3\%
 \item[DONE] Event study coefficients, pre-trend Wald test/joint coefficient test
 \item[DONE] Do people have gaps in the data?
 \item[DONE] What happens in the five year follow up? Do people die before they get the rehab? How many complete the rehab and survive the 5 years? How many neither get rehab nor die in the 5 years?
-\item SMD differences
+\item[DONE] SMD differences
 
 \end{itemize}
 }
