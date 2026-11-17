@@ -1,0 +1,32 @@
+%%
+%% This is file `./beamerfontthemebibcd.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ./beamerfontthemebibcd.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Created by familie redlich AG
+%% Created for Bundesinstitut f^^c3^^bcr Bev^^c3^^b6lkerungsforschung
+%% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{beamerfontthemebibcd}[2024/01/01 0.1.0 BiB Beamer color theme]
+\RequirePackage{fontspec}
+\IfFontExistsTF{Calibri}{
+  \setmainfont{Calibri}
+}{
+  \setmainfont{Carlito}
+}
+\setbeamerfont{title}{size=\huge,series=\bfseries}
+\setbeamerfont{subtitle}{size=\Large,series=\mdseries\itshape}
+\setbeamerfont{author}{size=\Large,series=\bfseries}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
+\setbeamerfont{button}{size=\footnotesize}
+\setbeamerfont{page number in head/foot}{size=\tiny}
+\endinput
+%%
+%% End of file `./beamerfontthemebibcd.sty'.

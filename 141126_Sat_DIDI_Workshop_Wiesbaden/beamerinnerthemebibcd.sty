@@ -1,0 +1,95 @@
+%%
+%% This is file `./beamerinnerthemebibcd.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ./beamerinnerthemebibcd.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Created by familie redlich AG
+%% Created for Bundesinstitut f^^c3^^bcr Bev^^c3^^b6lkerungsforschung
+%% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{beamerinnerthemebibcd}[2024/01/01 0.1.0 BiB Beamer color theme]
+\RequirePackage{ifthen}
+\RequirePackage{marvosym}
+\RequirePackage{setspace}
+\setbeamertemplate{headline}[custom]
+\defbeamertemplate{footline}{smoothbars theme}{%
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip2pt\insertnavigation{\paperwidth}\vskip4pt
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{frametitle}{%
+  \setstretch{1}
+  \vspace*{3.13cm}\color{BiBViolettK20}\bfseries\insertframetitle\par
+  \ifx\insertframesubtitle\@empty
+  \else
+    \vspace*{0.69cm}\color{black}\large\textit{\insertframesubtitle}\par
+  \fi
+  \vspace*{0.46cm}
+}
+\defbeamertemplate*{title page}{customized}[1][]{%
+  \newcommand{\btVFill}{\vskip0pt plus 1filll}
+  \vspace{2.6cm}
+  % define a new box for the title, to calculate size and vertical space
+  \newsavebox{\titlebox}
+  \savebox{\titlebox}{%
+    \begin{minipage}{17.13cm}
+      \raggedright
+      \usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle\par
+    \end{minipage}
+  }
+  \newlength{\titleboxheight}
+  \settoheight{\titleboxheight}{\usebox{\titlebox}}
+  \newlength{\subtitlevspace}
+  \addtolength{\subtitlevspace}{\dimexpr(3.80cm-\titleboxheight)}
+
+  % add Title
+  \usebox{\titlebox}\par
+
+  % add Subtitle
+  \vspace{\subtitlevspace}
+  \begin{minipage}{17.13cm}
+    \raggedright
+    \usebeamercolor{subtitle}\usebeamerfont{subtitle}\insertsubtitle\par
+  \end{minipage}
+
+  % add Author
+  \btVFill
+  {\usebeamercolor{author}\usebeamerfont{author}\insertauthor}
+  \vspace{2cm}
+}
+\setbeamertemplate{section in toc}{
+  \color{black}\Large\inserttocsectionnumber.\ \inserttocsection\par
+  \vspace{0.5cm}
+}
+\defbeamertemplate*{section page}{customized}[1][]{
+  \vspace{10.37cm}\color{black}\LARGE\textbf{\insertsection}
+}
+\setbeamertemplate{itemize item}{\small\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\footnotesize\color{black}$\bullet$}
+\setbeamertemplate{itemize subsubitem}{\scriptsize\color{black}$\bullet$}
+\setbeamertemplate{enumerate item}{\small\color{black}\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\footnotesize\color{black}\insertsubenumlabel.}
+\setbeamertemplate{enumerate subsubitem}{\scriptsize\color{black}\insertsubsubenumlabel.}
+\newlength{\buttonsymbolspacing}
+\settoheight{\buttonsymbolspacing}{0.3cm}
+\renewcommand{\insertgotosymbol}{\footnotesize\ForwardToIndex \hspace{\buttonsymbolspacing}}
+\renewcommand{\insertreturnsymbol}{\footnotesize\Rewind \hspace{\buttonsymbolspacing}}
+\renewcommand{\insertskipsymbol}{\footnotesize\ForwardToEnd \hspace{\buttonsymbolspacing}}
+\setbeamertemplate{button}{
+  \tikz
+  \node[
+  inner xsep=0.3cm,
+  draw=BiBViolettK40!100,
+  fill=BiBViolettK40!100,
+  rounded corners=4pt]  {\textbf{\insertbuttontext}};
+}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\endinput
+%%
+%% End of file `./beamerinnerthemebibcd.sty'.

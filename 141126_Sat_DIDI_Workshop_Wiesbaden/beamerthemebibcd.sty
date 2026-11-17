@@ -1,0 +1,105 @@
+%%
+%% This is file `./beamerthemebibcd.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ./beamerthemebibcd.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Created by familie redlich AG
+%% Created for Bundesinstitut f^^c3^^bcr Bev^^c3^^b6lkerungsforschung
+%% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{beamerthemebibcd}[2024/01/01 0.1.0 BiB Beamer theme]
+\RequirePackage{bookmark}
+\RequirePackage{environ}
+\RequirePackage{hyperref}
+\RequirePackage{ifthen}
+\RequirePackage{keyval}
+\RequirePackage{tikz}
+\hypersetup{
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=4,
+  colorlinks=false,
+  linkcolor=black,
+  anchorcolor=black,
+  citecolor=black,
+  filecolor=black,
+  urlcolor=black,
+  frenchlinks=false
+}
+\geometry{paperwidth=33.87cm, paperheight=19.05cm}
+\newcommand{\bibtitlebackground}{BiB_PowerPoint_Grafiken_1_Titel.pdf}
+\newcommand{\bibtitleenbackground}{BiB_PowerPoint_Grafiken_8_Titel_EN.pdf}
+\newcommand{\bibagendabackground}{BiB_PowerPoint_Grafiken_2_Agenda_Fazit.pdf}
+\newcommand{\bibsectionbackground}{BiB_PowerPoint_Grafiken_3_Trenner.pdf}
+\newcommand{\bibdefaultbackground}{BiB_PowerPoint_Grafiken_4_Standardfolie.pdf}
+\newcommand{\bibendscreenbackground}{BiB_PowerPoint_Grafiken_5_Danke_web.pdf}
+\newcommand{\bibendlogodebackground}{BiB_PowerPoint_Grafiken_6_Danke_Logo_DE.pdf}
+\newcommand{\bibendlogoenbackground}{BiB_PowerPoint_Grafiken_7_Danke_Logo_EN.pdf}
+\makeatletter
+\define@key{bibframe}{frametype}[default]{%
+  \ifthenelse{\equal{#1}{title}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibtitlebackground}%
+    }
+  }{}
+  \ifthenelse{\equal{#1}{titleen}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibtitleenbackground}%
+    }
+  }{}
+  \ifthenelse{\equal{#1}{section}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibsectionbackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+  \ifthenelse{\equal{#1}{agenda}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibagendabackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+  \ifthenelse{\equal{#1}{thankyou}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibendscreenbackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+  \ifthenelse{\equal{#1}{thankyoude}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibendlogodebackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+  \ifthenelse{\equal{#1}{thankyouen}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibendlogoenbackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+  \ifthenelse{\equal{#1}{default}}{%
+    \setbeamertemplate{background canvas}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{\bibdefaultbackground}%
+    }
+    \setbeamertemplate{headline}[custom]
+  }{}
+}
+\makeatother
+\NewEnviron{bibframe}[1][frametype=default]{%
+  \setkeys{bibframe}{#1}%
+  \begin{frame}[environment=bibframe]%
+    \BODY%
+  \end{frame}%
+}
+\useinnertheme{bibcd}
+\useoutertheme{bibcd}
+\usecolortheme{bibcd}
+\usefonttheme{bibcd}
+\endinput
+%%
+%% End of file `./beamerthemebibcd.sty'.

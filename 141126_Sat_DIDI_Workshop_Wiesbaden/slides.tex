@@ -1,0 +1,862 @@
+\documentclass[t,20pt]{beamer}
+
+% BiB corporate theme (local .sty files in this folder). The font theme loads
+% fontspec, so this deck must be built with XeLaTeX (see .latexmkrc).
+\usetheme{bibcd}
+
+\usepackage[ngerman,english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+% Figures come straight from the analysis folder, so the slides always show
+% the current versions.
+\graphicspath{{../figures/}}
+
+% Slightly larger list text than the template default, for readability in the room.
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\footnotesize}
+
+\hypersetup{pdftitle={Divorce-induced health decline and the impact on mortality risk},
+            pdfauthor={Kar Man Tan, Pavel Grigoriev}}
+
+% Helpers
+\newcommand{\hl}[1]{\textcolor{BiBViolett}{\textbf{#1}}}           % highlight
+\newcommand{\ct}[1]{{\color{BiBBlau80}(#1)}}                        % in-text citation
+\newcommand{\slidenote}[1]{\par\vfill{\footnotesize\color{gray}#1\par}} % note at slide bottom
+\newcommand{\ci}[2]{{\footnotesize[$#1$, $#2$]}}                    % confidence interval
+\newcommand{\Lam}{\Lambda}
+% Smaller list text for dense slides. Beamer sets the list font itself, so a
+% surrounding {\small ...} has no effect on itemize; use this at the start of a frame.
+\newcommand{\compactlists}{%
+  \setbeamerfont{itemize/enumerate body}{size=\small}%
+  \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{Divorce-induced health decline and the impact on mortality risk}
+\subtitle{DIDI Workshop, Wiesbaden\\23 Nov 2026}
+\author{Kar Man Tan and Pavel Grigoriev}
+
+\begin{document}
+
+% =====================================================================
+\begin{bibframe}[frametype=titleen]
+  \titlepage
+\end{bibframe}
+
+\begin{bibframe}[frametype=agenda]
+  \frametitle{Contents}
+  \begin{columns}
+    \begin{column}{10.5cm}
+    \end{column}
+    \begin{column}{18.5cm}
+      \tableofcontents[hideallsubsections]
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+% =====================================================================
+\section{Motivation and introduction}
+
+\begin{bibframe}
+  \frametitle{Why divorce, health and mortality?}
+  \begin{itemize}
+    \item Divorce is consistently linked to higher mortality: mean hazard ratio \hl{1.30} across 104 studies \ct{Shor et al., 2012}
+    \item The mechanisms are poorly identified
+    \begin{itemize}
+      \item Health is both a consequence and a cause of divorce \ct{Joung et al., 1998; Torvik et al., 2015}
+      \item Who divorces is not random
+    \end{itemize}
+    \item Germany: very little evidence. Brockmann \& Klein (2004), using the SOEP survey: divorced men +51\% mortality, no significant effect for women
+    \item Since 2011, DRV registers can be linked: income biographies, divorce dates (pension splitting), rehabilitation histories and deaths
+    \item[$\rightarrow$] Project \hl{DiDi}: \textit{Divorce and Diagnosis} (BiB, Hertie School, Charité, DRV)
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Why musculoskeletal (MSK) rehabilitation?}
+  \begin{itemize}
+    \item MSK conditions are the largest source of lost work capacity in Germany
+    \begin{itemize}
+      \item 21\% of certified incapacity days in 2024, the largest diagnostic group \ct{BAuA, 2026}
+      \item Orthopaedic conditions are the most common completed medical rehabilitation: 35.6\% (women), 35.5\% (men) \ct{DRV Reha-Atlas, 2024}
+      \item In our data: 46.5\% of all completed rehabilitation spells
+    \end{itemize}
+    \item The DRV grants rehabilitation only once a condition is chronic and \hl{threatens the ability to work} \ct{DRV, 2005}
+    \item Our outcome therefore measures crossing an \hl{institutional threshold}, not the onset of disease
+    \begin{itemize}
+      \item Does divorce push people with a latent vulnerability across that threshold?
+    \end{itemize}
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Research questions and approach}
+  \begin{block}{RQ1}
+    Does divorce raise the risk of a first musculoskeletal rehabilitation?
+  \end{block}
+  \begin{block}{RQ2}
+    Is part of the excess mortality after divorce due to divorce-induced musculoskeletal deterioration?
+  \end{block}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Annual risk sets: first observed divorce in year $t_0$ vs.\ people not yet divorced in $t_0$
+    \item Propensity score matching on up to three pre-divorce years
+    \item Discrete-time hazards, cumulative incidence of rehabilitation, cumulative mortality
+    \item Interventional mediation analysis via g-computation (RQ2)
+  \end{itemize}
+\end{bibframe}
+
+% =====================================================================
+\section{Literature review}
+
+\subsection{Divorce and mortality}
+\begin{bibframe}
+  \frametitle{Literature: divorce and mortality}
+  \begin{itemize}
+    \item Meta-analysis: hazard ratio 1.30 for the divorced; men 1.37, women 1.22; the gender gap narrows with age \ct{Shor et al., 2012}
+    \item Timing differs across countries
+    \begin{itemize}
+      \item Finland: men's excess mortality (accidents, violence, alcohol) is highest right after divorce \ct{Metsä-Simola \& Martikainen, 2013}
+      \item Norway: men's excess grows with time since divorce; remarriage changes it \ct{Berntsen \& Kravdal, 2012}
+    \end{itemize}
+    \item Germany: selection into marriage; longer marriages go with lower mortality \ct{Brockmann \& Klein, 2004}
+    \item Designs aimed at causality shrink the effect
+    \begin{itemize}
+      \item Exposure definition matters: continuously divorced HR 1.66 vs.\ ever divorced 0.98 \ct{Sbarra \& Nietert, 2009}
+      \item Norway: HR 1.59 (men) and 1.47 (women) disappear within twin pairs \ct{Wiborg \& Gugushvili, 2025}
+    \end{itemize}
+  \end{itemize}
+\end{bibframe}
+
+\subsection{Divorce and health}
+\begin{bibframe}
+  \frametitle{Literature: divorce and health}
+  \begin{itemize}
+    \item Poor health often \hl{precedes} divorce
+    \begin{itemize}
+      \item Health complaints: 1.5$\times$, multiple chronic conditions: 2$\times$ more likely to divorce \ct{Joung et al., 1998}
+      \item Health behaviours and distress predict divorce \ct{Torvik et al., 2015}; psychotropic use is elevated five years before divorce \ct{Metsä-Simola \& Martikainen, 2013}
+    \end{itemize}
+    \item Accounting for selection leaves small effects
+    \begin{itemize}
+      \item Marginal effect only for men under 45 \ct{Kohn \& Averett, 2014}
+      \item After matching, only the previously depressed have depressive episodes \ct{Sbarra et al., 2014}
+    \end{itemize}
+    \item Mental health: 3$\times$ risk of psychiatric inpatient care \ct{Björkenstam et al., 2013}; higher mental-health spending \ct{Meulman et al., 2023}
+    \item Physical health is mixed: more MSK and cardiovascular complaints, not significant \ct{meta-analysis of 94 studies, Pellón-Elexpuru et al., 2024}
+  \end{itemize}
+\end{bibframe}
+
+\subsection{Divorce and musculoskeletal disease}
+\begin{bibframe}
+  \frametitle{Literature: divorce and MSK disease}
+  \begin{itemize}
+    \item Direct evidence is limited and contradictory
+    \begin{itemize}
+      \item Chronic pain is more common among the divorced, separated and widowed; MSK causes 66.8\% of chronic pain \ct{Sjøgren et al., 2009}
+      \item SHARE: more chronic MSK pain among divorced women, less among men \ct{Cimas et al., 2018}
+      \item HRS: entering divorce lowers the probability of high-impact pain \ct{Choi \& Wagner, 2026}; no effect in Norway \ct{Andorsen et al., 2017}
+    \end{itemize}
+    \item Social support is the more consistent link
+    \begin{itemize}
+      \item Support goes with less persistent pain; divorced or separated people without a network have more \ct{Prang et al., 2015}
+      \item Lack of support: more MSK morbidity, sickness absence, failure to return to work \ct{Woods, 2005}
+      \item Divorce is followed by work-limiting health, especially without remarriage \ct{Couch et al., 2015; Tamborini et al., 2016}
+    \end{itemize}
+  \end{itemize}
+\end{bibframe}
+
+\subsection{Musculoskeletal disease and death}
+\begin{bibframe}
+  \frametitle{Literature: MSK disease and death}
+  \begin{itemize}
+    \item MSK conditions rarely kill directly; they act indirectly
+    \begin{itemize}
+      \item Inflammation raises cardiovascular risk \ct{England et al., 2018}; cardiovascular mortality is about 60\% higher in rheumatoid arthritis \ct{Meune et al., 2009}
+      \item Pain, then inactivity, then lower fitness and comorbidity: hip and knee osteoarthritis go with higher all-cause mortality \ct{Nüesch et al., 2011; Hawker et al., 2014}
+    \end{itemize}
+    \item Sickness absence due to MSK diagnoses: 1.3--1.5$\times$ all-cause mortality \ct{Jansson et al., 2012}
+    \item Rehabilitation can help: work-related medical rehabilitation raises return to work by 5.8 pp \ct{Bethge et al., 2019}
+    \item[$\rightarrow$] A first DRV MSK rehabilitation marks \hl{serious, work-relevant impairment} and the receipt of \hl{potentially beneficial treatment}
+  \end{itemize}
+\end{bibframe}
+
+% =====================================================================
+\section{Data and methodology}
+
+\subsection{Data}
+\begin{bibframe}
+  \frametitle{Data: linked DRV registers, 2011--2023}
+  \begin{itemize}
+    \item DRV Research Data Centre: datasets linkable through a unique identifier from reporting year 2011
+    \item 20\% sample: \hl{17,559,407 individuals}, \hl{185,518,738 person-years}
+  \end{itemize}
+  \vspace{0.2cm}
+  {%
+  \begin{tabularx}{\linewidth}{@{}l Y l@{}}
+    \toprule
+    Dataset & Content & Role \\
+    \midrule
+    AKVS & Actively insured persons (mostly employed) & Life course \\
+    LTVS & Latently insured: contributions paused, not retired (unemployed, in education, parental leave, \dots) & Life course \\
+    RTBN & Pension portfolio: pension recipients & Life course \\
+    \midrule
+    TD & Pension terminations due to death & Mortality \\
+    RSD & Completed rehabilitations: diagnosis group, benefit type, start and end dates & MSK rehabilitation \\
+    VA & Pension equalisation statistics: date of divorce, supplements and deductions & Divorce \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Merging the datasets}
+  \centering
+  \begin{tikzpicture}[
+      font=\small,
+      src/.style={draw=BiBBlau, fill=BiBBlau20, rounded corners=3pt, align=center,
+                  text width=4.2cm, minimum height=3.5cm, inner sep=4pt},
+      sup/.style={draw=BiBTuerkis, fill=BiBTuerkis20, rounded corners=3pt, align=center,
+                  text width=4.2cm, minimum height=3.5cm, inner sep=4pt},
+      arr/.style={-{Stealth[length=3mm]}, thick, color=BiBBlauK20}
+    ]
+    % Row 1: source datasets
+    \node[src] (akvs) at (2.4,9.6)  {\textbf{AKVS}\\ actively insured};
+    \node[src] (ltvs) at (7.3,9.6)  {\textbf{LTVS}\\ latently insured, not retired};
+    \node[src] (rtbn) at (12.2,9.6) {\textbf{RTBN}\\ pension recipients};
+    \node[sup] (td) at (17.4,9.6) {\textbf{TD}\\ deaths\\[2pt] inconsistent with BASE: 102 people dropped};
+    \node[sup] (rsd)  at (22.3,9.6) {\textbf{RSD}\\ rehabilitation\\[2pt] successful, completed spells; drop $\geq 3$ spells per year ($\approx$5\%)};
+    \node[sup] (va)   at (27.2,9.6) {\textbf{VA}\\ divorces\\[2pt] final divorces with pension equalisation};
+    % Row 2: BASE
+    \node[draw=BiBBlau, fill=BiBBlau40, rounded corners=3pt, align=center, text width=13.6cm,
+          minimum height=2.0cm] (base) at (7.3,5.6)
+          {\textbf{BASE} (merged by the DRV): full life course: working, between jobs, retired\\
+           duplicate rows: 11.3 million excess rows dropped, most complete row kept};
+    % Row 3: analysis panel
+    \node[draw=BiBViolett, fill=BiBViolett20, rounded corners=3pt, align=center, text width=28.4cm,
+          minimum height=1.6cm, font=\small] (panel) at (14.8,2.3)
+          {\textbf{Person-year panel 2011--2023}: 17.6 million people, 185.5 million person-years};
+    \foreach \n in {akvs,ltvs,rtbn} \draw[arr] (\n.south) -- (\n.south |- base.north);
+    \draw[arr] (base.south) -- (base.south |- panel.north);
+    \foreach \n in {td,rsd,va} \draw[arr] (\n.south) -- (\n.south |- panel.north);
+    % Note
+    \node[align=left, text width=28.4cm, font=\footnotesize, text=gray] at (14.8,0.6)
+      {The VA misses marriages of three years or less, waived equalisation and near-equal incomes: recorded divorces fall
+       from 23,364 (2011) to 9,350 (2023), faster than the national divorce rate.};
+  \end{tikzpicture}
+\end{bibframe}
+
+\subsection{Matching strategy}
+\begin{bibframe}
+  \frametitle{Design: annual risk sets around divorce}
+  \centering
+  \begin{tikzpicture}[font=\footnotesize, x=1cm, y=1cm]
+    \def\u{2.35}
+    % positions: t0-3 at 1.2 ... t0+5 at 1.2+8u ; t0+10 shown after a break
+    \foreach \k/\lab in {0/{t_0-3},1/{t_0-2},2/{t_0-1},3/{t_0},4/{t_0+1},5/{t_0+2},6/{t_0+3},7/{t_0+4},8/{t_0+5}} {
+      \draw[thick] ({1.2+\k*\u},0.55) -- ({1.2+\k*\u},0.85);
+      \node[below] at ({1.2+\k*\u},0.5) {$\lab$};
+    }
+    \draw[thick] (0.2,0.7) -- (21.6,0.7);
+    \draw[thick, dashed] (21.6,0.7) -- (25.4,0.7);
+    \draw[thick, -{Stealth[length=3mm]}] (25.4,0.7) -- (29.4,0.7);
+    \draw[thick] (27.6,0.55) -- (27.6,0.85);
+    \node[below] at (27.6,0.5) {$t_0+10$ or 2023};
+    % matching window
+    \fill[BiBBlau20, draw=BiBBlau, rounded corners=2pt] (0.3,2.9) rectangle ({1.2+2*\u+0.9},4.5);
+    \node[align=center, font=\small] at ({1.2+\u},3.7) {\textbf{Matching}\\$t_0-3$ to $t_0-1$};
+    % divorce
+    \fill[BiBRot] ({1.2+3*\u},0.7) circle (0.22);
+    \node[text=BiBRotK20, font=\small] at ({1.2+3*\u},1.45) {\textbf{divorce}};
+    % rehab follow-up
+    \fill[BiBTuerkis20, draw=BiBTuerkis, rounded corners=2pt] ({1.2+4*\u-0.9},2.9) rectangle ({1.2+8*\u+0.9},4.5);
+    \node[align=center, font=\small] at ({1.2+6*\u},3.7) {\textbf{RQ1}: first MSK rehabilitation\\5 years, death as competing event};
+    % mortality follow-up
+    \fill[BiBViolett20, draw=BiBViolett, rounded corners=2pt] ({1.2+4*\u-0.9},1.3) rectangle (28.8,2.5);
+    \node[font=\small] at (20.0,1.9) {\textbf{RQ2}: all-cause mortality, up to $t_0+10$ or 2023};
+  \end{tikzpicture}
+
+  \vspace{0.4cm}
+  \raggedright
+  \begin{itemize}
+    \item \hl{Treated}: first observed divorce from the earliest observed marriage, cohorts 2014--2018
+    \item \hl{Controls}: not yet divorced by $t_0$ (they may divorce later); no recorded end of a first marriage in or before $t_0$
+    \item \hl{Both}: alive at $t_0$, records in $t_0-3$ to $t_0-1$, no MSK rehabilitation up to $t_0$
+    \item Marital status is deliberately \hl{not} used: it is partly built from the VA, so ``married'' controls are disproportionately future divorcees (32\% divorced by 2018 in an earlier run)
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Propensity score matching}
+  \compactlists
+  \begin{columns}[T]
+    \begin{column}{14.4cm}
+      \textbf{Exact matching}: sex $\times$ 5-year age band $\times$ any rehabilitation by $t_0-1$
+
+      \vspace{0.3cm}
+      \textbf{Logit propensity score}, separately for each divorce year:
+      {\small
+      \begin{itemize}
+        \item Age, earnings, pension income, income source, contribution periods
+        \item Rehabilitation history: cumulative (mental-health) rehabilitations, years since last, starts, unsuccessful applications
+        \item Days in regular and marginal employment, unemployment, care leave
+        \item Children, federal state, occupation, education
+        \item Missingness treated as informative (indicators)
+      \end{itemize}
+      }
+    \end{column}
+    \begin{column}{14.4cm}
+      \textbf{Matching algorithm}
+      \begin{itemize}
+        \item Optimal 1:1 matching without replacement, caliper 0.01
+        \item Divorce years in chronological order; used controls leave the pool
+        \item Millions of controls: fit on all treated plus a seeded control sample (up to 500,000), correct the log-odds by $+\log f$ \ct{King \& Zeng, 2001}, then score everyone
+      \end{itemize}
+      \vspace{0.2cm}
+      \textbf{Balance}
+      \begin{itemize}
+        \item Target $|\text{SMD}| < 0.10$ \ct{Austin, 2009}; any remaining imbalance would enter the outcome model
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Why match on three pre-divorce years?}
+  \begin{itemize}
+    \item Matching on $t_0-1$ alone makes pairs alike in that year only; they may have arrived there along different paths
+    \item Event study on lag-1 matched pairs
+    \begin{itemize}
+      \item Within-pair differences from $t_0-3$ to $t_0+5$, relative to $t_0-1$, standard errors clustered by pair
+      \item Joint Wald test on $t_0-3$ and $t_0-2$: significant \hl{pre-trends} in earnings, rehabilitation starts and unsuccessful applications
+    \end{itemize}
+    \item[$\rightarrow$] Match on $t_0-3$, $t_0-2$ \textit{and} $t_0-1$: earnings, pension income, income source, unsuccessful applications, rehabilitation starts and employment days in all three years
+    \item Cost: three observed pre-divorce years are needed, so only divorces in 2014--2018
+  \end{itemize}
+  \vspace{0.3cm}
+  \begin{exampleblock}{Specifications}
+    \textbf{Lag-3, 2014--2018 (preferred)} \quad$\cdot$\quad lag-1, 2014--2018 \quad$\cdot$\quad lag-1, 2012--2018
+  \end{exampleblock}
+\end{bibframe}
+
+\subsection{Identification}
+\begin{bibframe}
+  \frametitle{RQ1: hazard of a first MSK rehabilitation}
+  Follow each matched person from $t_0+1$ to $t_0+5$:
+  \begin{align*}
+    \lambda^{\text{rehab}}_{i,\tau} &= \Pr\left(R_{i,\tau}=1 \mid \text{no MSK rehabilitation before } \tau,\ \text{alive at } \tau\right)\\
+    &= \Lam\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\boldsymbol{\gamma}\right), \qquad \tau = 1,\dots,5
+  \end{align*}
+  {\small
+  \begin{itemize}
+    \item $R_{i,\tau}$: first MSK rehabilitation in year $t_0+\tau$; $D_i$: divorce in $t_0$; $\alpha_\tau$: follow-up-year effects
+    \item Three specifications for $\mathbf{x}_i$: (a) none, matching only; (b) covariates with $|\text{SMD}|>0.10$ after matching (none, so identical to (a)); (c) all covariates in $t_0+\tau-1$ (may themselves be affected by divorce)
+    \item Separately for men and women; standard errors clustered by matched pair
+    \item Absolute scale: 5-year \hl{cumulative incidence} with death as a competing event (discrete Aalen--Johansen); risk difference per 1,000 and risk ratio; 200 matched-pair bootstraps
+  \end{itemize}
+  }
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ2: hazard of death}
+  Follow each person from $t_0+1$ to $t_0+10$ or 2023, whichever comes first:
+  \begin{align*}
+    \lambda^{\text{death}}_{i,\tau} &= \Pr\left(Y_{i,\tau}=1 \mid \text{alive at the start of follow-up year } \tau\right)\\
+    &= \Lam\left(\alpha_\tau + \beta D_i + \mathbf{x}_i'\boldsymbol{\gamma}\right)
+  \end{align*}
+  \begin{itemize}
+    \item $Y_{i,\tau}$: death in year $t_0+\tau$; same specifications as RQ1, by sex
+    \item Absolute scale: 5-year cumulative mortality $=1-$ Kaplan--Meier survival; risk difference per 1,000 and risk ratio
+    \item Landmark analysis: condition on surviving follow-up year 1 or 2
+    \item[$\rightarrow$] \hl{Mediation}: how much of the 5-year mortality gap runs through a first MSK rehabilitation?
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Mediation: why g-computation?}
+  {\small
+  \begin{itemize}
+    \item A mediator measured once after divorce misses deterioration later in follow-up
+    \item The post-divorce history $\mathbf{L}_{i,t}$ (earnings, pension income, income source, unsuccessful applications, non-MSK rehabilitation, employment days) is affected by divorce \textit{and} affects rehabilitation and death, so observed values cannot be plugged in
+    \item[$\rightarrow$] Model the process year by year and simulate counterfactual histories \ct{Robins, 1986; Lin et al., 2017}
+  \end{itemize}
+  }
+  \begin{block}{Yearly models, weighted by the inverse probability of having a record ($\hat\omega \leq 20$)}
+    \vspace{-0.3cm}
+    {\small
+    \begin{align*}
+      \text{Rehabilitation:}\quad \lambda^{\text{rehab}}_{i,t} &= \Lam\left(\kappa_t + \delta D_i + \mathbf{z}_i'\boldsymbol{\eta} + \mathbf{L}_{i,t-1}'\boldsymbol{\eta}_L\right)\\
+      \text{Death:}\quad \lambda^{\text{death}}_{i,t} &= \Lam\left(\alpha_t + \theta_D D_i + \theta_M M_{i,t} + \theta_{DM} D_i M_{i,t} + \mathbf{z}_i'\boldsymbol{\rho} + \mathbf{L}_{i,t-1}'\boldsymbol{\rho}_L\right)\\
+      \text{History:}\quad \mathbf{L}_{i,t} &\sim f\left(D_i, \mathbf{z}_i, \mathbf{L}_{i,t-1}, M_{i,t-1}, M_{i,t}\right) \quad \text{(nine models)}
+    \end{align*}
+    }
+    \vspace{-0.3cm}
+    {\footnotesize Unknown rehabilitation status in a missing year of death: average over both possibilities (50/50).}
+  \end{block}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{G-computation: simulating histories}
+  \begin{columns}[T]
+    \begin{column}{15.6cm}
+      \centering
+      \begin{tikzpicture}[
+          font=\small,
+          stp/.style={draw=BiBViolett, fill=BiBViolett20, rounded corners=4pt, align=left,
+                       text width=12.4cm, minimum height=1.55cm, inner sep=6pt},
+          arr/.style={-{Stealth[length=3mm]}, thick, color=BiBViolettK20}
+        ]
+        \node[draw=BiBBlau, fill=BiBBlau20, rounded corners=4pt, align=left, text width=12.4cm,
+              inner sep=6pt] (init) at (0,10.2)
+              {\textbf{Start}: observed history $\mathbf{L}_{i,t_0-1}$, $M_{i,t_0}=0$};
+        \node[stp] (s1) at (0,7.9) {\textbf{1. Rehabilitation}: $\lambda^{\text{rehab}}_{i,t}(\mathbf{L}_{i,t-1})$, draw $M_{i,t}$};
+        \node[stp] (s2) at (0,5.6) {\textbf{2. Death}: $\lambda^{\text{death}}_{i,t}(\mathbf{L}_{i,t-1}, M_{i,t})$, update survival};
+        \node[stp] (s3) at (0,3.3) {\textbf{3. History}: draw $\mathbf{L}_{i,t}$ given $D_i,\mathbf{z}_i,\mathbf{L}_{i,t-1},M_{i,t-1},M_{i,t}$};
+        \node[align=center, font=\footnotesize] (end) at (0,1.3) {\textbf{4.} hand $\mathbf{L}_{i,t}$ forward, $t \to t+1$, until $t_0+5$};
+        \draw[arr] (init) -- (s1);
+        \draw[arr] (s1) -- (s2);
+        \draw[arr] (s2) -- (s3);
+        \draw[arr] (s3) -- (end);
+        \draw[arr] (end.west) -| ([xshift=-0.7cm]s1.west) -- (s1.west);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{13.2cm}
+      \begin{itemize}
+        \item Simulated for every matched divorcee under $d=1$ and $d=0$
+        \item 25 Monte Carlo repeats per person
+        \item 100 matched-pair bootstraps for confidence intervals
+        \item Check first: does the simulation reproduce observed rehabilitation incidence, mortality and earnings?
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Interventional direct and indirect effects}
+  \begin{itemize}
+    \item Simulated rehabilitation timing $M_i(d)$ is the output of a stochastic process, so there is no individual counterfactual for the cross-world combination $(d, M(d'))$
+    \item Instead: person $i$ receives the simulated timing of a random person $j$ with the same $d$, within sex $\times$ age band $\times$ prior rehabilitation (overlap)
+    \item[$\rightarrow$] Interventional effects \ct{VanderWeele et al., 2014}, not natural effects \ct{Pearl, 2001}
+  \end{itemize}
+  \begin{block}{Decomposition of 5-year mortality}
+    \vspace{-0.4cm}
+    \begin{align*}
+      \text{Total effect} &= \hat Y(1,M(1)) - \hat Y(0,M(0))\\
+      \text{Direct effect} &= \hat Y(1,M(0)) - \hat Y(0,M(0))\\
+      \text{Indirect effect} &= \hat Y(1,M(1)) - \hat Y(1,M(0))
+    \end{align*}
+    \vspace{-0.4cm}
+    {\small $\hat Y(d,M(d'))$: mortality with divorce status $d$ and rehabilitation timing drawn from the distribution under $d'$}
+  \end{block}
+\end{bibframe}
+
+% =====================================================================
+\section{Results}
+
+\subsection{Descriptives and matching}
+\begin{bibframe}
+  \frametitle{Matched sample and covariate balance}
+  \begin{columns}[T]
+    \begin{column}{8.6cm}
+      {\small
+      \textbf{Sample, lag-3}\\[0.2cm]
+      95,693 first divorces 2014--18\\
+      $-$1,116 not first marriage\\
+      $-$1,823 died or MSK rehab in $t_0$\\
+      $-$576 no record in $t_0-1$\\
+      $-$7,071 MSK rehab before $t_0$\\
+      $-$646 no record in $t_0-2$, $t_0-3$\\[0.2cm]
+      \hl{84,461 pairs} (100\% matched)\\
+      41,430 men, 43,031 women\\[0.2cm]
+      Mean score gap $1.1\times10^{-6}$; maximum 0.009 $<$ caliper
+      }
+    \end{column}
+    \begin{column}{20.4cm}
+      {\small
+      \setlength{\tabcolsep}{4pt}
+      \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        & \multicolumn{3}{c}{Before matching} & \multicolumn{3}{c}{After matching} \\
+        \cmidrule(lr){2-4}\cmidrule(l){5-7}
+        In $t_0-1$ unless stated & Div. & Contr. & SMD & Div. & Contr. & SMD \\
+        \midrule
+        Age (years) & 45.96 & 50.97 & $-0.340$ & 45.96 & 45.97 & $-0.001$ \\
+        Earnings (€) & 22,511 & 14,107 & 0.412 & 22,511 & 23,709 & $-0.057$ \\
+        Earnings, $t_0-3$ (€) & 20,679 & 13,119 & 0.388 & 20,679 & 22,036 & $-0.067$ \\
+        Earnings missing (\%) & 13.25 & 42.76 & $-0.696$ & 13.25 & 12.62 & 0.019 \\
+        Pension income (€) & 70.56 & 230.56 & $-0.438$ & 70.56 & 63.50 & 0.027 \\
+        Cumulative rehabilitations & 0.151 & 0.035 & 0.320 & 0.151 & 0.150 & 0.003 \\
+        Ever mental-health rehab (\%) & 5.31 & 0.78 & 0.266 & 5.31 & 4.76 & 0.025 \\
+        Unsuccessful application (\%) & 2.64 & 0.43 & 0.180 & 2.64 & 2.24 & 0.026 \\
+        Years since last rehab & 1.59 & 1.99 & $-0.244$ & 1.59 & 1.73 & $-0.087$ \\
+        Days unemployed & 47.16 & 34.74 & 0.121 & 47.16 & 48.04 & $-0.008$ \\
+        Income source (max.\ level) & & & 0.663 & & & 0.035 \\
+        Occupation (max.\ level) & & & 0.448 & & & 0.024 \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+  \end{columns}
+  \slidenote{Mean $|$SMD$|$ over 73 terms: 0.239 before, 0.022 after matching; no covariate above 0.10 after matching.}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Event study after lag-3 matching}
+  \compactlists
+  \begin{columns}[T]
+    \begin{column}{14.2cm}
+      \includegraphics[width=\linewidth]{event_study_differences_lag3.png}
+    \end{column}
+    \begin{column}{14.8cm}
+      \begin{itemize}
+        \item \textbf{Before divorce}: small remaining gaps; the Wald test still rejects for earnings, rehabilitation starts and marginal employment ($p<0.001$)
+        \begin{itemize}
+          \item These years are matching variables, so this checks fit rather than testing independently
+          \item Earnings gaps are below 1\% of mean earnings
+        \end{itemize}
+        \item \textbf{After divorce}, relative to $t_0-1$:
+        \begin{itemize}
+          \item Rehabilitation starts: +1.6 per 100 in $t_0$, +2.9 by $t_0+4$
+          \item Unemployment: +11 to +15 days per year
+          \item Unsuccessful applications: about +0.8 pp
+          \item Marginal employment: $-5$ to $-8$ days per year
+        \end{itemize}
+        \item \textbf{Women}: 21.8\% had some unemployment in $t_0-1$ vs.\ 16.7\% of controls, but similar shares in $t_0-3$ and $t_0-2$: labour-market changes start before the divorce is recorded
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\subsection{RQ1: musculoskeletal rehabilitation}
+\begin{bibframe}
+  \frametitle{RQ1: divorce doubles the MSK rehab risk}
+  \begin{columns}[T]
+    \begin{column}{16.8cm}
+      \includegraphics[width=\linewidth]{ms_by_sex_lag3.png}
+    \end{column}
+    \begin{column}{12.2cm}
+      {\small
+      \setlength{\tabcolsep}{4pt}
+      \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Lag-3, 2014--2018 & Men & Women \\
+        \midrule
+        Odds ratio, matching only & 2.04$^{***}$ & 2.30$^{***}$ \\
+        Odds ratio, $t-1$ controls & 1.99$^{***}$ & 2.20$^{***}$ \\
+        \addlinespace
+        5-year incidence, divorced & 8.30\% & 8.81\% \\
+        5-year incidence, controls & 4.16\% & 3.93\% \\
+        \addlinespace
+        Risk difference per 1,000 & \textbf{41.4} & \textbf{48.7} \\
+        & \ci{39.0}{44.5} & \ci{46.0}{51.9} \\
+        Risk ratio & 2.00 & 2.24 \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+  \end{columns}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Pooled: 8.56\% vs.\ 4.04\%, i.e.\ \hl{45.1 more first MSK rehabilitations per 1,000}; women minus men: 7.3 per 1,000 \ci{2.8}{12.2}
+    \item Robust: lag-1 specifications give odds ratios of 1.97--2.08 (men) and 2.20--2.30 (women)
+  \end{itemize}
+  \slidenote{$^{***}p<0.001$. Odds-ratio intervals from pair-clustered standard errors; risk intervals from 200 matched-pair bootstraps; death is a competing event.}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ1: timing of first rehabilitation starts}
+  \begin{columns}[T]
+    \begin{column}{16.4cm}
+      \includegraphics[width=\linewidth]{annual_first_msk_starts_and_difference_by_sex_lag3.png}
+    \end{column}
+    \begin{column}{12.6cm}
+      {\small
+      \begin{itemize}
+        \item \textbf{Men}: about 8--9 extra first starts per 1,000 already in year 1, stable over five years (trend $-0.08$ per year, n.s.)
+        \item \textbf{Women}: the gap grows to about 11--12 per 1,000 in years 4--5 (trend $+0.78$ per year, $p<0.05$)
+        \item First starts only, so repeat episodes cannot explain the widening
+        \item Consistent with accumulating physical strain (no help with physical tasks after divorce)
+        \item But: the year-1 gap may reflect problems that began before divorce
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ1: who crosses the threshold?}
+  \begin{columns}[T]
+    \begin{column}{15.6cm}
+      \begin{block}{Risk difference per 1,000, by income source}
+        {\small
+        \setlength{\tabcolsep}{4pt}
+        \begin{tabular}{@{}lrr@{}}
+          & Men & Women \\
+          \midrule
+          Earnings only & \textbf{49.5} \ci{45.8}{53.1} & \textbf{55.2} \ci{51.6}{58.6} \\
+          Neither observed & 10.5 \ci{2.1}{18.1} & 23.5 \ci{14.4}{32.9} \\
+          Earnings and pension & 2.7 \ci{-4.3}{9.7} & 7.8 \ci{-3.9}{17.8} \\
+          Pension only & $-0.1$ \ci{-1.8}{1.8} & 1.1 \ci{-1.8}{4.3} \\
+        \end{tabular}
+        }
+
+        \vspace{0.1cm}
+        {\footnotesize Income source in $t_0-1$. Exploratory, not yet in the draft; balance within subgroups is not guaranteed.}
+      \end{block}
+    \end{column}
+    \begin{column}{13.4cm}
+      \begin{exampleblock}{Associations with entry}
+        {\small
+        \begin{tabular}{@{}lr@{}}
+          Unsuccessful application in $t-1$ & OR 4.23 \\
+          Earnings (+1 SD, log) & OR 1.39 \\
+          Pension income (+1 SD, log) & OR 0.57 \\
+          Age (+1 year within band) & OR 1.03 \\
+        \end{tabular}
+
+        \vspace{0.1cm}
+        {\footnotesize Model with $t-1$ controls; all $p<0.001$.}
+        }
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item The excess is concentrated among \hl{people with earnings}, in line with DRV rehabilitation as protection of working capacity
+    \item Preliminary: non-MSK rehabilitations also roughly double (mental health $\approx$2.7$\times$, nervous system $\approx$3.0$\times$), which points to broader distress
+  \end{itemize}
+\end{bibframe}
+
+\subsection{RQ2: mortality}
+\begin{bibframe}
+  \frametitle{RQ2: excess mortality, mainly among men}
+  \centering
+  {\small
+  \setlength{\tabcolsep}{10pt}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    Lag-3, 2014--2018 & Men & Women \\
+    \midrule
+    Odds ratio, matching only & 1.28$^{***}$ \ci{1.22}{1.36} & 1.17$^{***}$ \ci{1.08}{1.27} \\
+    Odds ratio, $t-1$ controls & 1.21$^{***}$ \ci{1.14}{1.29} & 1.05 \ci{0.95}{1.16} \\
+    \addlinespace
+    5-year mortality, divorced & 3.49\% & 1.25\% \\
+    5-year mortality, controls & 3.12\% & 1.33\% \\
+    Risk difference per 1,000 & \textbf{3.6} \ci{1.6}{5.9} & $\mathbf{-0.8}$ \ci{-2.2}{0.6} \\
+    Risk ratio & 1.12 & 0.94 \\
+    \addlinespace
+    Deaths (full follow-up) & 4,933 & 2,050 \\
+    \bottomrule
+  \end{tabular}
+  }\par
+  \vspace{0.3cm}
+  \raggedright
+  \begin{itemize}
+    \item Women minus men: $-4.47$ deaths per 1,000 \ci{-6.95}{-1.96}
+    \item Lag-1 specifications give very similar odds ratios (men 1.25--1.28, women 1.14--1.20)
+    \item The odds ratio pools up to nine follow-up years, the risk difference only five, so the two can differ in sign
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ2: early deficit, later excess}
+  \begin{columns}[T]
+    \begin{column}{14.4cm}
+      \includegraphics[width=\linewidth]{mortality_by_sex_with_differences_lag3.png}
+    \end{column}
+    \begin{column}{14.6cm}
+      {\small
+      \begin{itemize}
+        \item \textbf{Year 1}: 1.49 vs.\ 3.58 deaths per 1,000 (divorced vs.\ controls), gap $-2.1$ ($p<0.001$); men $-3.2$, women $-1.0$
+        \item \textbf{Year 2}: gap $-0.65$ ($p<0.05$)
+        \item \textbf{Years 3--5}: divorced men die more often: $+1.2$, $+3.6$, $+2.4$ per 1,000 (years 4--5: $p<0.001$); women n.s.
+        \item The cumulative excess appears by year 4 for men and year 5 pooled; not within five years for women
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ2: guaranteed survival and landmarks}
+  \begin{columns}[T]
+    \begin{column}{15.0cm}
+      {\small
+      \begin{itemize}
+        \item The VA records only \hl{final} divorces: a divorcee must survive until the court decision
+        \item Decision after $t_0$: same year 16.5\%, one year later 64.1\%, two years 13.8\%, three or more 5.6\%
+        \item People who fall seriously ill may postpone divorce or die during proceedings, and then count as controls
+        \item[$\rightarrow$] Landmark analysis removes this guaranteed-survival period
+      \end{itemize}
+      }
+    \end{column}
+    \begin{column}{14.0cm}
+      \begin{block}{5-year mortality risk difference per 1,000}
+        {\small
+        \setlength{\tabcolsep}{5pt}
+        \begin{tabular}{@{}lrrr@{}}
+          & From $t_0$ & \shortstack[r]{Alive end\\of year 1} & \shortstack[r]{Alive end\\of year 2} \\
+          \midrule
+          Men & 3.6 & 6.8 & \textbf{7.2} \\
+          Women & $-0.8$ & 0.1 & 1.1 \\
+          Pooled & 1.4 & 3.4 & 4.1 \\
+          \addlinespace
+          Risk ratio, men & 1.12 & 1.26 & 1.35 \\
+        \end{tabular}
+        }
+
+        \vspace{0.1cm}
+        {\footnotesize Confidence intervals still to be bootstrapped.}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{RQ2: the survival gap keeps widening}
+  \centering
+  \includegraphics[width=24.5cm]{mortality_kaplan_meier_lag3_overall_by_sex.png}
+
+  \raggedright
+  \begin{itemize}
+    \item Pooled survival at year 9: 93.07\% (divorced) vs.\ 94.91\% (controls), i.e.\ \hl{18.4 more deaths per 1,000}
+    \item Years 6--9 rest on the earlier divorce cohorts only
+  \end{itemize}
+\end{bibframe}
+
+\subsection{Mediation}
+\begin{bibframe}
+  \frametitle{Mediation: no indirect effect via MSK rehab}
+  \begin{columns}[T]
+    \begin{column}{15.6cm}
+      {\small
+      \setlength{\tabcolsep}{5pt}
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        5-year mortality, per 1,000 (lag-3) & \\
+        \midrule
+        Total effect & 1.31 \ci{0.29}{1.98} \\
+        Direct effect & 1.32 \ci{0.39}{2.00} \\
+        Indirect effect via first MSK rehab & $\mathbf{-0.02}$ \ci{-0.16}{0.08} \\
+        Proportion mediated & $-1.2$\% \ci{-20.2}{9.0} \\
+        \addlinespace
+        Observed difference (Kaplan--Meier) & 1.36 \ci{-0.24}{2.67} \\
+        Carry-forward sensitivity: indirect & $-0.004$ \\
+        \midrule
+        \multicolumn{2}{@{}l}{5-year first MSK rehab, simulated vs.\ observed} \\
+        Controls, $M(0)$ & 4.05\% vs.\ 4.04\% \\
+        Divorced, $M(1)$ & 8.42\% vs.\ 8.56\% \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+    \begin{column}{13.4cm}
+      {\small
+      \begin{itemize}
+        \item The rehabilitation model reproduces the mediator well, so the near-zero indirect effect is not an artefact of that model
+        \item Lag-1 specifications give the same picture (indirect effect $-0.02$)
+        \item People who enter MSK rehabilitation die \textit{less} often within five years: about 0.9\% vs.\ 2.5\% among divorcees, 0.7\% vs.\ 2.3\% among controls
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+  \slidenote{Interventional effects; 95\% intervals from 100 matched-pair bootstraps.}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Mediation: why results are still provisional}
+  \begin{alertblock}{The death model under-predicts mortality}
+    \begin{itemize}
+      \item Simulated 5-year mortality: 1.59\% (divorced), 1.47\% (controls)
+      \item Observed: 2.35\% and 2.21\%, so about \hl{7.5 deaths per 1,000 (one third) are missing}
+      \item Year 1 looks right only because the errors offset: divorced $+1.04$, controls $-1.04$ per 1,000
+    \end{itemize}
+  \end{alertblock}
+  \vspace{0.3cm}
+  \textbf{Next steps}
+  \begin{itemize}
+    \item Add the missing earnings and employment-day variables to the history models and re-calibrate
+    \item Decompose separately for men and women, as for RQ1 and RQ2
+    \item Check how often a borrowed rehabilitation timing is implausible for its recipient (overlap)
+  \end{itemize}
+\end{bibframe}
+
+% =====================================================================
+\section{Discussion and conclusion}
+
+\begin{bibframe}
+  \frametitle{Discussion}
+  \begin{itemize}
+    \item Divorce roughly \hl{doubles} the 5-year risk of crossing the MSK rehabilitation threshold (+41 men, +49 women per 1,000), robust across matching specifications
+    \item The excess is concentrated among people with earnings, in line with rehabilitation as protection of working capacity
+    \item Women's gap widens over time, consistent with accumulating physical strain, but other rehabilitations rise too, which suggests broader distress
+    \item Excess mortality among men appears once the divorce is final and keeps growing; the early deficit is plausibly a recording artefact
+    \item A first MSK rehabilitation does not carry the mortality gap: entry marks treated, work-capable people rather than the frailest
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Mechanisms to test next}
+  {\small
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{10.4cm} Y@{}}
+    \toprule
+    Hypothesis & Test \\
+    \midrule
+    \textbf{Time to seek help}: once the marriage ends, people finally apply for rehabilitation &
+      Link first starts to application dates (before or after the month the marriage ends); court decision date as a second timing marker \\
+    \textbf{Loss of help with physical tasks} after separation &
+      Periods of incapacity before divorce as a proxy; total rehabilitation days with and without repeat episodes \\
+    \textbf{Financial urgency}: protecting one's own earning capacity &
+      Work impairment at entry; people already working before the split; income quintiles \\
+    \textbf{Access}: pension equalisation adds contribution periods (15-year rule) &
+      Eligibility before and after equalisation \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Limitations}
+  \begin{itemize}
+    \item Conditional exchangeability: relationship conflict, social support and repartnering are unobserved
+    \item The VA covers only final divorces with pension equalisation (no marriages of three years or less, no waived equalisation, no near-equal incomes)
+    \item Controls are people who do not divorce in $t_0$: marital status is mostly unknown (83\%) and some divorce later
+    \item The outcome is an administrative threshold (application and approval), not disease onset; pensioners are rarely eligible
+    \item Residual pre-divorce differences in earnings, rehabilitation starts and marginal employment
+    \item The mediation model is not yet calibrated and is pooled over sex
+  \end{itemize}
+\end{bibframe}
+
+\begin{bibframe}
+  \frametitle{Conclusion}
+  \begin{block}{1. Divorce and MSK rehabilitation}
+    Divorce doubles the 5-year risk of a first MSK rehabilitation: 8.6\% vs.\ 4.0\% (+45 per 1,000)
+  \end{block}
+  \begin{block}{2. Divorce and mortality}
+    Divorce raises mortality among men; the gap grows over time (pooled: 18 more deaths per 1,000 by year 9)
+  \end{block}
+  \begin{block}{3. Mediation}
+    So far, MSK rehabilitation does not explain the divorce--mortality gap, but the mediation model still needs re-calibration
+  \end{block}
+\end{bibframe}
+
+% =====================================================================
+\section*{}
+\begin{bibframe}[frametype=thankyouen]
+  \frametitle{Thank you!}
+  \large
+  \vspace{2cm}
+  \textbf{Kar Man Tan}\par
+  \vspace{1cm}
+  Federal Institute for\\
+  Population Research (BiB)\par
+  \vspace{1cm}
+  Phone: +49 611 75 4674\\
+  karman.tan@bib.bund.de
+\end{bibframe}
+
+\end{document}

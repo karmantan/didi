@@ -12,6 +12,7 @@
 \usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{soul}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{adjustbox}
 \usepackage{diagbox}
@@ -432,7 +433,7 @@ Once the parameters for these nine equations are estimated, we simulate the coun
 	\item Since the simulation starts in the first follow-up year, $t_0+1$, we initialize using the individual's true observed history in $t_0 -1$, i.e\footnote{We do not use the history in $t_0$ to initialize since it gives both treated and controls the same starting point before simulating counterfactuals. At $t_0$, the treated may already be affected by divorce.}, $\mathbf{L}_{i,t_0-1}$, and estimate the probability of rehabilitation, $\lambda_{i,t_0+1}^{\text{rehab}}$. Since we need to feed $M_{i,t_0+1}$ into the next step and not $\lambda_{i,t_0+1}^{\text{rehab}}$, we draw a random number from a uniform distribution $U(0,1)$ and if it is smaller than $\lambda_{i,t_0-1}^{\text{rehab}}$, then the value of $M_{i,t_0+1}$ is set at 1 and 0 otherwise.
     % \item Since our data starts from 2011, we use $\mathbf{L}_{i,2011}$ which contains true values to estimate the probability of rehabilitation, $\lambda_{i,2011}^{rehab}$. Since we need to feed $M_{i,2012}$ into the next step and not $\lambda_{i,2011}^{rehab}$, we draw a random number from a uniform distribution $U(0,1)$ and if it is smaller than $\lambda_{i,2011}^{rehab}$, then the value of $M_{i,2012}$ is set at 1 and 0 otherwise.
   \end{itemize}
-  \item Death probability (uses $\mathbf{L}_{i,t-1}$, $M_{i,t}$) $\rightarrow$ if individual $i$ survives, continue
+  \item Death probability (uses $\mathbf{L}_{i,t-1}$, $M_{i,t}$) $\rightarrow$ update the probability of survival for individual $i$ and plug `survived' histories into next step
   \item History-update (uses $\mathbf{z}_i$, $D_i$, $\mathbf{L}_{i,t-1}$, $M_{i,t-1}$, $M_{i,t}$) $\rightarrow$ produces $\mathbf{L}_{i,t}$
   \begin{itemize}
 	\item We use $\mathbf{L}_{i,t_0-1}$, $M_{i,t_0} (=0$ since no one in the sample has had a musculoskeletal rehabilition by $t_0$) and $M_{i,t_0+1}$ to simulate $\mathbf{L}_{i,t_0+1}$.
@@ -588,6 +589,8 @@ Ever had a mental health rehabilitation & 5.31 & 0.78 & 0.266 & 5.31 & 4.76 & 0.
 Unsuccessful rehabilitation application & 2.64 & 0.43 & 0.180 & 2.64 & 2.24 & 0.026 \\
 Unsuccessful rehabilitation application, $t_0-2$ & 2.39 & 0.44 & 0.166 & 2.39 & 2.02 & 0.025 \\
 Unsuccessful rehabilitation application, $t_0-3$ & 1.98 & 0.44 & 0.141 & 1.98 & 1.76 & 0.016 \\
+Earnings data missing & 13.25 & 42.76 & $-0.696$ & 13.25 & 12.62 & 0.019 \\
+Pension income missing & 91.66 & 71.57 & 0.537 & 91.66 & 92.61 & $-0.035$ \\
 Full-time contribution data missing & 91.66 & 71.57 & 0.537 & 91.66 & 92.61 & $-0.035$ \\
 Part-time contribution data missing & 91.66 & 71.57 & 0.537 & 91.66 & 92.61 & $-0.035$ \\
 Regular employment days missing\textsuperscript{b} & 14.34 & 38.15 & $-0.562$ & 14.34 & 13.14 & 0.035 \\
@@ -633,7 +636,9 @@ Any rehabilitation by $t_0-1$ & \multicolumn{2}{c}{2} & 0.350 & \multicolumn{2}{
 \end{minipage}
 \end{table}
 
-Table \ref{tab:balance} compares the treated (divorced) and controls before and after matching. Before matching, the treated are younger than the controls (46.0 vs 51.0 years), there are more currently employed individuals than pensioners, and more have had prior rehabilitation, including mental health rehabilitation. After matching, no variable has an SMD exceeding 0.10. The average SMD (from the 73 continuous variables, binary variables and each category) falls from 0.239 before matching to 0.022 after matching. The variables with the largest remaining difference after matching are years since last rehabilitation (-0.087) and earnings at $t_0 -3$ (-0.067). Before matching, earnings are observed for 86.75\% of treated and 57.24\% of controls and after matching 86.75\% and 87.38\% respectively. Pension income is observed for 8.34\% of trated and 28.43\% of controls before matching, and after matching 8.34\% and 7.39\% respectively. Among those with observed earnings, the mean earnings are \texteuro25{,}950 for treated and \texteuro24{,}646 for controls before matching and \texteuro27{,}132 after matching. Similarly, among those with observed pension income, the mean is \texteuro846 for treated and for controls before and after matching, the means are \texteuro811.0 and \texteuro860 respectively. The mean full-time contribution periods is 264.3 for treated and respectively 278.3 and 279.9 for controls before and after matching. The missingness rate for full-time and part-time contribution periods is not only numerically identical but matches pension income missingness exactly, which is consistent with all three variables tracking the same employment vs status. For a more detailed breakdown, please see the section on \ref{app:descriptives} in the Appendix.
+Table \ref{tab:balance} compares the treated (divorced) and controls before and after matching. Before matching, the treated are younger than the controls (46.0 vs 51.0 years), there are more currently employed individuals than pensioners, and more have had prior rehabilitation, including mental health rehabilitation. After matching, none of the covariates used in matching has an absolute SMD exceeding 0.10. The average SMD (from the 73 continuous variables, binary variables and each category) falls from 0.239 before matching to 0.022 after matching. The variables with the largest remaining difference after matching are years since last rehabilitation (-0.087) and earnings at $t_0 -3$ (-0.067). Before matching, earnings are observed for 86.75\% of treated and 57.24\% of controls and after matching 86.75\% and 87.38\% respectively. Pension income is observed for 8.34\% of trated and 28.43\% of controls before matching, and after matching 8.34\% and 7.39\% respectively. Among those with observed earnings, the mean earnings are \texteuro25{,}950 for treated and \texteuro24{,}646 for controls before matching and \texteuro27{,}132 after matching. Similarly, among those with observed pension income, the mean is \texteuro846 for treated and for controls before and after matching, the means are \texteuro811.0 and \texteuro860 respectively. The mean full-time contribution periods is 264.3 for treated and respectively 278.3 and 279.9 for controls before and after matching. The missingness rate for full-time and part-time contribution periods is not only numerically identical but matches pension income missingness exactly, which is consistent with all three variables tracking the same employment vs pension receipt distinction.
+
+84,461 out of 95,693 first observed divorces in 2014--2018 enter the lag-3 matching sample. At the step excluding prior musculoskeletal rehabilitation, 7,071 divorced individuals were excluded. The mortality analysis therefore concerns individuals no observed musculoskeletal rehabilition up until $t_0$. The controls are with people without a recorded divorce by $t_0$, althouth they can still divorce later. For a more detailed breakdown and balance diagnostics, please see the section on \ref{app:descriptives} in the Appendix.
 
 
 % \begin{table}[H]
@@ -813,9 +818,7 @@ First MS rehabilitations & 5,481 & 5,515 & 8,345 \\
 
 
 
-Panel A in Table \ref{tab:rq1_main_effect} reports reports the discrete-time hazard model in Equation \ref{eq:rq1_equation} among men, and Panel B reports the corresponding estimates for women, with death as a competing event. In the lag-3 specification, the matching-only odds ratios are 2.043 ($p < 0.001$) for men and 2.303 ($p < 0.001$) for women, indicating approximately 104\% and 130\% higher annual odds of entering rehabilitation, respectively, over the five-year follow-up. With previous-year controls, the odds ratios decrease slightly to 1.993 ($p < 0.001$) for men and 2.196 ($p < 0.001$) for women. At five years, cumulative incidence among men is 8.30\% for divorcees and 4.16\% for controls, a difference of 41.4 rehabilitation entries per 1,000 people ($p < 0.05$). Among women, the corresponding risks are 8.81\% and 3.93\%, a difference of 48.7 entries per 1,000 ($p < 0.05$).
-
-
+Panel A in Table \ref{tab:rq1_main_effect} reports reports the discrete-time hazard model in Equation \ref{eq:rq1_equation} among men, and Panel B reports the corresponding estimates for women, with death as a competing event. In the lag-3 specification, the matching-only odds ratios are 2.043 ($p < 0.001$) for men and 2.303 ($p < 0.001$) for women, indicating approximately 104\% and 130\% higher annual odds of entering rehabilitation, respectively, over the five-year follow-up. With previous-year controls, the odds ratios decrease slightly to 1.993 ($p < 0.001$) for men and 2.196 ($p < 0.001$) for women. 
 
 % \begin{table}[H]
 % \color{red}
@@ -894,7 +897,33 @@ Panel A in Table \ref{tab:rq1_main_effect} reports reports the discrete-time haz
     \end{minipage}    
 \end{figure}
 
-Figure \ref{fig:rq1_gender} displays the 5-year cumulative effect of divorce on starting a musculoskeletal rehabilitation. For men, the 5-year cumulative risk difference is 41.14 per 1,000 between divorced and controls. For women, it is 48.7 per 1,000. The constructed confidence intervals exclude zero. The overall incidences among divorced are 8.3\% and 8.8\% for men and women respectively, compared with 4.1\% and 3.9\% among controls. 
+Figure \ref{fig:rq1_gender} displays the 5-year cumulative effect of divorce on starting a musculoskeletal rehabilitation. For men, the 5-year cumulative risk difference is 41.14 per 1,000 between divorced and controls. For women, it is 48.7 per 1,000. The constructed confidence intervals exclude zero. The overall incidences among divorced are 8.3\% and 8.8\% for men and women respectively, compared with 4.1\% and 3.9\% among controls. Overall, the cumulative incidence is 8.56\% for the divorced and 4.04\% fo controls, which is a difference of 45.1 entries per 1,000 people ($p<0.001$). 
+
+
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/annual_first_msk_starts_and_difference_by_sex_lag3.png}
+    \caption{Cumulative incidence of first musculoskeletal rehabilitation}
+    \label{fig:rq1_first_starts_annual}
+    % \begin{minipage}{\textwidth}
+    %     \footnotesize
+    %     \vspace{0.5em}
+    %     \textit{Notes:} 41,430 matched pairs for men and 43,031 for women. 5-year risk difference is 41.4 (95\% CI [38.96, 44.48]) and 48.7 (95\% CI [45.97, 51.88]) per 1,000 for men and women respectively. Women minus men is 7.3 per 1,000 (95\% CI [2.84, 12.19]). Confidence intervals use 200 bootstrap replications. Death is a competing event.
+    % \end{minipage}    
+\end{figure}
+
+One possible explanation could be the obligation to perform physically challenging chores before, during and after a divorce. Before divorce, when partners are still living together, despite existing relationship problems, a spouse might still be obligated to help the other who struggles with related tasks. After divorce, the struggling individual may no longer have someone to rely on, hence, is likely to take on the physical burden individually. Several potential patterns can emerge: the struggling individual might be able to bear the brunt initially, but their bodies give way over time (leading to higher incidences of musculoskeletal rehabilitation in later years after divorce), the individual might just get injured immediately (higher incidences right after divorce), the individual gets used to it (no meaningful difference in musculoskeletal rehabilitation). 
+
+To see whether the difference in first musculoskeletal rehabilitation starts grows over time, we compared the divorced with the controls in each follow-up year. Figure \ref{fig:rq1_first_starts_annual} shows the number of first musculoskeletal rehabilitation starts per 1,000 individuals in each follow-up year after $t_0$. Among divorced and control men, the difference in rehabilitation starts is already present in the first year and persists at roughly the same level over the next four years. The difference in annual first starts per 1,000 in each follow-up year is $-0.08$ (insignificant) between divorced and controls. For women, while the difference exists in the first year, it is higher in the years and 5. Between divorced and control women, the difference is $0.78$ ($p < 0.05$) per 1,000 per follow-up year. Among controls, the difference between women and men is $0.20$ (insignificant) per 1,000 per follow-up year while among divorced, the difference is $1.07$ ($p < 0.001$) per 1,000 per follow-up year. If musculoskeletal conditions are ongoing, someone who started rehabilitation in the first two years may also return in later years. However, since we only considered first musculoskeletal rehabilitation starts, the gap cannot be attributed to repeated episodes. This later widening among women is consistent with physical strain accumulating over time. A mechanism that takes several years to affect health would leave the first year difference between men and women unexplained. Rehabilitation can start months or years after symptoms first appear, so the first year difference could also reflect problems that began before divorce. To tell whether the pattern is related to household chores, we would need to know when symptoms began and how the division of physical tasks changed after divorce. Chores have a direct link to musculoskeletal rehabilitation, however, \textcolor{red}{other non-musculoskeletal rehabilitations are also nearly double for divorced individuals, with mental health and nervous system related rehabilitations at about 2.7 and 3.0 times more respectively. This suggests that divorce might have an overall distressing effect.} Furthermore, biological differences in susceptibility to musculoskeletal conditions may shape the underlying health problems on which these post-divorce processes operate. \citeauthor{wolf2015male} (\citeyear{wolf2015male}) find that women appear more biologically susceptible to particular degenerative and joint conditions due to differences in anatomy, hormones and biomechanics. However, certain injury patterns are more common in men, and when men develop osteoporotic hip fractures, outcomes may be worse. Hence, they cannot by themselves explain why the divorce-control contrast is slightly higher for women. 
+
+
+
+
+\textcolor{red}{However, these trends may also be driven by a new partner and this cannot be identified from the data. If someone has re-married and did not divorce, they might or might not have a value for the marital status, but it could have been overwritten with divorce. Check this.} 
+
 
 
 % \begin{table}[H]
@@ -952,16 +981,17 @@ Figure \ref{fig:rq1_gender} displays the 5-year cumulative effect of divorce on 
 
 % Table \ref{tab:rq1_gender} displays the 5-year cumulative effect of divorce on starting a musculoskeletal rehabilitation. For men, the 5-year cumulative risk difference is 0.09 per 1,000 between divorced and controls, while for women, it is much larger at 6.2 per 1,000 although both estimates are statistically insignificant. The overall incidence among divorced men and women are also very similar at year 5 (7.81\% and 7.88\% respectively). The gender difference arises primarily from the contrast between divorced and controls of the same gender rather than substantially difference rehabilitation incidence between males and females overall. For women, the bulk of the risk difference is emerges in years $t_0 +2$ to $t_0+4$, and the incremental difference is almost zero by year 5. For men, controls have a modestly higher cumulative incidence compared to the divorced in years $t_0+2$ to $t_0+4$. The largest difference occurs in $t_0+2$ where the cumulative risk among controls is 2.14 per 1,000 higher than divorced men. Similar to women, the risk difference almost disappears by year 5. 
 
-One possible interpretation is that divorce affects the transition from latent or previously untreated musculoskeletal problems into formal rehabilitation differently for men and women. Biological differences in susceptibility to musculoskeletal conditions may shape the underlying health problems on which these post-divorce processes operate. \citeauthor{wolf2015male} (\citeyear{wolf2015male}) find that women appear more biologically susceptible to particular degenerative and joint conditions due to differences in anatomy, hormones and biomechanics. However, certain injury patterns are more common in men, and when men develop osteoporotic hip fractures, outcomes may be worse. Hence, they cannot by themselves explain why the divorce-control contrast is slightly higher for women. 
 
 To explore possible explanations involving the transition into formal rehabilitation, we next examine associations with age, previous applications and recorded economic circumstances. In the specification with annually updated $t-1$ covariates and missingness indicators, each additional year of age within a five-year age band is associated with 2.9\% higher annual odds of first musculoskeletal rehabilitation entry (OR 1.029; $p<0.001$). Although pre-divorce application histories enter the matching, the annually updated model also accounts for subsequent applications. Within the matched sample, an unsuccessful rehabilitation application in $t-1$ is associated with higher odds of entry at time $t$ (OR 4.230; $p<0.001$). Higher recorded earnings are also positively associated with entry (OR 1.393; $p<0.001$), whereas higher recorded pension income is negatively associated (OR 0.573; $p<0.001$). The income odds ratios refer to a one-standard-deviation increase in log-transformed amounts. These conditional associations provide information about the rehabilitation entry process, although their role in generating the divorce–control difference remains to be established.
+
+
 
 {\color{blue}
 There are further tests I want to conduct to shed more light on the mechanism beween divorce and rehabilitation entry. Eventually, I would substitute rehabilitation incidence with rehabilitation duration, \texttt{mcdams\_succeed\_1}.
 
 There are three hypotheses:
 \begin{enumerate}
-    \item In a failing marriage, individuals might not have time to seek out rehabilitation for existing complaints because they are dealing with the stress of a difficult relationship and maybe still exerting effort to try to preserve the marriage. Once divorce occurs, the individual may finally have free time to prioritize seeking rehabilitation.
+    \item In a failing marriage, individuals might not have time to seek out rehabilitation for existing complaints because they are dealing with the stress of a difficult relationship and maybe still exerting effort to try to preserve the marriage. Once divorce occurs, the individual may finally have free time to prioritize seeking rehabilitation. 
     \begin{itemize}
         \item Run extra analysis using rehabilitation application dates. Among people who already had musculoskeletal issues BEFORE divorce (but we don't observe them in the data since we excluded individuals with prior musculoskeletal rehabilitation), does divorce make them more likely to apply for their first rehabilitation?
         \item Check rehabilitation application patterns before divorce (we already used unsuccessful applications in matching and in the event study, we showed that both had parallel trends prior to $t_0$ although there is a tiny significant difference in unsuccessful applications between divorced and controls per year - difference in level not trend). There shouldn't be a huge difference between divorced and controls prior to $t_0$. If there is a divergence after $t_0$, i.e. applications from divorced increase while those for controls remain, then that can provide support for the hypothesis that individuals finally have time to seek help.
@@ -970,9 +1000,9 @@ There are three hypotheses:
     \end{itemize}
     \item Even in failing marriages, partners are usually still obligated to perform physical tasks, like lifting, chores, etc. After divorce, however, individuals are often on their own, and have no one to rely on for the physically challenging tasks. Initially, divorced individuals might be able to bear the brunt, but over time, bodies might give in increasing likelihood of musculoskeletal rehabilitation.
     \begin{itemize}
-        \item With the existing data, we can plot the annual first musculoskeletal rehabilitation starts in each follow-up year since we already have the table somewhere. There are about 8 to 10 starts in each follow-up year, so this first point might not support the hypothesis.
+        \item[DONE] \st{With the existing data, we can plot the annual first musculoskeletal rehabilitation starts in each follow-up year since we already have the table somewhere. There are about 8 to 10 starts in each follow-up year, so this first point might not support the hypothesis.}
         \item As a proxy of whether an individual generally needs help performing physical tasks, we can look at periods of incapacity before divorce. If a period of incapacity existed, this can signify that the individual is likelier to delegate physically demanding tasks when a partner is present. See point 4 too.
-        \item We should also check whether the individuals receiving a musculoskeletal rehab in years 3 to 5 are the same people who also underwent a musculoskeletal rehabilitation in years 1 to 2. Then we can recalculate the incidence instead and see if the same share of divorced and control undergo their first musculoskeletal rehabilitation. We have this in the existing data. Even if you count for the unique individuals, divorced individuals still are twice as likely to experience musculoskeletal rehabilitation start. 
+        \item[DONE] \st{We should also check whether the individuals receiving a musculoskeletal rehab in years 3 to 5 are the same people who also underwent a musculoskeletal rehabilitation in years 1 to 2. Then we can recalculate the incidence instead and see if the same share of divorced and control undergo their first musculoskeletal rehabilitation. We only look at first musculoskeletal rehabilitation starts.}
         \item We should also look at total musculoskeletal rehabilitation days per 1,000 divorced and control individuals including AND excluding repeat episodes over 5 years or in each follow-up year. 
     \end{itemize}
     \item In some marriages, both partners have unequal expectations regarding the standard of cleanliness that needs to be maintained. In failing marriages, through pettiness or cold war, one partner may have to constantly pick up after the other. After a divorce, it might be easier for the individual who has higher standards of cleanliness to maintain the standard. 
@@ -1081,7 +1111,7 @@ Deaths (full follow-up) & 2,050 & 2,093 & 3,528 \\
 \end{minipage}
 \end{table}
 
-Panel A in Table \ref{tab:mortality_main_effect} reports mortality estimates for men, and Panel B reports the corresponding estimates for women. In the preferred lag-3 specification, the matching-only odds ratios are 1.284 ($p < 0.001$) for men and 1.171 ($p < 0.001$) for women, indicating approximately 28\% and 17\% higher annual odds of death, respectively, over the available follow-up. With previous-year controls, the odds ratio is 1.211 ($p < 0.001$) for men and 1.050 (insignificant) for women. At five years, cumulative mortality among men is 3.49\% for divorcees and 3.12\% for controls, a difference of 3.6 deaths per 1,000 people ($p < 0.05$). Among women, the corresponding risks are 1.25\% and 1.33\%, a difference of $-0.8$ deaths per 1,000 (insignificant). The pooled hazard estimates summarize a longer follow-up period than the five-year risk contrasts and therefore need not have the same direction when mortality differences change over time.
+Panel A in Table \ref{tab:mortality_main_effect} reports mortality estimates for men, and Panel B reports the corresponding estimates for women. In the preferred lag-3 specification, the matching-only odds ratios are 1.284 ($p < 0.001$) for men and 1.171 ($p < 0.001$) for women, indicating approximately 28\% and 17\% higher annual odds of death, respectively, over the available follow-up. With previous-year controls, the odds ratio is 1.211 ($p < 0.001$) for men and 1.050 (insignificant) for women. At five years, cumulative mortality among men is 3.49\% for divorcees and 3.12\% for controls, a difference of 3.6 deaths per 1,000 people ($p < 0.05$). Among women, the corresponding risks are 1.25\% and 1.33\%, a difference of $-0.8$ deaths per 1,000 (insignificant). The pooled hazard estimates summarize a longer follow-up period than the five-year risk contrasts and therefore need not have the same direction when mortality differences change over time. The women-minus-men difference is -4.47 deaths per 1,000 ($p < 0.001$), indicating that there is a significantly larger 5-year mortality difference among men. Going from the lag-1 to stricter lag-3 specification does not materially change the odds ratio or cumulative mortality.
 
 % #men_note = "Five-year RD: 3.63 per 1,000\n95% CI [1.60, 5.91]"
 % # women_note = "Five-year RD: -0.84 per 1,000\n95% CI [-2.23, 0.56]"
@@ -1101,14 +1131,109 @@ Panel A in Table \ref{tab:mortality_main_effect} reports mortality estimates for
     \end{minipage}
 \end{figure}
 
-The difference in mortality rate is higher for controls in the first two follow-up years. The overall mortality rate is 1.49 per 1,000 and 3.58 per 1,000 for divorced and controls respectively in the first follow-up year. In the second follow-up year, the overall mortality rate is 3.41 and 4.06 per 1,000 for divorced and controls. This difference reverses sign from the third follow-up year onwards with the divorced mortality rate at 5.06, 6.26 and 7.25 per 1,000 in follow-up years 3, 4 and 5. For controls the mortality rate is 4.42, 4.33 and 5.72 per 1,000. This is true for both genders, although most of this effect is driven by men. The later excess mortality offsets the earlier mortality deficit before the cumulative differnce becomes positive. For the pooled sample, this occurs by year 5, for men year 4. For women, the later excess does not fully offset the earlier deficit within five years. The 5-year cumulative difference is 3.63 deaths per 1,000 among men ($p < 0.001$), compared with -0.84 among women (insignificant). The women-minus-men contrast is -4.47 per 1,000 ($p < 0.001$), indicating a significantly larger 5-year mortality difference among men.
 
+The difference in mortality rate is significantly positive in the first two follow-up years. In the first follow-up year, the overall mortality rate is 1.49 and 3.58 per 1,000 for divorced and controls respectively. The gap of $-2.08$ deaths per 1,000 is significant at the 0.1\% level. Similarly, the gaps of $-3.24$ for men and $-0.98$ for women are also significant at the 0.1\% level. In the second follow-up year, the overall mortality rate is 3.41 and 4.06 per 1,000 for divorced and controls and the gap of $-0.65$ is significant at the 5\% level. For men, however, the gap of $-0.34$ is insignificant while for women the gap of $-0.95$ is significant at the 1\% level. The difference in mortality rate then reverses sign from the follow-up year 3 onwards with the divorced mortality rate at 5.06, 6.26 and 7.25 per 1,000 in follow-up years 3, 4 and 5. For controls the mortality rate is 4.42, 4.33 and 5.72 per 1,000. The overall gap in follow-up year 3 is 0.64 but it is only significant at the 10\% level; for men, the gap is 1.23 and significant at the 5\% level. For women in follow-up years 3, 4 and 5 the gap in mortality rate is no longer significant In follow-up years 4 and 5, the overall gaps, 1.93 and 1.53, and the gap for men, 3.59 and 2.39, are all significant at the 0.1\% level. Most of the difference in mortality is driven by men. The later excess mortality offsets the earlier mortality deficit before the cumulative difference becomes positive. For the pooled sample, this occurs by year 5, and for men, year 4. For women, the later excess does not fully offset the earlier deficit within five years. 
+
+There are several potential explanations for why there are fewer divorced individuals dying in the first follow-up year.This effect may be an artefact of selection near the divorce date. The VA only records divorces which have become finalized. If an individual becomes seriously ill, they may postpone the divorce. This individual may end up as a control in the year that they would have divorced if they were not ill. Furthermore, for 16.5\% of divorces, the court decision falls in the same calendar year as $t_0$; for 64.1\%, the court decision arrives one year later, for 13.8\%, two years later and for 5.6\%, three of more years later. If the individual then dies during the proceedings, a divorce would not be recorded hence the individual is not treated, therefore potentially contributing to a higher first-year mortality among controls. Divorced individuals are therefore guaranteed to survive until their divorce becomes final, which is likely from $t_0 + 1$ onwards, while controls are already at risk of death in any time period. This can also partially explain why, at least among women, the hazard odds ratio exceeds one while the 5-year risk difference is negative. The hazard model average over up to nine follow-up years, most of which lie after the guaranteed survival period. 
+
+\begin{table}[H]
+\centering
+\small
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Lag-3, 2014--2018 & \shortstack{Unconditional\\(from $t_0$)} & \shortstack{Alive at end\\of year 1} & \shortstack{Alive at end\\of year 2} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Panel A: Men}} \\ \midrule
+Divorced (\%) & 3.49 & 3.27 & 2.77 \\
+Controls (\%) & 3.12 & 2.59 & 2.05 \\
+Risk difference (per 1,000) & 3.6 & 6.8 & 7.2 \\
+Risk ratio & 1.116 & 1.263 & 1.351 \\ \midrule
+\addlinespace
+\multicolumn{4}{@{}l}{\textit{Panel B: Women}} \\ \midrule
+Divorced (\%) & 1.25 & 1.17 & 1.00 \\
+Controls (\%) & 1.33 & 1.16 & 0.89 \\
+Risk difference (per 1,000) & $-0.8$ & 0.1 & 1.1 \\
+Risk ratio & 0.937 & 1.011 & 1.120 \\ \midrule
+\addlinespace
+\multicolumn{4}{@{}l}{\textit{Panel C: Pooled}} \\ \midrule
+Divorced (\%) & 2.35 & 2.20 & 1.87 \\
+Controls (\%) & 2.21 & 1.86 & 1.46 \\
+Risk difference (per 1,000) & 1.4 & 3.4 & 4.1 \\
+Risk ratio & 1.061 & 1.183 & 1.279 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Five-year all-cause mortality conditional on survival to the end of follow-up year 1 or 2 (landmark analysis)}
+\label{tab:mortality_landmark}
+\end{table}
+
+To remove the guaranteed survival period, we condition on being alive at the end of the first or second follow-up year and then compare mortality up to follow-up year 5. Among men alive at the end of the first year, 5-year mortality is 3.27\% for divorced and 2.59\% for controls. Since the mortality rate is lower for controls, this is a difference of 6.8 deaths per 1,000, almost double the unconditional difference of 3.6. Amont women, the negative difference disappears to 0.1 per 1,000 at the end of the first year and 1.1 per 1,000 at the end of the second year. In the pooled sample, the difference rises from 1.4 to 3.4 at the end of the first year and 4.1 at the end of the second year. \textcolor{red}{Confidence intervals need to be bootstrapped.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/mortality_kaplan_meier_lag3_overall_by_sex.png}
+    \caption{Kaplan-Meier survival curve, pooled}
+    \label{fig:rq2_pooled_10yr_km}
+\end{figure}
+
+In the pooled sample, the survival gap continues to widen after year 5. By year 9, estimated survival is 93.07\% among divorcees and 94.91\% among controls, corresponding to a cumulative mortality difference of 18.4 deaths per 1,000 people.
+
+
+\begin{table}[H]
+\centering
+\small
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Five-year contrast & Lag-3, 2014--2018 & Lag-1, 2014--2018 & Lag-1, 2012--2018 \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Mortality risk differences per 1,000 people}} \\
+Total difference & $1.308\ [0.293, 1.976]$ & $1.577$ (point only) & $0.834\ [0.095, 1.519]$ \\
+Direct difference & $1.323\ [0.393, 2.002]$ & $1.593$ (point only) & $0.855\ [0.122, 1.543]$ \\
+\shortstack[l]{Indirect difference through\\first MSK rehabilitation} & $-0.015\ [-0.157, 0.077]$ & $-0.016$ (point only) & $-0.021\ [-0.099, 0.060]$ \\
+Proportion mediated (\%) & $-1.16\ [-20.17, 8.97]$ & $-1.00$ (point only) & $-2.48\ [-17.06, 14.49]$ \\
+\addlinespace 
+\multicolumn{4}{@{}l}{\textit{Observed five-year risk difference per 1,000 (Kaplan--Meier)}} \\
+Divorced minus controls & $1.356\ [-0.244, 2.672]$ & $1.580\ [0.380, 2.943]$ & $0.765\ [-0.295, 1.802]$ \\
+\addlinespace
+\multicolumn{4}{@{}l}{\textit{Sensitivity analysis with last observed values carried forward in the year of death}} \\
+Total difference & $1.295$ & $1.533$ & $0.862$ \\
+Direct difference & $1.299$ & $1.539$ & $0.897$ \\
+\shortstack[l]{Indirect difference through\\first MSK rehabilitation} & $-0.004$ & $-0.006$ & $-0.035$ \\
+\addlinespace
+\multicolumn{4}{@{}l}{\textit{Mediator check for five-year first MSK rehabilitation (\%), simulated vs.\ observed}} \\
+Distribution among controls, $M(0)$ & 4.05 vs.\ 4.04 & 3.98 vs.\ 4.00 & 4.23 vs.\ 4.24 \\
+Distribution among divorced, $M(1)$ & 8.42 vs.\ 8.56 & 8.38 vs.\ 8.54 & 8.44 vs.\ 8.60 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Interventional mediation decomposition of five-year mortality after divorce}
+\label{tab:mortality_mediation}
+
+\begin{minipage}{\textwidth}
+\footnotesize
+\vspace{0.5em}
+\textit{Notes.} We only use the treated in the mediation. Brackets contain 95\% confidence intervals from 100 matched-pair boostrap refits for the lag-3 and lag-1 specifications. The carry-forward analysis copies the last observed annual covariates into missing years. The primary mediation analysis allows for both possibilities for an unknown rehabilitation status and if there is a gap before death year, the model model stops using later history and uses observation weights to account for the loss of follow-up.
+\end{minipage}
+\end{table}
+
+The proportion mediated by musculoskeletal rehabilitation is $-$1.16\%. This is infinitesimal and insignificant. The risks are 1.455\% under $(0, M(0))$, 1.587\% under $(1, M(0))$, 1.432\% under $(0,M(1))$ and 1.585\% under $(1, M(1))$.
+
+The results suggest that the near-zero indirect effect is not an artefact of the rehabilitation model. The simulated 5-year incidence of a first musculoskeletal rehabilitation closely reproduces the observed incidences of 4.05\% (compared to 4.04\% observed) for controls and 8.42\% (compared to 8.56\% for observed) for treated. The decomposition also hardly changes when the missing row in the death year is filled with the last observed values (1.295 per 1,000 vs 1.308 for the total difference and 1.299 vs 1.323 for the direct difference). People who enter musculoskeletal rehabilitation also die less often. Among the divorced, 0.93\% of individuals with a first rehabilitation within five years die by year 5 (67 out of 7,90) compared to 2.48\% of individuals who did not undergo a musculoskeletal rehabilitation within 5 years (1,915 out of 77,271). Among controls, the shares are 0.65\% (22 out of 3,407) and 2.28\% (1,845 out of 81,031). The model-based total effect of 1.308 per 1,000 is close to the observed Kaplan-Meier difference of 1.356 although its interval is narrower and excludes zero since it relies on parametric models. 
+
+
+{\color{blue}
+
+The calibration might have something to do with the unsuccessful mediation analysis. Simulated 5-year mortality is 1.59\% for divorced and 1.47\% for controls, compared to the observed pooled mortality of 2.35\% and 2.21\% respectively. This is an underprediction of 7.65 and 7.37 deaths per 1,000, i.e. about 30\% of observed mortality. Pooled first year mortality is close but only because the model overpredicts divorced mortality by 1.04 per 1,000 and underpredicts control mortality by 1.04 per 1,000 leading to a pooled mortality of 2.535 per 1,000 which is identical to the observed mortality of 2.5345. In later follow-up years, simulated mortality falls increasingly short. 
+
+In additional to adding the missing earnings and employment days related variables, do mediation separately for men and women, since both RQ1 and RQ2 were separately estimated anyway.}
 
 {\color{red}
 \begin{itemize}
 \item[DONE] How much more likely are divorced people to die during the follow up period
 \item[DONE] Compare lag1 and lag3 spec mortality risk
-\item Cumulative mortality over 5 years
+\item[DONE] Cumulative mortality over 5 years
 \item Total, direct and indirect effects plus 95\% confidence interval.
 \item How often is it the case that the borrowed rehab timing is completely off?
 \item Total, direct and indirect effects for men vs women. 
@@ -1861,6 +1986,7 @@ Total & 140,063 & & 127,395 & 0.684 & 0.009391 & & \\
 
 \end{table}
 
+
 Table \ref{tab:matching} shows the matching results. Of the 84,461 eligible treated individuals for the lag-3 specification (and 127,395 for the lag-1 specification), the match rate is 100\% (and respectively 99.99\%). No control is used twice as a control and every treated individual has at least one control in their exact-match group (ie. their gender $\times$ 5-year age band $\times$ prior rehabilitation group). Although controls used in earlier years are removed from the pool available for later matching, this does not lead to a decline in matching success. In the lag-3 specification, eligible control slots decrease slightly from 12.05 million in 2014 to 12.01 million in 2018, although the change is not monotonic. These counts describe the eligible pools before earlier control use is removed. It is also possible for individuals to appear first as a control and then as a treated if that individual divorces eventually. 
 
 Across the lag-3 matched sample, 603 individuals out of 168,319 unique individuals appear as both treated and control (about 0.36\%). There is a median gap of two years between being a control and being a treated. The matched sample also has close to an even split on gender with 41,430 male and 43,031 female pairs (49.1\% vs 50.9\%). 11.70\% of individuals in the lag-3 specification and 9.35\% in the lag-1 specification have had some rehabilitation before $t_0$. Across all years, the mean absolute gap between propensity scores within a pair is $1.135 \times 10^{-6}$ in the lag-3 specification and $0.684 \times 10^{-6}$ in the lag-1 specification. The maximum gaps are 0.009110 and 0.009391 respectively, both below the 0.01 caliper. The propensity scores are low because divorce is relatively rare: in the preferred specification, annual mean scores range from approximately 2.7 to 3.5 per 1,000 among divorcees and 1.2 to 1.6 per 1,000 among controls before matching.
@@ -1911,100 +2037,159 @@ Across the lag-3 matched sample, 603 individuals out of 168,319 unique individua
 % Table \ref{tab:matching} shows the matching results. Of the 84,461 eligible treated individuals for the lag-3 specification (and 127,395 for the lag-1 specification), the match rate is 100\% (and respectively 99.99\%). No control is used twice and every treated individual has at least one control in their exact-match group (i.e. their gender $\times$ 5-year age band $\times$ prior rehabilitation group). Although controls used in earlier years are removed from later matching pools, this does not lead to a decline in matching success. In the lag-3 specification, eligible control slots decrease slightly from 12.75 million in 2014 to 12.62 million in 2018. It is also possible for individuals to appear first as a control and then as a treated if that individual divorces eventually. 534 individuals out of 168,388 (168,922 - 534)distinct individuals across all matched pairs appear as both treated and control (about 0.32\%). There is a mean gap of two years between being a control and being a treated. The matched sample also has close to an even split on gender with 41,430 male and 43,031 female pairs (491\% vs 50.9\%). 11.70\% of individuals in the lag-3 (and 9.35\% in the lag-1) specification have had some rehabilitation before $t_0$. Across all years, the mean absolute gap between propensity scores within a pair is $0.56 \times 10^{-6}$ in the lag-3 specification (and $0.40 \times 10^{-6}$ in the lag-1 specification). The propensity scores are low because divorce is relatively rare (approximately 2.3 to 3.0 per 1,000 among divorcees and 1.1 to 1.5 per 1,000 among controls before matching).}
 
 
- \begin{table}[H]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{2pt}
-\begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{lrrrrrrrrr}
-\toprule
-\shortstack{Year relative\\to $t_0$}
-& \shortstack{Earnings\\(euros)}
-& \shortstack{Pension income\\(euros)}
-& \shortstack{Rehabilitation\\starts\\(per 100 people)}
-& \shortstack{Unsuccessful\\applications\\(pp)}
-& \shortstack{Pension income\\missing\\(pp)}
-& \shortstack{Regular\\employment\\(days)}
-& \shortstack{Unemployed\\(days)}
-& \shortstack{Marginal\\employment\\(days)}
-& \shortstack{Care leave\\(days)} \\
-\midrule
-$-3$ & $-159.2$ & $-0.93$ & $-0.50$ & $-0.18$
-     & $0.07$ & $1.33$ & $-0.75$ & $2.20$ & $0.13$ \\
-     & (40.5) & (0.49) & (0.13) & (0.09)
-     & (0.05) & (0.68) & (0.47) & (0.56) & (0.15) \\
 
-$-2$ & $-41.4$ & $-0.55$ & $-0.05$ & $-0.03$
-     & $0.03$ & $0.97$ & $-0.38$ & $1.67$ & $0.10$ \\
-     & (30.2) & (0.39) & (0.14) & (0.10)
-     & (0.04) & (0.56) & (0.41) & (0.45) & (0.12) \\
 
-$-1$ & $0.0$ & $0.00$ & $0.00$ & $0.00$
-     & $0.00$ & $0.00$ & $0.00$ & $0.00$ & $0.00$ \\
-     & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
 
-$0$  & $357.3$ & $-1.69$ & $1.59$ & $0.83$
-     & $0.18$ & $2.72$ & $13.87$ & $-5.32$ & $-0.51$ \\
-     & (32.5) & (0.48) & (0.12) & (0.09)
-     & (0.05) & (0.54) & (0.42) & (0.44) & (0.13) \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/event_study_differences_lag3.png}
+    \caption{Event-study differences between divorcees and matched controls
+      relative to $t_0-1$ (lag-3 specification, 2014--2018 divorce cohorts)}
+    \label{fig:event_study}
 
-$1$  & $562.0$ & $-1.94$ & $2.29$ & $0.92$
-     & $0.17$ & $4.71$ & $15.52$ & $-7.67$ & $-1.08$ \\
-     & (46.0) & (0.71) & (0.14) & (0.09)
-     & (0.07) & (0.69) & (0.50) & (0.55) & (0.19) \\
+    \par\medskip
+    \begin{minipage}{\textwidth}
+        \footnotesize
+        \raggedright
+        \textit{Notes.} Each point is the mean within-pair difference between divorcees and controls in that year, minus the mean difference at $t_0-1$. The shaded bands are pointwise 95\% confidence intervals based on standard errors clustered by matched pair. Each joint Wald test assesses whether the coefficients for $t_0-3$ and $t_0-2$ are both zero (two degrees of freedom). The reference-year zero reflects this normalization. Because pre-divorce values enter matching, the pre-divorce points describe the remaining differences in the histories used to select controls.
 
-$2$  & $679.1$ & $0.54$ & $2.57$ & $0.78$
-     & $-0.09$ & $3.96$ & $14.43$ & $-8.25$ & $-1.16$ \\
-     & (54.7) & (0.86) & (0.14) & (0.09)
-     & (0.08) & (0.76) & (0.54) & (0.61) & (0.23) \\
+        \par\smallskip
+        The table reports the number of matched pairs with usable values for each outcome in selected years. For employment-day outcomes, both members of the pair must have observed day counts, so the set of pairs can change across years. Employment-day outcomes are measured in days per year. The abbreviation pp denotes percentage points.
 
-$3$  & $644.8$ & $2.46$ & $2.74$ & $0.76$
-     & $-0.29$ & $2.19$ & $14.45$ & $-7.62$ & $-1.23$ \\
-     & (61.9) & (0.99) & (0.14) & (0.09)
-     & (0.09) & (0.81) & (0.56) & (0.65) & (0.27) \\
+        \par\smallskip
+        {\centering
+        \setlength{\tabcolsep}{2pt}
+        \begin{adjustbox}{max width=\linewidth}
+            \begin{tabular}{@{}lrrrrrrrrr@{}}
+                \toprule
+                Event year
+                & \shortstack[r]{Earnings\\(euros)}
+                & \shortstack[r]{Pension\\income\\(euros)}
+                & \shortstack[r]{Rehabilitation\\starts\\(per 100 people)}
+                & \shortstack[r]{Unsuccessful\\applications\\(pp)}
+                & \shortstack[r]{Pension income\\missing\\(pp)}
+                & \shortstack[r]{Regular\\employment\\(days)}
+                & \shortstack[r]{Unemployed\\(days)}
+                & \shortstack[r]{Marginal\\employment\\(days)}
+                & \shortstack[r]{Care\\leave\\(days)} \\
+                \midrule
+                $t_0-3$ & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+                        & 68,802 & 69,759 & 69,770 & 70,142 \\
+                $t_0-2$ & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+                        & 68,928 & 69,743 & 69,833 & 70,230 \\
+                $t_0-1$ & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+                        & 70,976 & 71,501 & 71,649 & 72,134 \\
+                $t_0+5$ & 81,443 & 81,443 & 81,443 & 81,443 & 81,443
+                        & 60,924 & 61,454 & 61,846 & 62,041 \\
+                \bottomrule
+            \end{tabular}
+        \end{adjustbox}
+        \par}
+    \end{minipage}
+\end{figure}
 
-$4$  & $617.7$ & $2.19$ & $2.91$ & $0.85$
-     & $-0.30$ & $1.53$ & $13.11$ & $-7.09$ & $-1.41$ \\
-     & (68.9) & (1.18) & (0.15) & (0.09)
-     & (0.10) & (0.84) & (0.58) & (0.68) & (0.30) \\
 
-$5$  & $634.7$ & $4.07$ & $2.91$ & $0.85$
-     & $-0.45$ & $0.03$ & $11.00$ & $-6.54$ & $-1.41$ \\
-     & (75.5) & (1.35) & (0.15) & (0.09)
-     & (0.11) & (0.88) & (0.58) & (0.70) & (0.33) \\
-\midrule
-\shortstack[l]{Joint Wald\\statistic}
-& 18.34 & 3.62 & 17.41 & 4.50 & 1.91 & 4.35 & 2.54 & 18.21 & 0.88 \\
-$p$-value
-& $<0.001$ & 0.164 & $<0.001$ & 0.105 & 0.385
-& 0.113 & 0.281 & $<0.001$ & 0.644 \\
-\midrule
-Pairs, $t_0-3$
-& 84,461 & 84,461 & 84,461 & 84,461 & 84,461
-& 68,802 & 69,759 & 69,770 & 70,142 \\
-Pairs, $t_0-2$
-& 84,461 & 84,461 & 84,461 & 84,461 & 84,461
-& 68,928 & 69,743 & 69,833 & 70,230 \\
-Pairs, $t_0-1$
-& 84,461 & 84,461 & 84,461 & 84,461 & 84,461
-& 70,976 & 71,501 & 71,649 & 72,134 \\
-Pairs, $t_0+5$
-& 81,443 & 81,443 & 81,443 & 81,443 & 81,443
-& 60,924 & 61,454 & 61,846 & 62,041 \\
-\bottomrule
-\end{tabular}
-\end{adjustbox}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{figures/event_study_differences_lag3.png}
+%     \caption{Five-year cumulative all-cause mortality among divorcees and matched controls, by sex}
+%     \label{fig:event_study}
+% \end{figure}
 
-\caption{Differences between matched pairs relative to $t_0-1$, from $t_0-3$ to $t_0+5$ (lag-3 specification, 2014--2018)}
-\label{tab:event_study_lag3}
+% \begin{table}[H]
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{2pt}
+% \begin{adjustbox}{max width=\textwidth}
+% \begin{tabular}{lrrrrrrrrr}
+% \toprule
+% \shortstack{Year relative\\to $t_0$}
+% & \shortstack{Earnings\\(euros)}
+% & \shortstack{Pension income\\(euros)}
+% & \shortstack{Rehabilitation\\starts\\(per 100 people)}
+% & \shortstack{Unsuccessful\\applications\\(pp)}
+% & \shortstack{Pension income\\missing\\(pp)}
+% & \shortstack{Regular\\employment\\(days)}
+% & \shortstack{Unemployed\\(days)}
+% & \shortstack{Marginal\\employment\\(days)}
+% & \shortstack{Care leave\\(days)} \\
+% % \midrule
+% % $-3$ & $-159.2$ & $-0.93$ & $-0.50$ & $-0.18$
+% %      & $0.07$ & $1.33$ & $-0.75$ & $2.20$ & $0.13$ \\
+% %      & (40.5) & (0.49) & (0.13) & (0.09)
+% %      & (0.05) & (0.68) & (0.47) & (0.56) & (0.15) \\
 
-\par\smallskip
-\begin{minipage}{\textwidth}
-\footnotesize
-\textit{Notes:} Each entry is the mean within-pair difference between divorcees and controls in that year, minus the reference-year mean difference at $t_0-1$. Standard errors in parentheses are clustered on the matched pair. The joint Wald tests concern the coefficients for $t_0-3$ and $t_0-2$ (two degrees of freedom). Outcome-specific observed-pair counts appear in the final rows. Employment-day counts are included only when both members of a pair have usable values; missing day counts are not filled. The composition of observed pairs can therefore change across years. Employment-day means are not participation shares. Reference-year zeros do not imply that divorcees and controls have identical levels in $t_0-1$. Because the pre-divorce values also enter matching, these rows describe the remaining differences in the histories used to select controls.
-\end{minipage}
+% % $-2$ & $-41.4$ & $-0.55$ & $-0.05$ & $-0.03$
+% %      & $0.03$ & $0.97$ & $-0.38$ & $1.67$ & $0.10$ \\
+% %      & (30.2) & (0.39) & (0.14) & (0.10)
+% %      & (0.04) & (0.56) & (0.41) & (0.45) & (0.12) \\
 
-\end{table}
+% % $-1$ & $0.0$ & $0.00$ & $0.00$ & $0.00$
+% %      & $0.00$ & $0.00$ & $0.00$ & $0.00$ & $0.00$ \\
+% %      & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+
+% % $0$  & $357.3$ & $-1.69$ & $1.59$ & $0.83$
+% %      & $0.18$ & $2.72$ & $13.87$ & $-5.32$ & $-0.51$ \\
+% %      & (32.5) & (0.48) & (0.12) & (0.09)
+% %      & (0.05) & (0.54) & (0.42) & (0.44) & (0.13) \\
+
+% % $1$  & $562.0$ & $-1.94$ & $2.29$ & $0.92$
+% %      & $0.17$ & $4.71$ & $15.52$ & $-7.67$ & $-1.08$ \\
+% %      & (46.0) & (0.71) & (0.14) & (0.09)
+% %      & (0.07) & (0.69) & (0.50) & (0.55) & (0.19) \\
+
+% % $2$  & $679.1$ & $0.54$ & $2.57$ & $0.78$
+% %      & $-0.09$ & $3.96$ & $14.43$ & $-8.25$ & $-1.16$ \\
+% %      & (54.7) & (0.86) & (0.14) & (0.09)
+% %      & (0.08) & (0.76) & (0.54) & (0.61) & (0.23) \\
+
+% % $3$  & $644.8$ & $2.46$ & $2.74$ & $0.76$
+% %      & $-0.29$ & $2.19$ & $14.45$ & $-7.62$ & $-1.23$ \\
+% %      & (61.9) & (0.99) & (0.14) & (0.09)
+% %      & (0.09) & (0.81) & (0.56) & (0.65) & (0.27) \\
+
+% % $4$  & $617.7$ & $2.19$ & $2.91$ & $0.85$
+% %      & $-0.30$ & $1.53$ & $13.11$ & $-7.09$ & $-1.41$ \\
+% %      & (68.9) & (1.18) & (0.15) & (0.09)
+% %      & (0.10) & (0.84) & (0.58) & (0.68) & (0.30) \\
+
+% % $5$  & $634.7$ & $4.07$ & $2.91$ & $0.85$
+% %      & $-0.45$ & $0.03$ & $11.00$ & $-6.54$ & $-1.41$ \\
+% %      & (75.5) & (1.35) & (0.15) & (0.09)
+% %      & (0.11) & (0.88) & (0.58) & (0.70) & (0.33) \\
+% % \midrule
+% % \shortstack[l]{Joint Wald\\statistic}
+% % & 18.34 & 3.62 & 17.41 & 4.50 & 1.91 & 4.35 & 2.54 & 18.21 & 0.88 \\
+% % $p$-value
+% % & $<0.001$ & 0.164 & $<0.001$ & 0.105 & 0.385
+% % & 0.113 & 0.281 & $<0.001$ & 0.644 \\
+% \midrule
+% Pairs, $t_0-3$
+% & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+% & 68,802 & 69,759 & 69,770 & 70,142 \\
+% Pairs, $t_0-2$
+% & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+% & 68,928 & 69,743 & 69,833 & 70,230 \\
+% Pairs, $t_0-1$
+% & 84,461 & 84,461 & 84,461 & 84,461 & 84,461
+% & 70,976 & 71,501 & 71,649 & 72,134 \\
+% Pairs, $t_0+5$
+% & 81,443 & 81,443 & 81,443 & 81,443 & 81,443
+% & 60,924 & 61,454 & 61,846 & 62,041 \\
+% \bottomrule
+% \end{tabular}
+% \end{adjustbox}
+
+% \caption{Differences between matched pairs relative to $t_0-1$, from $t_0-3$ to $t_0+5$ (lag-3 specification, 2014--2018)}
+% \label{tab:event_study_lag3}
+
+% \par\smallskip
+% \begin{minipage}{\textwidth}
+% \footnotesize
+% \textit{Notes:} Each entry is the mean within-pair difference between divorcees and controls in that year, minus the reference-year mean difference at $t_0-1$. Standard errors in parentheses are clustered on the matched pair. The joint Wald tests concern the coefficients for $t_0-3$ and $t_0-2$ (two degrees of freedom). Outcome-specific observed-pair counts appear in the final rows. Employment-day counts are included only when both members of a pair have usable values; missing day counts are not filled. The composition of observed pairs can therefore change across years. Employment-day means are not participation shares. Reference-year zeros do not imply that divorcees and controls have identical levels in $t_0-1$. Because the pre-divorce values also enter matching, these rows describe the remaining differences in the histories used to select controls.
+% \end{minipage}
+
+% \end{table}
 
 The estimates show how the difference between divorcees and their matched controls changes relative to the year before divorce. The earnings gap is \texteuro159.2 lower at $t_0-3$ and \texteuro41.4 lower at $t_0-2$ than at $t_0-1$, indicating that divorcees' earnings were already rising relative to controls before the recorded divorce. The rehabilitation-start gap also increases towards divorce. Joint tests reject unchanged pre-divorce gaps for earnings, rehabilitation starts and marginal-employment days (all $p<0.001$), while providing no statistically significant evidence of changes in pension income, unsuccessful applications, pension-income missingness, regular-employment days, unemployment days or care-leave days.
 

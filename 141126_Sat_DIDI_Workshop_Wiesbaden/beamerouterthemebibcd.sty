@@ -1,0 +1,37 @@
+%%
+%% This is file `./beamerouterthemebibcd.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ./beamerouterthemebibcd.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Created by familie redlich AG
+%% Created for Bundesinstitut f^^c3^^bcr Bev^^c3^^b6lkerungsforschung
+%% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{beamerouterthemebibcd}[2024/01/01 0.1.0 BiB Beamer color theme]
+\RequirePackage[absolute,overlay]{textpos}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=2.03cm,text margin right=2.03cm}
+\AtBeginSection[]
+{
+  \begin{bibframe}[frametype=section]
+    \sectionpage
+  \end{bibframe}
+}
+\defbeamertemplate*{headline}{custom}
+{
+  \begin{textblock}{0.5}(14.55,1.35)
+    \insertframenumber
+  \end{textblock}
+}
+\setbeamertemplate{headline}{}
+\patchcmd{\beamer@calculateheadfoot}{\advance\footheight by 10pt}{\advance\footheight by 20pt}{}{}
+\newcommand\bibtwocolumnsep{13.8cm}
+\newcommand\bibthreecolumnsep{8.48cm}
+\endinput
+%%
+%% End of file `./beamerouterthemebibcd.sty'.
